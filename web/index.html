@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="My bio.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="mybio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+  <title>mybio</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    #phone-frame { position: relative; top: 88px; left: 385px; height: 800px; width: 400px; z-index: -2;}
+    #app-content { position: relative;  }
+  </style>
+</head>
+<body>
+<h2 id="tit">Konstantinos Lountzis - Android Engineer</h2>
+<img id="phone-frame" src="pixel1.png" />
+<iframe id="app-content" src="/bio_app.html" height="630" width="355"></iframe>
+<script>
+  window.addEventListener("message", function(event) {
+
+  document.getElementById("tit").innerText = "tits also:" + event.data;
+
+  // can message back using event.source.postMessage(...)
+});
+
+document.getElementById('tit').onclick = function fun() {
+  var event = new Event("theme-dark")
+
+  document.getElementById("app-content").dispatchEvent(event);
+  console.log("pressed a tit");
+}
+
+</script>
+</body>
+</html>
