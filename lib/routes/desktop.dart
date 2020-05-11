@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/main_content_navigator.dart';
 import 'package:mybio/widgets/AppWidget.dart';
+//import 'dart:html' as html;
 
 class DesktopRoute extends StatefulWidget {
   final Function onPush;
+  final Function onPop;
 
-  DesktopRoute({key: Key, this.onPush});
+  const DesktopRoute({key: Key, this.onPush, this.onPop});
 
   @override
   State<StatefulWidget> createState() {
-    return _DesktopRouteState();
+//    html.window.parent.postMessage('desktop', '*');
+    return DesktopRouteState();
   }
 }
 
-class _DesktopRouteState extends State<DesktopRoute> {
-  Widget _desktop;
+class DesktopRouteState extends State<DesktopRoute> {
+  var currentRoute = MainContentRoutes.desktop;
 
   @override
   Widget build(BuildContext context) {
-    if (_desktop == null) {
-      _desktop = getDesktop();
-    }
-    return _desktop;
+    return getDesktop();
   }
 
   Widget getDesktop() {
@@ -37,22 +37,30 @@ class _DesktopRouteState extends State<DesktopRoute> {
                   key: UniqueKey(),
                   title: 'About me',
                   icon: 'images/avatar.png',
-                  onClick: () => {widget.onPush(MainContentRoutes.about_me)}),
+                  onClick: () {
+                    widget.onPush(MainContentRoutes.about_me);
+                  }),
               AppWidget(
                   key: UniqueKey(),
                   title: 'Experience',
                   icon: 'images/about_me.png',
-                  onClick: () => {}),
+                  onClick: () {
+                    widget.onPush(MainContentRoutes.experience);
+                  }),
               AppWidget(
                   key: UniqueKey(),
                   title: 'Contact me',
                   icon: 'images/about_me.png',
-                  onClick: () => {}),
+                  onClick: () {
+                    widget.onPush(MainContentRoutes.experience);
+                  }),
               AppWidget(
                   key: UniqueKey(),
-                  title: 'About',
+                  title: 'About this',
                   icon: 'images/about_me.png',
-                  onClick: () => {}),
+                  onClick: () {
+                    widget.onPush(MainContentRoutes.about_app);
+                  }),
             ],
           ),
         ));

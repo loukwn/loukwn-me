@@ -1,20 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+//import 'dart:html' as html;
 
 class AboutMeRoute extends StatefulWidget {
-  final Function onPop;
-
-  const AboutMeRoute({ key: Key, this.onPop });
-
-  @override
-  Widget build(BuildContext context) {
-
-  }
-
   @override
   State<StatefulWidget> createState() {
+//    html.window.parent.postMessage('about me', '*');
     return AboutMeRouteState();
   }
 }
@@ -22,21 +13,29 @@ class AboutMeRoute extends StatefulWidget {
 class AboutMeRouteState extends State<AboutMeRoute> {
   @override
   Widget build(BuildContext context) {
-    print("About me building");
-    return  NotificationListener<SoftwareButtonActionNotification>(
-      onNotification: (notification) {
-        if (notification.title == SoftwareButtonActionNotification.BACK ||
-            notification.title == SoftwareButtonActionNotification.HOME) {
-          print("about me listens");
-        }
-        return true;
-      }, child: Scaffold(
-      body: Text("about me"),
-    ),
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 50,
+          ),
+          Row(
+            children: <Widget>[
+              Hero(
+                  tag: 'avatar_About me',
+                  child: Image.asset(
+                    'images/avatar.png',
+                    width: 80,
+                    height: 80,
+                  )),
+              SizedBox(
+                width: 20,
+              ),
+              Hero(tag: 'text_About me', child: Text('About me'))
+            ],
+          )
+        ],
+      ),
     );
-  }
-
-  void pop() {
-    widget.onPop();
   }
 }

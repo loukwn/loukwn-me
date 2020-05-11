@@ -1,50 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/routes/desktop.dart';
 import 'package:mybio/routes/about_me.dart';
+import 'package:mybio/routes/experience.dart';
 
 class MainContentRoutes {
-  static const String root = '/';
+  static const String desktop = '/';
   static const String about_me = '/about_me';
   static const String experience = '/experience';
   static const String contact_me = '/contact_me';
-  static const String about = '/about';
+  static const String about_app = '/about_app';
 }
 
-class MainContentNavigator extends StatelessWidget {
+class MainContentNavigator extends StatefulWidget {
   MainContentNavigator({this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
-  final GlobalKey<AboutMeRouteState> aboutMeKey =
-      GlobalKey<AboutMeRouteState>();
-  var currentRoute = MainContentRoutes.root;
+  final GlobalKey<DesktopRouteState> desktopKey =
+      GlobalKey<DesktopRouteState>();
 
+  @override
+  State<StatefulWidget> createState() => MainContentNavigatorState();
+}
+
+class MainContentNavigatorState extends State<MainContentNavigator> {
   void _push(BuildContext context, String dest) {
     var routeBuilders = _routeBuilders(context);
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => routeBuilders[dest](context)));
-
-    currentRoute = dest;
-  }
-
-  void _pop(BuildContext context) {
-    Navigator.pop(context);
-    currentRoute = MainContentRoutes.root;
-  }
-
-  void pop() {
-    if (currentRoute != MainContentRoutes.root)
-    aboutMeKey.currentState.pop();
   }
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
     return {
-      MainContentRoutes.root: (context) => DesktopRoute(
+      MainContentRoutes.desktop: (context) => DesktopRoute(
             onPush: (dest) => _push(context, dest),
           ),
-      MainContentRoutes.about_me: (context) =>
-          AboutMeRoute(key: aboutMeKey, onPop: () => _pop(context)),
+      MainContentRoutes.about_me: (context) => AboutMeRoute(),
+      MainContentRoutes.experience: (context) => ExperienceRoute(),
     };
+  }
+
+  HeroController _heroController;
+
+  @override
+  void initState() {
+    super.initState();
+    _heroController = HeroController();
   }
 
   @override
@@ -52,8 +53,9 @@ class MainContentNavigator extends StatelessWidget {
     var routeBuilders = _routeBuilders(context);
 
     return Navigator(
-        key: navigatorKey,
-        initialRoute: MainContentRoutes.root,
+        key: widget.navigatorKey,
+        observers: [_heroController],
+        initialRoute: MainContentRoutes.desktop,
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
               builder: (context) => routeBuilders[routeSettings.name](context));

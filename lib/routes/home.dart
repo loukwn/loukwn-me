@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:html' as html;
+//import 'dart:html' as html;
 
 import 'package:mybio/main_content_navigator.dart';
 
 class HomeRoute extends StatefulWidget {
+  final navigatorKey = GlobalKey<NavigatorState>();
+  final mainContentNavigatorKey = GlobalKey<MainContentNavigatorState>();
+
   @override
   _HomeRouteState createState() {
     var now = DateTime.now();
@@ -18,7 +21,8 @@ class HomeRoute extends StatefulWidget {
 class _HomeRouteState extends State<HomeRoute> {
   var timeToDisplay = "";
   var timerHasStarted = false;
-  final navigatorKey = GlobalKey<NavigatorState>();
+
+  Widget _mainContentWidget;
 
   _HomeRouteState(String timeToDisplay) {
     this.timeToDisplay = timeToDisplay;
@@ -68,11 +72,14 @@ class _HomeRouteState extends State<HomeRoute> {
   }
 
   Widget getMainContent() {
-    return Expanded(
-      child: MainContentNavigator(
-        navigatorKey: navigatorKey,
-      ),
-    );
+    if (_mainContentWidget == null) {
+      _mainContentWidget = Expanded(
+          child: MainContentNavigator(
+        navigatorKey: widget.navigatorKey,
+      ));
+    }
+
+    return _mainContentWidget;
   }
 
   Widget getSoftButtons() {
@@ -91,12 +98,12 @@ class _HomeRouteState extends State<HomeRoute> {
                   size: 24.0,
                 ),
                 onPressed: () {
-                  print("back pressed");
                   // Send a notification to close the current screen
-                  navigatorKey.currentState.pop();
+                  widget.navigatorKey.currentState
+                      .popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-                  html.window.parent.postMessage('desktop', '*');
+//                  html.window.parent.postMessage('desktop', '*');
                 },
               ),
             ),
@@ -108,10 +115,11 @@ class _HomeRouteState extends State<HomeRoute> {
                 ),
                 onPressed: () {
                   // Send a notification to close the current screen
-                  navigatorKey.currentState.pop();
+                  widget.navigatorKey.currentState
+                      .popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-                  html.window.parent.postMessage('desktop', '*');
+//                  html.window.parent.postMessage('desktop', '*');
                 }),
             IconButton(
                 icon: new Icon(
@@ -156,13 +164,4 @@ class _HomeRouteState extends State<HomeRoute> {
       ),
     );
   }
-}
-
-class SoftwareButtonActionNotification extends Notification {
-  final String title;
-  static const String BACK = "back";
-  static const String HOME = "home";
-  static const String MORE = "more";
-
-  const SoftwareButtonActionNotification({this.title});
 }
