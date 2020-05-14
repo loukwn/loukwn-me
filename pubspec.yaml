@@ -49,6 +49,11 @@ flutter:
   assets:
     - images/
 
+  fonts:
+      - family: OstrichSans
+        fonts:
+          - asset: fonts/ostrich-sans/OstrichSans-Bold.otf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

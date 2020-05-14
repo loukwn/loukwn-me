@@ -2,12 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'dart:html' as html;
+import 'dart:html' as html;
 
 class ExperienceRoute extends StatefulWidget {
+  const ExperienceRoute({this.id});
+
+  final int id;
+
   @override
   State<StatefulWidget> createState() {
-//    html.window.parent.postMessage('experience', '*');
+    html.window.parent.postMessage('experience', '*');
     return ExperienceRouteState();
   }
 }

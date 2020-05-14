@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-//import 'dart:html' as html;
+import 'dart:html' as html;
 
 import 'package:mybio/main_content_navigator.dart';
 
@@ -103,7 +103,7 @@ class _HomeRouteState extends State<HomeRoute> {
                       .popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-//                  html.window.parent.postMessage('desktop', '*');
+                  html.window.parent.postMessage('desktop', '*');
                 },
               ),
             ),
@@ -119,7 +119,7 @@ class _HomeRouteState extends State<HomeRoute> {
                       .popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-//                  html.window.parent.postMessage('desktop', '*');
+                  html.window.parent.postMessage('desktop', '*');
                 }),
             IconButton(
                 icon: new Icon(

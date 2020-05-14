@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class AppWidget extends StatefulWidget {
   final String title;
   final String icon;
+  final int id;
   final Function onClick;
 
-  AppWidget({Key key, this.title, this.icon, this.onClick}) : super(key: key);
+  AppWidget({Key key, this.title, this.icon, this.onClick, this.id})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -20,25 +22,21 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("${widget.title} building $scaleOfWidget");
     return Column(
       children: <Widget>[
         GestureDetector(
           onTapDown: (TapDownDetails details) {
-            print("onTapDown");
             setState(() {
               scaleOfWidget = 0.95;
               rebuildCausedBySettingState = true;
             });
           },
           onTapUp: (TapUpDetails details) {
-            print("onTapUp");
             setState(() {
               scaleOfWidget = 1.0;
             });
           },
           onTapCancel: () {
-            print("onTapCancel");
             if (!rebuildCausedBySettingState) {
               setState(() {
                 scaleOfWidget = 1.0;
@@ -52,14 +50,13 @@ class _AppWidgetState extends State<AppWidget> {
             });
           },
           onTap: () {
-            print("onTap");
             widget.onClick.call();
             setState(() {
               scaleOfWidget = 1.0;
             });
           },
           child: Hero(
-            tag: 'avatar_${widget.title}',
+            tag: 'avatar_${widget.id}',
             child: Image.asset(
               widget.icon,
               width: 40 * scaleOfWidget,
@@ -69,7 +66,7 @@ class _AppWidgetState extends State<AppWidget> {
         ),
         SizedBox(height: 10),
         Hero(
-            tag: 'text_${widget.title}',
+            tag: 'text_${widget.id}',
             child: Text(
               widget.title,
               style:

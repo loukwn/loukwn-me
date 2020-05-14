@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mybio/routes/contact_me.dart';
 import 'package:mybio/routes/desktop.dart';
 import 'package:mybio/routes/about_me.dart';
 import 'package:mybio/routes/experience.dart';
@@ -35,8 +36,15 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
       MainContentRoutes.desktop: (context) => DesktopRoute(
             onPush: (dest) => _push(context, dest),
           ),
-      MainContentRoutes.about_me: (context) => AboutMeRoute(),
-      MainContentRoutes.experience: (context) => ExperienceRoute(),
+      MainContentRoutes.about_me: (context) => AboutMeRoute(
+            id: 1,
+          ),
+      MainContentRoutes.experience: (context) => ExperienceRoute(
+            id: 2,
+          ),
+      MainContentRoutes.contact_me: (context) => ContactMeRoute(
+            id: 3,
+          ),
     };
   }
 

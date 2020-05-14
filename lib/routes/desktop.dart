@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/main_content_navigator.dart';
 import 'package:mybio/widgets/AppWidget.dart';
-//import 'dart:html' as html;
+import 'dart:html' as html;
 
 class DesktopRoute extends StatefulWidget {
   final Function onPush;
@@ -11,7 +11,7 @@ class DesktopRoute extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-//    html.window.parent.postMessage('desktop', '*');
+    html.window.parent.postMessage('desktop', '*');
     return DesktopRouteState();
   }
 }
@@ -35,6 +35,7 @@ class DesktopRouteState extends State<DesktopRoute> {
               //<a href="https://iconscout.com/icons/avatar" target="_blank">Avatar Icon</a> by <a href="https://iconscout.com/contributors/dmitriy-bondarchuk">Dmitriy Bondarchuk</a> on <a href="https://iconscout.com">Iconscout</a>
               AppWidget(
                   key: UniqueKey(),
+                  id: 1,
                   title: 'About me',
                   icon: 'images/avatar.png',
                   onClick: () {
@@ -42,6 +43,7 @@ class DesktopRouteState extends State<DesktopRoute> {
                   }),
               AppWidget(
                   key: UniqueKey(),
+                  id: 2,
                   title: 'Experience',
                   icon: 'images/about_me.png',
                   onClick: () {
@@ -49,13 +51,15 @@ class DesktopRouteState extends State<DesktopRoute> {
                   }),
               AppWidget(
                   key: UniqueKey(),
+                  id: 3,
                   title: 'Contact me',
                   icon: 'images/about_me.png',
                   onClick: () {
-                    widget.onPush(MainContentRoutes.experience);
+                    widget.onPush(MainContentRoutes.contact_me);
                   }),
               AppWidget(
                   key: UniqueKey(),
+                  id: 4,
                   title: 'About this',
                   icon: 'images/about_me.png',
                   onClick: () {
