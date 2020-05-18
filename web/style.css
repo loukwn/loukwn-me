@@ -1,0 +1,104 @@
+body {
+    background-color: rgb(82, 146, 179);
+}
+
+#main-container { 
+    display: flex;
+    flex-direction: column;
+}
+
+#header-row {
+    flex-direction: row;
+}
+
+#content-row {
+    flex-direction: row;
+}
+
+#phone-frame {
+    pointer-events: none;
+    z-index: 2;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+
+#app-content {
+    border: 0;
+    display: inline;
+    z-index: 1;
+    position: absolute;
+    top: 56px;
+    left: 21px;
+}
+
+#phone-container {
+    position: relative;
+    height: 800px;
+    width: 400px;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 0.5s;
+    animation-name: animatebottom;
+    animation-duration: 0.5s
+}
+
+#loader {
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #009789;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#loading-screen {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border-radius: 50px;
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}
