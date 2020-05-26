@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mybio/routes/about_this.dart';
 import 'package:mybio/routes/contact_me.dart';
 import 'package:mybio/routes/desktop.dart';
 import 'package:mybio/routes/about_me.dart';
@@ -45,6 +46,9 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
       MainContentRoutes.contact_me: (context) => ContactMeRoute(
             id: 3,
           ),
+      MainContentRoutes.about_app: (context) => AboutThisRoute(
+            id: 4,
+          )
     };
   }
 

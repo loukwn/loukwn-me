@@ -27,7 +27,6 @@ class ContactMeRouteState extends State<ContactMeRoute> {
   @override
   void dispose() {
     _scrollController.dispose();
-    html.window.parent.postMessage('desktop', '*');
     super.dispose();
   }
 
@@ -57,40 +56,46 @@ class ContactMeRouteState extends State<ContactMeRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Stack(
-        children: <Widget>[
-          new CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              new SliverAppBar(
-                expandedHeight: 150.0,
-                pinned: true,
-                backgroundColor: Color.fromRGBO(138, 139, 137, 1),
-                flexibleSpace: new FlexibleSpaceBar(
-                  title: new Text(
-                    "Contact me",
-                    style: TextStyle(fontFamily: 'OstrichSans'),
+    return WillPopScope(
+        onWillPop: () {
+          html.window.parent.postMessage('desktop', '*');
+          return new Future(() => true);
+        },
+        child: new Scaffold(
+          body: new Stack(
+            children: <Widget>[
+              new CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  new SliverAppBar(
+                    expandedHeight: 150.0,
+                    pinned: true,
+                    backgroundColor: Color.fromRGBO(138, 139, 137, 1),
+                    flexibleSpace: new FlexibleSpaceBar(
+                      title: new Text(
+                        "Contact me",
+                        style: TextStyle(fontFamily: 'OstrichSans'),
+                      ),
+                      background: Image.asset(
+                        "images/contact_me_bg.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                  background: Image.asset(
-                    "images/contact_me_bg.jpg",
-                    fit: BoxFit.cover,
+                  new SliverList(
+                    delegate: new SliverChildListDelegate(
+                      new List.generate(
+                        20,
+                        (int index) =>
+                            new ListTile(title: new Text("Item $index")),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-              new SliverList(
-                delegate: new SliverChildListDelegate(
-                  new List.generate(
-                    20,
-                    (int index) => new ListTile(title: new Text("Item $index")),
-                  ),
-                ),
-              ),
+              _buildIcon()
             ],
           ),
-          _buildIcon()
-        ],
-      ),
-    );
+        ));
   }
 }
