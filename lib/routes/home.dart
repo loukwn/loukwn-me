@@ -29,7 +29,7 @@ class _HomeRouteState extends State<HomeRoute> {
   }
 
   Widget getBgImage() {
-    return Image.asset('images/phone_bg.png',
+    return Image.asset('assets/images/phone_bg.png',
         fit: BoxFit.cover, height: double.infinity, width: double.infinity);
   }
 
