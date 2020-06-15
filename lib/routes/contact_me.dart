@@ -8,6 +8,8 @@ import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
 
 import 'dart:html' as html;
 
+import 'package:url_launcher/url_launcher.dart';
+
 class ContactMeRoute extends StatelessWidget {
   final config = PortfolioAppConfiguration.CONTACT_ME;
   final appContainer = html.window.document.getElementById("app-container");
@@ -20,7 +22,7 @@ class ContactMeRoute extends StatelessWidget {
 
     var widgets = List<Widget>();
     widgets.add(Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 82, 25),
+      padding: const EdgeInsets.fromLTRB(18, 15, 82, 25),
       child: Text(
         model.description,
         style: TextStyle(fontSize: 15),
@@ -93,6 +95,11 @@ class ContactMeRoute extends StatelessWidget {
                 child: Container(
                   height: 58,
                   width: double.infinity,
+                  child: GestureDetector(
+                    onTap: () {
+                      launch(element.link);
+                    },
+                  ),
                 ),
                 onEnter: (e) => {appContainer.style.cursor = "pointer"},
                 onExit: (e) => {appContainer.style.cursor = "default"},
@@ -106,6 +113,9 @@ class ContactMeRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Notify Html that the app is launched
+    html.window.parent.postMessage(config.jsEventName, '*');
+
     return FutureBuilder(
       // A delay to the future is added so that the Hero animation of the avatar
       // plays nicely

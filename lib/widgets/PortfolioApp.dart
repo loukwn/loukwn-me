@@ -32,9 +32,6 @@ class _PortfolioAppState extends State<PortfolioApp> {
   void initState() {
     super.initState();
 
-    // Notify Html that the app is launched
-    html.window.parent.postMessage(widget.config.jsEventName, '*');
-
     _scrollController = new ScrollController();
     _scrollController.addListener(() => setState(() {}));
 
