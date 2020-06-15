@@ -45,6 +45,12 @@ class _PortfolioAppState extends State<PortfolioApp> {
     _loadItems();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   // Loads the widgets that were provided as arguments but with a delay since we
   // want them animated (SliverAnimatedList can only animate insertions/deletions)
   void _loadItems() {
@@ -65,6 +71,8 @@ class _PortfolioAppState extends State<PortfolioApp> {
   // Used to build list items that haven't been removed.
   Widget _buildItem(
       BuildContext context, int index, Animation<double> animation) {
+
+    // Setup item animation
     var beginOffset = widget.config.itemAnimationType == AnimationType.VERTICAL
         ? Offset(0, 1)
         : Offset(1, 0);
@@ -80,18 +88,13 @@ class _PortfolioAppState extends State<PortfolioApp> {
         child: _list[index]);
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
+  /// Builds avatar and keeps track of its position, based on the [_scrollController]
   Widget _buildIcon() {
-    double top = 124.0; //default top margin, -4 for exact alignment
+    double top = 118.0; //default top margin, -4 for exact alignment
     if (_scrollController.hasClients) {
       top -= _scrollController.offset;
     }
-    if (top < 28) top = 28;
+    if (top < 22) top = 22;
     return new Positioned(
       top: top,
       right: 16.0,
@@ -153,15 +156,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   }
 }
 
-// Keeps a Dart [List] in sync with an [AnimatedList].
-//
-// The [insert] and [removeAt] methods apply to both the internal list and
-// the animated list that belongs to [listKey].
-//
-// This class only exposes as much of the Dart List API as is needed by the
-// sample app. More list methods are easily added, however methods that
-// mutate the list must make the same changes to the animated list in terms
-// of [AnimatedListState.insertItem] and [AnimatedList.removeItem].
+/// Keeps a Dart [List] in sync with an [AnimatedList].
 class ListModel<E> {
   ListModel({
     @required this.listKey,
