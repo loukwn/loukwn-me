@@ -2,9 +2,9 @@ let messagedOnce = false;
 
 const screens = {
     DESKTOP: 'desktop',
-    ABOUT_ME: 'about me',
+    ABOUT_ME: 'about_me',
     EXPERIENCE: 'experience',
-    CONTACT_ME: 'contact me',
+    CONTACT_ME: 'contact_me',
     ABOUT_THIS: 'about_this'
 }
 

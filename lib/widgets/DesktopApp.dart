@@ -1,22 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
 
-class AppWidget extends StatefulWidget {
-  final String title;
-  final String icon;
-  final int id;
+class DesktopApp extends StatefulWidget {
+  final PortfolioAppConfiguration config;
   final Function onClick;
 
-  AppWidget({Key key, this.title, this.icon, this.onClick, this.id})
-      : super(key: key);
+  DesktopApp({Key key, this.config, this.onClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _AppWidgetState();
+    return _DesktopAppState();
   }
 }
 
-class _AppWidgetState extends State<AppWidget> {
+class _DesktopAppState extends State<DesktopApp> {
   var scaleOfWidget = 1.0;
   var rebuildCausedBySettingState = false;
 
@@ -56,9 +54,9 @@ class _AppWidgetState extends State<AppWidget> {
             });
           },
           child: Hero(
-            tag: 'avatar_${widget.id}',
+            tag: 'avatar_${widget.config.id}',
             child: Image.asset(
-              widget.icon,
+              widget.config.avatarImagePath,
               width: 40 * scaleOfWidget,
               height: 40 * scaleOfWidget,
             ),
@@ -66,9 +64,9 @@ class _AppWidgetState extends State<AppWidget> {
         ),
         SizedBox(height: 10),
         Hero(
-            tag: 'text_${widget.id}',
+            tag: 'text_${widget.config.id}',
             child: Text(
-              widget.title,
+              widget.config.title,
               style:
                   TextStyle(color: Colors.white, fontSize: 13 * scaleOfWidget),
             ))

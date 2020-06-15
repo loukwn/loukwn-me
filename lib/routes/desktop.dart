@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/main_content_navigator.dart';
-import 'package:mybio/widgets/AppWidget.dart';
+import 'package:mybio/widgets/DesktopApp.dart';
 import 'dart:html' as html;
+
+import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
 
 class DesktopRoute extends StatefulWidget {
   final Function onPush;
@@ -33,35 +35,27 @@ class DesktopRouteState extends State<DesktopRoute> {
             crossAxisCount: 3,
             children: <Widget>[
               //<a href="https://iconscout.com/icons/avatar" target="_blank">Avatar Icon</a> by <a href="https://iconscout.com/contributors/dmitriy-bondarchuk">Dmitriy Bondarchuk</a> on <a href="https://iconscout.com">Iconscout</a>
-              AppWidget(
+              DesktopApp(
                   key: UniqueKey(),
-                  id: 1,
-                  title: 'About me',
-                  icon: 'images/avatar.png',
+                  config: PortfolioAppConfiguration.ABOUT_ME,
                   onClick: () {
                     widget.onPush(MainContentRoutes.about_me);
                   }),
-              AppWidget(
+              DesktopApp(
                   key: UniqueKey(),
-                  id: 2,
-                  title: 'Experience',
-                  icon: 'images/about_me.png',
+                  config: PortfolioAppConfiguration.EXPERIENCE,
                   onClick: () {
                     widget.onPush(MainContentRoutes.experience);
                   }),
-              AppWidget(
+              DesktopApp(
                   key: UniqueKey(),
-                  id: 3,
-                  title: 'Contact me',
-                  icon: 'images/about_me.png',
+                  config: PortfolioAppConfiguration.CONTACT_ME,
                   onClick: () {
                     widget.onPush(MainContentRoutes.contact_me);
                   }),
-              AppWidget(
+              DesktopApp(
                   key: UniqueKey(),
-                  id: 4,
-                  title: 'About this',
-                  icon: 'images/about_me.png',
+                  config: PortfolioAppConfiguration.ABOUT_APP,
                   onClick: () {
                     widget.onPush(MainContentRoutes.about_app);
                   }),
