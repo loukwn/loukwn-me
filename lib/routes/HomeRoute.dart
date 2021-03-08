@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:html' as html;
 
-import 'package:mybio/main_content_navigator.dart';
+import 'package:mybio/navigation/MainContentNavigator.dart';
 
 class HomeRoute extends StatefulWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -20,7 +20,6 @@ class HomeRoute extends StatefulWidget {
 
 class _HomeRouteState extends State<HomeRoute> {
   var timeToDisplay = "";
-  var timerHasStarted = false;
 
   Widget _mainContentWidget;
 
@@ -28,12 +27,18 @@ class _HomeRouteState extends State<HomeRoute> {
     this.timeToDisplay = timeToDisplay;
   }
 
-  Widget getBgImage() {
+  @override
+  void initState() {
+    super.initState();
+    _startTimerForClock();
+  }
+
+  Widget _getBgImage() {
     return Image.asset('assets/images/phone_bg.png',
         fit: BoxFit.cover, height: double.infinity, width: double.infinity);
   }
 
-  Widget getStatusBar(String timeToDisplay) {
+  Widget _getStatusBar(String timeToDisplay) {
     return Container(
       color: Color(0xff000000),
       padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
@@ -71,7 +76,7 @@ class _HomeRouteState extends State<HomeRoute> {
     );
   }
 
-  Widget getMainContent() {
+  Widget _getMainContent() {
     if (_mainContentWidget == null) {
       _mainContentWidget = Expanded(
           child: MainContentNavigator(
@@ -82,7 +87,7 @@ class _HomeRouteState extends State<HomeRoute> {
     return _mainContentWidget;
   }
 
-  Widget getSoftButtons() {
+  Widget _getSoftButtons() {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 15.0),
         color: Colors.black,
@@ -90,10 +95,10 @@ class _HomeRouteState extends State<HomeRoute> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             RotatedBox(
-              quarterTurns: 1,
+              quarterTurns: 3,
               child: IconButton(
                 icon: new Icon(
-                  Icons.details,
+                  Icons.change_history,
                   color: Colors.white,
                   size: 24.0,
                 ),
@@ -132,32 +137,27 @@ class _HomeRouteState extends State<HomeRoute> {
         ));
   }
 
-  void startTimerIfNotRunningAlready() {
-    if (!timerHasStarted) {
-      timerHasStarted = true;
-      Timer.periodic(new Duration(seconds: 1), (timer) {
-        var now = DateTime.now();
-        setState(() {
-          timeToDisplay =
-              "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-        });
+  void _startTimerForClock() {
+    Timer.periodic(new Duration(seconds: 1), (timer) {
+      var now = DateTime.now();
+      setState(() {
+        timeToDisplay =
+            "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
       });
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    startTimerIfNotRunningAlready();
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          getBgImage(),
+          _getBgImage(),
           Column(
             children: <Widget>[
-              getStatusBar(timeToDisplay),
-              getMainContent(),
-              getSoftButtons()
+              _getStatusBar(timeToDisplay),
+              _getMainContent(),
+              _getSoftButtons()
             ],
           )
         ],

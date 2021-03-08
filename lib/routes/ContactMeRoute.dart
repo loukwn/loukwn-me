@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mybio/builders/ContactMeDataBuilder.dart';
+import 'package:mybio/data/ContactMeDataBuilder.dart';
 
 import 'package:mybio/widgets/PortfolioApp.dart';
 import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
@@ -13,6 +13,9 @@ import 'package:url_launcher/url_launcher.dart';
 class ContactMeRoute extends StatelessWidget {
   final config = PortfolioAppConfiguration.CONTACT_ME;
   final appContainer = html.window.document.getElementById("app-container");
+  final Function onPop;
+
+  ContactMeRoute({key: Key, this.onPop});
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(ContactMeDataModel model) {
@@ -113,23 +116,11 @@ class ContactMeRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Notify Html that the app is launched
-    html.window.parent.postMessage(config.jsEventName, '*');
-
-    return FutureBuilder(
-      // A delay to the future is added so that the Hero animation of the avatar
-      // plays nicely
-      future: Future.delayed(Duration(milliseconds: 200), () {
-        return rootBundle.loadString(config.dataJsonPath);
-      }),
-      builder: (context, snapshot) {
-        return PortfolioApp(
-          key: UniqueKey(),
-          config: config,
-          listItems: _getListItems(
-              ContactMeDataBuilder.getModelFromJson(snapshot.data)),
-        );
-      },
+    return PortfolioApp(
+      key: UniqueKey(),
+      config: config,
+      onPop: onPop,
+      listItems: _getListItems(ContactMeDataBuilder.getModel()),
     );
   }
 }

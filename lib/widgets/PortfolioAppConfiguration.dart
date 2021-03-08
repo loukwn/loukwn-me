@@ -5,7 +5,6 @@ class PortfolioAppConfiguration {
   final String title;
   final String backgroundImagePath;
   final String avatarImagePath;
-  final String dataJsonPath;
   final String jsEventName;
   final Color appBarBackgroundColor;
   final AnimationType itemAnimationType;
@@ -16,7 +15,6 @@ class PortfolioAppConfiguration {
     this.title,
     this.backgroundImagePath,
     this.avatarImagePath,
-    this.dataJsonPath,
     this.jsEventName,
     this.appBarBackgroundColor,
     this.itemAnimationType,
@@ -30,7 +28,6 @@ class PortfolioAppConfiguration {
       'About me',
       'assets/images/about_me_bg.png',
       'assets/images/avatar.png',
-      '',
       'about_me',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,
@@ -41,7 +38,6 @@ class PortfolioAppConfiguration {
       'Experience',
       'assets/images/contact_me_bg.jpg',
       'assets/images/about_me.png',
-      '',
       'experience',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,
@@ -52,7 +48,6 @@ class PortfolioAppConfiguration {
       'Contact me',
       'assets/images/contact_me_bg.jpg',
       'assets/images/avatar.png',
-      'assets/data/data_contact_me.json',
       'contact_me',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,
@@ -63,7 +58,6 @@ class PortfolioAppConfiguration {
       'About this',
       'assets/images/contact_me_bg.jpg',
       'assets/images/about_me.png',
-      '',
       'about_this',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,

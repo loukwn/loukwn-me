@@ -8,10 +8,10 @@ const screens = {
     ABOUT_THIS: 'about_this'
 }
 
-const theme = {
-    LIGHT: 'light',
-    DARK: 'dark'
-}
+//const theme = {
+//    LIGHT: 'light',
+//    DARK: 'dark'
+//}
 
 /*
  * Function that listens to events from flutter app
@@ -33,50 +33,48 @@ function updateWebsiteLook(screen) {
     let bgWrapper = document.getElementById("background-container")
 
     switch (screen) {
-        case screens.DESKTOP:
-            bgWrapper.children[1].classList.remove("opaque")
-            bgWrapper.children[2].classList.remove("opaque")
-            bgWrapper.children[3].classList.remove("opaque")
-            bgWrapper.children[4].classList.remove("opaque")
-            bgWrapper.children[0].classList.add("opaque")
-            setThemeOfHeader(theme.LIGHT)
-            break
-        case screens.ABOUT_ME:
-            bgWrapper.children[0].classList.remove("opaque")
-            bgWrapper.children[1].classList.add("opaque")
-            break
-        case screens.EXPERIENCE:
-            bgWrapper.children[0].classList.remove("opaque")
-            bgWrapper.children[2].classList.add("opaque")
-            break
-        case screens.CONTACT_ME:
-            bgWrapper.children[0].classList.remove("opaque")
-            bgWrapper.children[3].classList.add("opaque")
-            // setThemeOfHeader(theme.DARK)
-            break
-        case screens.ABOUT_THIS:
-            bgWrapper.children[0].classList.remove("opaque")
-            bgWrapper.children[4].classList.add("opaque")
-            break
+//        case screens.DESKTOP:
+//            bgWrapper.children[1].classList.remove("opaque")
+//            bgWrapper.children[2].classList.remove("opaque")
+//            bgWrapper.children[3].classList.remove("opaque")
+//            bgWrapper.children[4].classList.remove("opaque")
+//            bgWrapper.children[0].classList.add("opaque")
+//            break
+//        case screens.ABOUT_ME:
+//            bgWrapper.children[0].classList.remove("opaque")
+//            bgWrapper.children[1].classList.add("opaque")
+//            break
+//        case screens.EXPERIENCE:
+//            bgWrapper.children[0].classList.remove("opaque")
+//            bgWrapper.children[2].classList.add("opaque")
+//            break
+//        case screens.CONTACT_ME:
+//            bgWrapper.children[0].classList.remove("opaque")
+//            bgWrapper.children[3].classList.add("opaque")
+//            break
+//        case screens.ABOUT_THIS:
+//            bgWrapper.children[0].classList.remove("opaque")
+//            bgWrapper.children[4].classList.add("opaque")
+//            break
     }
 }
-
-function setThemeOfHeader(value) {
-    let title = document.getElementById('title')
-    let socialWrapper = document.getElementById('social-wrapper')
-
-    switch (value) {
-        case theme.LIGHT:
-            title.classList.remove("turn-to-dark")
-            title.classList.add("turn-to-light")
-            socialWrapper.classList.remove("turn-to-dark")
-            socialWrapper.classList.add("turn-to-light")
-            break
-        case theme.DARK:
-            title.classList.remove("turn-to-light")
-            title.classList.add("turn-to-dark")
-            socialWrapper.classList.remove("turn-to-light")
-            socialWrapper.classList.add("turn-to-dark")
-            break
-    }
-}
+//
+//function setThemeOfHeader(value) {
+//    let title = document.getElementById('title')
+//    let socialWrapper = document.getElementById('social-wrapper')
+//
+//    switch (value) {
+//        case theme.LIGHT:
+//            title.classList.remove("turn-to-dark")
+//            title.classList.add("turn-to-light")
+//            socialWrapper.classList.remove("turn-to-dark")
+//            socialWrapper.classList.add("turn-to-light")
+//            break
+//        case theme.DARK:
+//            title.classList.remove("turn-to-light")
+//            title.classList.add("turn-to-dark")
+//            socialWrapper.classList.remove("turn-to-light")
+//            socialWrapper.classList.add("turn-to-dark")
+//            break
+//    }
+//}

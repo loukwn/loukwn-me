@@ -10,8 +10,9 @@ import 'dart:html' as html;
 class PortfolioApp extends StatefulWidget {
   final PortfolioAppConfiguration config;
   final List<Widget> listItems;
+  final Function onPop;
 
-  PortfolioApp({Key key, this.config, this.listItems}) : super(key: key);
+  PortfolioApp({Key key, this.config, this.listItems, this.onPop}) : super(key: key);
 
   @override
   _PortfolioAppState createState() => _PortfolioAppState();
@@ -114,7 +115,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        html.window.parent.postMessage('desktop', '*');
+        widget.onPop();
         return new Future(() => true);
       },
       child: new Stack(

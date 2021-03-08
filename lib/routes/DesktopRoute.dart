@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mybio/main_content_navigator.dart';
+import 'package:mybio/navigation/MainContentNavigator.dart';
 import 'package:mybio/widgets/DesktopApp.dart';
 import 'dart:html' as html;
 
@@ -7,9 +7,8 @@ import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
 
 class DesktopRoute extends StatefulWidget {
   final Function onPush;
-  final Function onPop;
 
-  const DesktopRoute({key: Key, this.onPush, this.onPop});
+  const DesktopRoute({key: Key, this.onPush});
 
   @override
   State<StatefulWidget> createState() {
@@ -39,25 +38,37 @@ class DesktopRouteState extends State<DesktopRoute> {
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.ABOUT_ME,
                   onClick: () {
-                    widget.onPush(MainContentRoutes.about_me);
+                    widget.onPush(
+                      MainContentRoutes.about_me,
+                      PortfolioAppConfiguration.ABOUT_ME.jsEventName,
+                    );
                   }),
               DesktopApp(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.EXPERIENCE,
                   onClick: () {
-                    widget.onPush(MainContentRoutes.experience);
+                    widget.onPush(
+                      MainContentRoutes.experience,
+                      PortfolioAppConfiguration.EXPERIENCE.jsEventName,
+                    );
                   }),
               DesktopApp(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.CONTACT_ME,
                   onClick: () {
-                    widget.onPush(MainContentRoutes.contact_me);
+                    widget.onPush(
+                      MainContentRoutes.contact_me,
+                      PortfolioAppConfiguration.CONTACT_ME.jsEventName,
+                    );
                   }),
               DesktopApp(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.ABOUT_APP,
                   onClick: () {
-                    widget.onPush(MainContentRoutes.about_app);
+                    widget.onPush(
+                      MainContentRoutes.about_app,
+                      PortfolioAppConfiguration.ABOUT_APP.jsEventName,
+                    );
                   }),
             ],
           ),
