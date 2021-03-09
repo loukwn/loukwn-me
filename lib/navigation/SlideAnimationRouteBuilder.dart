@@ -19,7 +19,7 @@ class SlideAnimationRouteBuilder extends PageRouteBuilder {
                   ).animate(animation),
                   child: child,
                 ),
-            transitionDuration: Duration(milliseconds: 500));
+            transitionDuration: Duration(milliseconds: 300));
 }
 
 /**

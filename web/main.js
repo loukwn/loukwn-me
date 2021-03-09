@@ -33,29 +33,29 @@ function updateWebsiteLook(screen) {
     let bgWrapper = document.getElementById("background-container")
 
     switch (screen) {
-//        case screens.DESKTOP:
-//            bgWrapper.children[1].classList.remove("opaque")
-//            bgWrapper.children[2].classList.remove("opaque")
-//            bgWrapper.children[3].classList.remove("opaque")
-//            bgWrapper.children[4].classList.remove("opaque")
-//            bgWrapper.children[0].classList.add("opaque")
-//            break
-//        case screens.ABOUT_ME:
-//            bgWrapper.children[0].classList.remove("opaque")
-//            bgWrapper.children[1].classList.add("opaque")
-//            break
-//        case screens.EXPERIENCE:
-//            bgWrapper.children[0].classList.remove("opaque")
-//            bgWrapper.children[2].classList.add("opaque")
-//            break
-//        case screens.CONTACT_ME:
-//            bgWrapper.children[0].classList.remove("opaque")
-//            bgWrapper.children[3].classList.add("opaque")
-//            break
-//        case screens.ABOUT_THIS:
-//            bgWrapper.children[0].classList.remove("opaque")
-//            bgWrapper.children[4].classList.add("opaque")
-//            break
+        case screens.DESKTOP:
+            bgWrapper.children[1].classList.remove("opaque")
+            bgWrapper.children[2].classList.remove("opaque")
+            bgWrapper.children[3].classList.remove("opaque")
+            bgWrapper.children[4].classList.remove("opaque")
+            bgWrapper.children[0].classList.add("opaque")
+            break
+        case screens.ABOUT_ME:
+            bgWrapper.children[0].classList.remove("opaque")
+            bgWrapper.children[1].classList.add("opaque")
+            breaks
+        case screens.EXPERIENCE:
+            bgWrapper.children[0].classList.remove("opaque")
+            bgWrapper.children[2].classList.add("opaque")
+            break
+        case screens.CONTACT_ME:
+            bgWrapper.children[0].classList.remove("opaque")
+            bgWrapper.children[3].classList.add("opaque")
+            break
+        case screens.ABOUT_THIS:
+            bgWrapper.children[0].classList.remove("opaque")
+            bgWrapper.children[4].classList.add("opaque")
+            break
     }
 }
 //
