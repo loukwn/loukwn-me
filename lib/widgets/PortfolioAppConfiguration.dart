@@ -40,7 +40,7 @@ class PortfolioAppConfiguration {
       'assets/images/about_me.png',
       'experience',
       Color.fromRGBO(138, 139, 137, 1),
-      AnimationType.HORIZONTAL,
+      AnimationType.VERTICAL,
       100);
 
   static const CONTACT_ME = const PortfolioAppConfiguration._internal(

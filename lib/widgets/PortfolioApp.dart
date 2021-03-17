@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
-import 'dart:html' as html;
 
 /// This widget represents an "app" that a user clicks in my portfolio. It is
 /// built in a way that is reusable and can be configured (items, animations,
@@ -77,7 +76,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
 
     return SlideTransition(
         position: CurvedAnimation(
-          curve: Curves.easeOut,
+          curve: Curves.fastLinearToSlowEaseIn,
           parent: animation,
         ).drive((Tween<Offset>(
           begin: beginOffset,
