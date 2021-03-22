@@ -15,8 +15,9 @@ class Job {
   final String location;
   final bool isCurrent;
   final Color accentColor;
+  final String bgImage;
 
-  Job({this.title, this.description, this.durationString, this.location, this.isCurrent, this.accentColor});
+  Job({this.title, this.description, this.durationString, this.location, this.isCurrent, this.accentColor, this.bgImage});
 }
 
 class Project {
@@ -35,18 +36,22 @@ class ExperienceDataBuilder {
       description: "List of places I worked and things I tinkered with",
       jobs: [
         Job(
-          title: "Android Engineer @ muzmatch",
-          description: "",
-          durationString: "October 2019 - Now",
+          title: "muzmatch",
+          description: "Helping millions of Muslims find their special one.",
+          durationString: "October 2019 - Present",
           location: "London, UK",
           isCurrent: true,
+          accentColor: Color.fromARGB(0, 251,64,108),
+          bgImage: "images/career/muzmatch_bg.png"
         ),
         Job(
-            title: "Android Engineer @ Nup / UNIpad",
-            description: "",
+            title: "Nup",
+            description: "A",
             durationString: "October 2019 - Now",
-            location: "London, UK",
-            isCurrent: true
+            location: "Athens, GR",
+            isCurrent: true,
+            accentColor: Color.fromARGB(0, 241,47,102),
+            bgImage: "images/career/nup_bg.png"
         ),
       ],
       projects: [

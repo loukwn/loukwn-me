@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mybio/data/ExperienceDataBuilder.dart';
 
 class JobItemWidget extends StatefulWidget {
-  static const double BULLET_SIZE = 10;
-  static const double BULLET_LEFT_PADDING = 40;
-  static const double BULLET_RIGHT_PADDING = 30;
-  static const double BULLET_TOP_PADDING = 30;
+  static const double _BULLET_SIZE = 10;
+  static const double _BULLET_LEFT_PADDING = 30;
+  static const double _BULLET_RIGHT_PADDING = 30;
+  static const double _BULLET_TOP_PADDING = 30;
 
   final GlobalKey _keyBubble = GlobalKey();
   final Job job;
@@ -37,36 +37,36 @@ class _JobItemWidgetState extends State<JobItemWidget> {
   Widget _buildDotAndLine(Color dotColor) {
     _LinePainter _linePainter;
     if (widget.isFirst) {
-      _linePainter = _LinePainter(JobItemWidget.BULLET_TOP_PADDING, null);
+      _linePainter = _LinePainter(JobItemWidget._BULLET_TOP_PADDING, null);
     } else if (widget.isLast) {
-      _linePainter = _LinePainter(null, JobItemWidget.BULLET_TOP_PADDING);
+      _linePainter = _LinePainter(null, JobItemWidget._BULLET_TOP_PADDING);
     } else {
       _linePainter = _LinePainter(null, null);
     }
 
     return SizedBox(
-      width: (JobItemWidget.BULLET_LEFT_PADDING +
-              JobItemWidget.BULLET_RIGHT_PADDING +
-              JobItemWidget.BULLET_SIZE)
+      width: (JobItemWidget._BULLET_LEFT_PADDING +
+              JobItemWidget._BULLET_RIGHT_PADDING +
+              JobItemWidget._BULLET_SIZE)
           .toDouble(),
       height: null,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(JobItemWidget.BULLET_LEFT_PADDING, 0,
-            JobItemWidget.BULLET_RIGHT_PADDING, 0),
+        padding: EdgeInsets.fromLTRB(JobItemWidget._BULLET_LEFT_PADDING, 0,
+            JobItemWidget._BULLET_RIGHT_PADDING, 0),
         child: Stack(
           children: [
             SizedBox(
-              width: JobItemWidget.BULLET_SIZE,
+              width: JobItemWidget._BULLET_SIZE,
               height: heightOfBubble,
               child: CustomPaint(
                 painter: _linePainter,
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: JobItemWidget.BULLET_TOP_PADDING),
+              padding: EdgeInsets.only(top: JobItemWidget._BULLET_TOP_PADDING),
               child: SizedBox(
-                width: JobItemWidget.BULLET_SIZE,
-                height: JobItemWidget.BULLET_SIZE,
+                width: JobItemWidget._BULLET_SIZE,
+                height: JobItemWidget._BULLET_SIZE,
                 child: CustomPaint(painter: _CirclePainter(dotColor)),
               ),
             ),
@@ -100,7 +100,12 @@ class _JobItemWidgetState extends State<JobItemWidget> {
           ),
           child: Padding(
             padding: EdgeInsets.all(16),
-            child: Text(job.title, style: TextStyle(fontWeight: FontWeight.bold),),
+            child: Column(
+              children: [
+                Text(job.title, style: TextStyle(fontWeight: FontWeight.bold),),
+                Image.asset(job.bgImage)
+              ],
+            ),
           ),
         ),
       ),
