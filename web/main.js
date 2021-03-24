@@ -3,7 +3,7 @@ let messagedOnce = false;
 const screens = {
     DESKTOP: 'desktop',
     ABOUT_ME: 'about_me',
-    EXPERIENCE: 'experience',
+    PORTFOLIO: 'portfolio',
     CONTACT_ME: 'contact_me',
     ABOUT_THIS: 'about_this'
 }
@@ -44,7 +44,7 @@ function updateWebsiteLook(screen) {
             bgWrapper.children[0].classList.remove("opaque")
             bgWrapper.children[1].classList.add("opaque")
             breaks
-        case screens.EXPERIENCE:
+        case screens.PORTFOLIO:
             bgWrapper.children[0].classList.remove("opaque")
             bgWrapper.children[2].classList.add("opaque")
             break

@@ -98,14 +98,24 @@ class _JobItemWidgetState extends State<JobItemWidget> {
               ),
             ],
           ),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(job.title, style: TextStyle(fontWeight: FontWeight.bold),),
-                Image.asset(job.bgImage)
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  job.title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: 200,
+                  child: Image.asset(job.bgImage),
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -130,7 +140,7 @@ class _JobItemWidgetState extends State<JobItemWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildDotAndLine(Colors.red),
+        _buildDotAndLine(Color.fromRGBO(75, 193, 205, 1)),
         _buildJobBubble(widget.job),
       ],
     );

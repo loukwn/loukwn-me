@@ -29,17 +29,17 @@ class PortfolioAppConfiguration {
       'assets/images/about_me_bg.png',
       'assets/images/avatar.png',
       'about_me',
-      Color.fromRGBO(138, 139, 137, 1),
+      Color.fromRGBO(112, 111, 113, 1),
       AnimationType.HORIZONTAL,
       100);
 
-  static const EXPERIENCE = const PortfolioAppConfiguration._internal(
+  static const PORTFOLIO = const PortfolioAppConfiguration._internal(
       2,
-      'Experience',
-      'assets/images/contact_me_bg.jpg',
-      'assets/images/about_me.png',
-      'experience',
-      Color.fromRGBO(138, 139, 137, 1),
+      'Portfolio',
+      'images/portfolio/portfolio_bg.jpg',
+      'images/portfolio/portfolio_icon.png',
+      'portfolio',
+      Color.fromRGBO(128, 132, 142, 1),
       AnimationType.VERTICAL,
       100);
 

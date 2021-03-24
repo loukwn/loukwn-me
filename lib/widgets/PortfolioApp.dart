@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
 
 /// This widget represents an "app" that a user clicks in my portfolio. It is
@@ -128,9 +129,13 @@ class _PortfolioAppState extends State<PortfolioApp> {
                   pinned: true,
                   backgroundColor: widget.config.appBarBackgroundColor,
                   flexibleSpace: new FlexibleSpaceBar(
-                    title: new Text(
-                      widget.config.title,
-                      style: TextStyle(fontFamily: 'OstrichSans'),
+                    title: Container(
+                      color: widget.config.appBarBackgroundColor.withAlpha(230),
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: new Text(
+                        widget.config.title,
+                        style: TextStyle(fontFamily: 'Oswald', fontWeight: FontWeight.w500,),
+                      ),
                     ),
                     background: Image.asset(
                       widget.config.backgroundImagePath,

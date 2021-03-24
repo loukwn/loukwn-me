@@ -28,7 +28,7 @@ class ExperienceRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return PortfolioApp(
         key: UniqueKey(),
-        config: PortfolioAppConfiguration.EXPERIENCE,
+        config: PortfolioAppConfiguration.PORTFOLIO,
         onPop: onPop,
         listItems: _getListItems(ExperienceDataBuilder.getModel()));
   }

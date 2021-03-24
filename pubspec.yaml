@@ -55,6 +55,14 @@ flutter:
         fonts:
           - asset: assets/fonts/ostrich-sans/OstrichSans-Bold.otf
 
+      - family: Oswald
+        fonts:
+          - asset: assets/fonts/oswald/Oswald-Regular.ttf
+          - asset: assets/fonts/oswald/Oswald-Medium.ttf
+            weight: 500
+          - asset: assets/fonts/oswald/Oswald-SemiBold.ttf
+            weight: 600
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

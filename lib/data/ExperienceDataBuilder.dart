@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 class ExperienceDataModel {
   final String description;
   final List<Job> jobs;
@@ -13,11 +11,9 @@ class Job {
   final String description;
   final String durationString;
   final String location;
-  final bool isCurrent;
-  final Color accentColor;
   final String bgImage;
 
-  Job({this.title, this.description, this.durationString, this.location, this.isCurrent, this.accentColor, this.bgImage});
+  Job({this.title, this.description, this.durationString, this.location, this.bgImage});
 }
 
 class Project {
@@ -40,18 +36,14 @@ class ExperienceDataBuilder {
           description: "Helping millions of Muslims find their special one.",
           durationString: "October 2019 - Present",
           location: "London, UK",
-          isCurrent: true,
-          accentColor: Color.fromARGB(0, 251,64,108),
-          bgImage: "images/career/muzmatch_bg.png"
+          bgImage: "images/portfolio/muzmatch_bg.png"
         ),
         Job(
             title: "Nup",
             description: "A",
             durationString: "October 2019 - Now",
             location: "Athens, GR",
-            isCurrent: true,
-            accentColor: Color.fromARGB(0, 241,47,102),
-            bgImage: "images/career/nup_bg.png"
+            bgImage: "images/portfolio/nup_bg.png"
         ),
       ],
       projects: [

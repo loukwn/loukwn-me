@@ -45,11 +45,11 @@ class DesktopRouteState extends State<DesktopRoute> {
                   }),
               DesktopApp(
                   key: UniqueKey(),
-                  config: PortfolioAppConfiguration.EXPERIENCE,
+                  config: PortfolioAppConfiguration.PORTFOLIO,
                   onClick: () {
                     widget.onPush(
                       MainContentRoutes.experience,
-                      PortfolioAppConfiguration.EXPERIENCE.jsEventName,
+                      PortfolioAppConfiguration.PORTFOLIO.jsEventName,
                     );
                   }),
               DesktopApp(
