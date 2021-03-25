@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/data/ExperienceDataBuilder.dart';
-import 'package:mybio/widgets/JobItemWidget.dart';
-import 'package:mybio/widgets/PortfolioApp.dart';
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/portfolio/JobItemWidget.dart';
+import 'package:mybio/screens/common/BioAppScaffold.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
-class ExperienceRoute extends StatelessWidget {
+class PortfolioApp extends StatelessWidget {
   final Function onPop;
 
-  const ExperienceRoute({key: Key, this.onPop});
+  const PortfolioApp({key: Key, this.onPop});
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(ExperienceDataModel model) {
@@ -44,7 +44,7 @@ class ExperienceRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PortfolioApp(
+    return BioAppScaffold(
         key: UniqueKey(),
         config: PortfolioAppConfiguration.PORTFOLIO,
         onPop: onPop,

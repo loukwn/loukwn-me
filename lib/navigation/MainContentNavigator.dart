@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/navigation/SlideAnimationRouteBuilder.dart';
-import 'package:mybio/routes/AboutAppRoute.dart';
-import 'package:mybio/routes/ContactMeRoute.dart';
-import 'package:mybio/routes/DesktopRoute.dart';
-import 'package:mybio/routes/AboutMeRoute.dart';
-import 'package:mybio/routes/ExperienceRoute.dart';
+import 'package:mybio/screens/about_this/AboutThisApp.dart';
+import 'package:mybio/screens/contact_me/ContactMeApp.dart';
+import 'package:mybio/screens/desktop/DesktopScreen.dart';
+import 'package:mybio/screens/about_me/AboutMeApp.dart';
+import 'package:mybio/screens/portfolio/PortfolioApp.dart';
 import 'dart:html' as html;
 
 class MainContentRoutes {
@@ -19,8 +19,8 @@ class MainContentNavigator extends StatefulWidget {
   MainContentNavigator({this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
-  final GlobalKey<DesktopRouteState> desktopKey =
-      GlobalKey<DesktopRouteState>();
+  final GlobalKey<DesktopScreenState> desktopKey =
+      GlobalKey<DesktopScreenState>();
 
   @override
   State<StatefulWidget> createState() => MainContentNavigatorState();
@@ -48,19 +48,19 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
     return {
-      MainContentRoutes.desktop: (context) => DesktopRoute(
+      MainContentRoutes.desktop: (context) => DesktopScreen(
             onPush: (dest, eventPayload) => _push(context, dest, eventPayload),
           ),
-      MainContentRoutes.about_me: (context) => AboutMeRoute(
+      MainContentRoutes.about_me: (context) => AboutMeApp(
             onPop: () => _pop(context),
           ),
-      MainContentRoutes.experience: (context) => ExperienceRoute(
+      MainContentRoutes.experience: (context) => PortfolioApp(
             onPop: () => _pop(context),
           ),
-      MainContentRoutes.contact_me: (context) => ContactMeRoute(
+      MainContentRoutes.contact_me: (context) => ContactMeApp(
             onPop: () => _pop(context),
           ),
-      MainContentRoutes.about_app: (context) => AboutAppRoute(
+      MainContentRoutes.about_app: (context) => AboutThisApp(
             onPop: () => _pop(context),
           ),
     };

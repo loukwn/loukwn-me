@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:mybio/routes/HomeRoute.dart';
+import 'package:mybio/screens/home/HomeScreen.dart';
 
 void main() {
   runApp(
     MaterialApp(
       title: 'my_bio',
-      home: HomeRoute(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
     ),
   );

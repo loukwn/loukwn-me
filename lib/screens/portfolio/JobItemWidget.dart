@@ -129,8 +129,7 @@ class _JobItemWidgetState extends State<JobItemWidget> {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: Text(
                   job.description,
-                  style:
-                  TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15),
                 ),
               ),
               Align(

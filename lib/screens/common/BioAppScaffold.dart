@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
-/// This widget represents an "app" that a user clicks in my portfolio. It is
+/// This widget represents an "app" that a user clicks on my "device". It is
 /// built in a way that is reusable and can be configured (items, animations,
 /// contents etc) by supplying different AppConfigurations to it
 
-class PortfolioApp extends StatefulWidget {
+class BioAppScaffold extends StatefulWidget {
   final PortfolioAppConfiguration config;
   final List<Widget> listItems;
   final Function onPop;
 
-  PortfolioApp({Key key, this.config, this.listItems, this.onPop}) : super(key: key);
+  BioAppScaffold({Key key, this.config, this.listItems, this.onPop}) : super(key: key);
 
   @override
-  _PortfolioAppState createState() => _PortfolioAppState();
+  _BioAppScaffoldState createState() => _BioAppScaffoldState();
 }
 
-class _PortfolioAppState extends State<PortfolioApp> {
+class _BioAppScaffoldState extends State<BioAppScaffold> {
   // Key to scroll state so that items can be added/animated with a delay
   final GlobalKey<SliverAnimatedListState> _listKey =
       GlobalKey<SliverAnimatedListState>();
@@ -27,7 +27,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   ScrollController _scrollController;
 
   // Data structure that helps operate on both local list and animated one
-  ListModel<Widget> _list;
+  _ListModel<Widget> _list;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
     _scrollController = new ScrollController();
     _scrollController.addListener(() => setState(() {}));
 
-    _list = ListModel<Widget>(
+    _list = _ListModel<Widget>(
       listKey: _listKey,
       initialItems: <Widget>[],
     );
@@ -159,8 +159,8 @@ class _PortfolioAppState extends State<PortfolioApp> {
 }
 
 /// Keeps a Dart [List] in sync with an [AnimatedList].
-class ListModel<E> {
-  ListModel({
+class _ListModel<E> {
+  _ListModel({
     @required this.listKey,
     Iterable<E> initialItems,
   })  : assert(listKey != null),

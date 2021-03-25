@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
-class DesktopApp extends StatefulWidget {
+class DesktopAppShortcut extends StatefulWidget {
   final PortfolioAppConfiguration config;
   final Function onClick;
 
-  DesktopApp({Key key, this.config, this.onClick}) : super(key: key);
+  DesktopAppShortcut({Key key, this.config, this.onClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _DesktopAppState();
+    return _DesktopAppShortcutState();
   }
 }
 
-class _DesktopAppState extends State<DesktopApp> {
+class _DesktopAppShortcutState extends State<DesktopAppShortcut> {
   var scaleOfWidget = 1.0;
   var rebuildCausedBySettingState = false;
 

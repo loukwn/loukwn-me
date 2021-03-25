@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/data/ContactMeDataBuilder.dart';
 
-import 'package:mybio/widgets/PortfolioApp.dart';
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/common/BioAppScaffold.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
 import 'dart:html' as html;
 
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactMeRoute extends StatelessWidget {
+class ContactMeApp extends StatelessWidget {
   final config = PortfolioAppConfiguration.CONTACT_ME;
   final appContainer = html.window.document.getElementById("app-container");
   final Function onPop;
 
-  ContactMeRoute({key: Key, this.onPop});
+  ContactMeApp({key: Key, this.onPop});
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(ContactMeDataModel model) {
@@ -111,7 +111,7 @@ class ContactMeRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PortfolioApp(
+    return BioAppScaffold(
       key: UniqueKey(),
       config: config,
       onPop: onPop,

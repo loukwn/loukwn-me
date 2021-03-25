@@ -4,26 +4,26 @@ import 'dart:html' as html;
 
 import 'package:mybio/navigation/MainContentNavigator.dart';
 
-class HomeRoute extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
   final mainContentNavigatorKey = GlobalKey<MainContentNavigatorState>();
 
   @override
-  _HomeRouteState createState() {
+  _HomeScreenState createState() {
     var now = DateTime.now();
     var timeToDisplay =
         "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
 
-    return _HomeRouteState(timeToDisplay);
+    return _HomeScreenState(timeToDisplay);
   }
 }
 
-class _HomeRouteState extends State<HomeRoute> {
+class _HomeScreenState extends State<HomeScreen> {
   var timeToDisplay = "";
 
   Widget _mainContentWidget;
 
-  _HomeRouteState(String timeToDisplay) {
+  _HomeScreenState(String timeToDisplay) {
     this.timeToDisplay = timeToDisplay;
   }
 

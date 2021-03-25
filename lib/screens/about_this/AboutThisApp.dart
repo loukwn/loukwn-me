@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mybio/widgets/PortfolioApp.dart';
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/common/BioAppScaffold.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
-class AboutAppRoute extends StatelessWidget {
+class AboutThisApp extends StatelessWidget {
   final Function onPop;
 
-  const AboutAppRoute({key: Key, this.onPop});
+  const AboutThisApp({key: Key, this.onPop});
 
   List<Widget> _getListItems() {
     return [
@@ -29,7 +29,7 @@ class AboutAppRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PortfolioApp(
+    return BioAppScaffold(
         key: UniqueKey(),
         onPop: onPop,
         config: PortfolioAppConfiguration.ABOUT_APP,

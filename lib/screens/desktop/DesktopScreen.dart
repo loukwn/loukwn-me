@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/navigation/MainContentNavigator.dart';
-import 'package:mybio/widgets/DesktopApp.dart';
+import 'package:mybio/screens/desktop/DesktopAppShortcut.dart';
 import 'dart:html' as html;
 
-import 'package:mybio/widgets/PortfolioAppConfiguration.dart';
+import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
-class DesktopRoute extends StatefulWidget {
+class DesktopScreen extends StatefulWidget {
   final Function onPush;
 
-  const DesktopRoute({key: Key, this.onPush});
+  const DesktopScreen({key: Key, this.onPush});
 
   @override
   State<StatefulWidget> createState() {
     html.window.parent.postMessage('desktop', '*');
-    return DesktopRouteState();
+    return DesktopScreenState();
   }
 }
 
-class DesktopRouteState extends State<DesktopRoute> {
+class DesktopScreenState extends State<DesktopScreen> {
   var currentRoute = MainContentRoutes.desktop;
 
   @override
@@ -34,7 +34,7 @@ class DesktopRouteState extends State<DesktopRoute> {
             crossAxisCount: 3,
             children: <Widget>[
               //<a href="https://iconscout.com/icons/avatar" target="_blank">Avatar Icon</a> by <a href="https://iconscout.com/contributors/dmitriy-bondarchuk">Dmitriy Bondarchuk</a> on <a href="https://iconscout.com">Iconscout</a>
-              DesktopApp(
+              DesktopAppShortcut(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.ABOUT_ME,
                   onClick: () {
@@ -43,7 +43,7 @@ class DesktopRouteState extends State<DesktopRoute> {
                       PortfolioAppConfiguration.ABOUT_ME.jsEventName,
                     );
                   }),
-              DesktopApp(
+              DesktopAppShortcut(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.PORTFOLIO,
                   onClick: () {
@@ -52,7 +52,7 @@ class DesktopRouteState extends State<DesktopRoute> {
                       PortfolioAppConfiguration.PORTFOLIO.jsEventName,
                     );
                   }),
-              DesktopApp(
+              DesktopAppShortcut(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.CONTACT_ME,
                   onClick: () {
@@ -61,7 +61,7 @@ class DesktopRouteState extends State<DesktopRoute> {
                       PortfolioAppConfiguration.CONTACT_ME.jsEventName,
                     );
                   }),
-              DesktopApp(
+              DesktopAppShortcut(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.ABOUT_APP,
                   onClick: () {
