@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mybio/data/ContactMeDataBuilder.dart';
 
 import 'package:mybio/widgets/PortfolioApp.dart';
@@ -19,11 +18,7 @@ class ContactMeRoute extends StatelessWidget {
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(ContactMeDataModel model) {
-    if (model == null) {
-      return [];
-    }
-
-    var widgets = List<Widget>();
+    var widgets = <Widget>[];
     widgets.add(Padding(
       padding: const EdgeInsets.fromLTRB(18, 15, 82, 25),
       child: Text(

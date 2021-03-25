@@ -8,7 +8,7 @@ class JobItemWidget extends StatefulWidget {
   static const double _BULLET_SIZE = 10;
   static const double _BULLET_LEFT_PADDING = 30;
   static const double _BULLET_RIGHT_PADDING = 30;
-  static const double _BULLET_TOP_PADDING = 30;
+  static const double _BULLET_TOP_PADDING = 40;
 
   final GlobalKey _keyBubble = GlobalKey();
   final Job job;
@@ -101,17 +101,42 @@ class _JobItemWidgetState extends State<JobItemWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      job.title,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      "@${job.location}",
+                      style: TextStyle(
+                          fontFamily: "Oswald",
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15),
+                    ),
+                  ),
+                ],
+              ),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: Text(
-                  job.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  job.description,
+                  style:
+                  TextStyle(fontSize: 15),
                 ),
               ),
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
-                  height: 200,
+                  height: 150,
                   child: Image.asset(job.bgImage),
                 ),
               )
