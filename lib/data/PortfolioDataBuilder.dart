@@ -21,8 +21,9 @@ class Project {
   final String description;
   final String link;
   final List<String> tags;
+  final String bgImage;
 
-  Project({this.name, this.description, this.link, this.tags});
+  Project({this.name, this.description, this.link, this.tags, this.bgImage});
 }
 
 // Till a better solution is found, this data will remain hardcoded here
@@ -56,8 +57,9 @@ class PortfolioDataBuilder {
       projects: [
         Project(
           name: "GifSound It",
-          description: "My kotlin workspace where I try and experiment with things like new architectures, libraries, patterns etc.",
-          link: "https://www.github.com/"
+          description: "Combine GIFs with sound.\n\nMy kotlin workspace where I try and experiment with things like new architectures, libraries, patterns etc.",
+          link: "https://www.github.com/",
+          bgImage: "images/portfolio/gifsoundit_bg.png"
         )
       ]
     );

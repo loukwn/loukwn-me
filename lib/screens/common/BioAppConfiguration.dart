@@ -47,7 +47,7 @@ class PortfolioAppConfiguration {
       3,
       'Contact me',
       'assets/images/contact_me_bg.jpg',
-      'assets/images/avatar.png',
+      'assets/images/about_me.png',
       'contact_me',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,

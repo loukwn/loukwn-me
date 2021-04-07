@@ -4,6 +4,7 @@ import 'package:mybio/data/PortfolioDataBuilder.dart';
 import 'package:mybio/screens/portfolio/JobItemWidget.dart';
 import 'package:mybio/screens/common/BioAppScaffold.dart';
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
+import 'package:mybio/screens/portfolio/ProjectItemWidget.dart';
 
 class PortfolioApp extends StatelessWidget {
   final Function onPop;
@@ -48,6 +49,11 @@ class PortfolioApp extends StatelessWidget {
             fontFamily: "Oswald", fontWeight: FontWeight.w500, fontSize: 18),
       ),
     ));
+
+    for (var i = 0; i < model.projects.length; i++) {
+      widgets.add(ProjectItemWidget(project: model.projects[i]));
+    }
+
     return widgets;
   }
 
