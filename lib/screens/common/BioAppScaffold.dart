@@ -124,7 +124,7 @@ class _BioAppScaffoldState extends State<BioAppScaffold> {
             body: CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
-                new SliverAppBar(
+                SliverAppBar(
                   expandedHeight: 150.0,
                   pinned: true,
                   backgroundColor: widget.config.appBarBackgroundColor,

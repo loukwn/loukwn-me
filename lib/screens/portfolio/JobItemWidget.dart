@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mybio/data/ExperienceDataBuilder.dart';
+import 'package:mybio/data/PortfolioDataBuilder.dart';
 
 class JobItemWidget extends StatefulWidget {
   static const double _BULLET_SIZE = 10;

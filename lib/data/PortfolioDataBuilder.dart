@@ -1,9 +1,9 @@
-class ExperienceDataModel {
+class PortfolioDataModel {
   final String description;
   final List<Job> jobs;
   final List<Project> projects;
 
-  ExperienceDataModel({this.description, this.jobs, this.projects});
+  PortfolioDataModel({this.description, this.jobs, this.projects});
 }
 
 class Job {
@@ -26,9 +26,9 @@ class Project {
 }
 
 // Till a better solution is found, this data will remain hardcoded here
-class ExperienceDataBuilder {
-  static ExperienceDataModel getModel() {
-    return ExperienceDataModel(
+class PortfolioDataBuilder {
+  static PortfolioDataModel getModel() {
+    return PortfolioDataModel(
       description: "List of apps I worked on and things I tinkered with.",
       jobs: [
         Job(
@@ -56,7 +56,7 @@ class ExperienceDataBuilder {
       projects: [
         Project(
           name: "GifSound It",
-          description: "asd",
+          description: "My kotlin workspace where I try and experiment with things like new architectures, libraries, patterns etc.",
           link: "https://www.github.com/"
         )
       ]
