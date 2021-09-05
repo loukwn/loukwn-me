@@ -5,7 +5,7 @@ import 'package:mybio/screens/contact_me/ContactMeApp.dart';
 import 'package:mybio/screens/desktop/DesktopScreen.dart';
 import 'package:mybio/screens/about_me/AboutMeApp.dart';
 import 'package:mybio/screens/portfolio/PortfolioApp.dart';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 
 class MainContentRoutes {
   static const String desktop = '/';

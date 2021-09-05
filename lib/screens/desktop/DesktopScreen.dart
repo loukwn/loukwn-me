@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/navigation/MainContentNavigator.dart';
 import 'package:mybio/screens/desktop/DesktopAppShortcut.dart';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
 

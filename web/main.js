@@ -20,7 +20,6 @@ window.addEventListener("message", function (event) {
 
     if (!messagedOnce) {
         messagedOnce = true;
-        this.document.body.style("background: none")
         this.document.getElementById('loading-screen').remove()
     }
 
@@ -43,7 +42,7 @@ function updateWebsiteLook(screen) {
         case screens.ABOUT_ME:
             bgWrapper.children[0].classList.remove("opaque")
             bgWrapper.children[1].classList.add("opaque")
-            breaks
+            break
         case screens.PORTFOLIO:
             bgWrapper.children[0].classList.remove("opaque")
             bgWrapper.children[2].classList.add("opaque")

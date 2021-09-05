@@ -42,7 +42,7 @@ class PortfolioApp extends StatelessWidget {
     }
 
     widgets.add(Padding(
-      padding: const EdgeInsets.fromLTRB(18, 0, 0, 15),
+      padding: const EdgeInsets.fromLTRB(18, 16, 0, 15),
       child: Text(
         "Side stuff",
         style: TextStyle(

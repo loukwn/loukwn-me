@@ -58,7 +58,7 @@ class PortfolioDataBuilder {
         Project(
           name: "GifSound It",
           description: "Combine GIFs with sound.\n\nMy kotlin workspace where I try and experiment with things like new architectures, libraries, patterns etc.",
-          link: "https://www.github.com/",
+          link: "https://www.github.com/loukwn/GifSound-It",
           bgImage: "images/portfolio/gifsoundit_bg.png"
         )
       ]

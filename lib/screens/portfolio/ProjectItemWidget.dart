@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/data/PortfolioDataBuilder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectItemWidget extends StatelessWidget {
   final Project project;
@@ -35,8 +36,7 @@ class ProjectItemWidget extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Text(
                 project.name,
-                style:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
             Padding(
@@ -53,13 +53,19 @@ class ProjectItemWidget extends StatelessWidget {
                 child: Image.asset(project.bgImage),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  height: 30,
-                  child: Image.asset('assets/images/github_white.png', color: Colors.black,),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                child: IconButton(
+                  icon: Image.asset(
+                    "assets/images/github_white.png",
+                    width: 32,
+                    height: 32,
+                    color: Colors.black,
+                  ),
+                  onPressed: () => {launch(project.link)},
+                  iconSize: 32,
                 ),
               ),
             )
@@ -68,5 +74,4 @@ class ProjectItemWidget extends StatelessWidget {
       ),
     );
   }
-
 }

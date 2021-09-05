@@ -47,7 +47,7 @@ class PortfolioAppConfiguration {
       3,
       'Contact me',
       'assets/images/contact_me_bg.jpg',
-      'assets/images/about_me.png',
+      'images/contact_me/phone.ico',
       'contact_me',
       Color.fromRGBO(138, 139, 137, 1),
       AnimationType.HORIZONTAL,
@@ -56,11 +56,11 @@ class PortfolioAppConfiguration {
   static const ABOUT_APP = const PortfolioAppConfiguration._internal(
       4,
       'About this',
-      'assets/images/contact_me_bg.jpg',
-      'assets/images/about_me.png',
+      'images/about_app/about_app_bg.jpg',
+      'images/about_app/about_app.ico',
       'about_this',
       Color.fromRGBO(138, 139, 137, 1),
-      AnimationType.HORIZONTAL,
+      AnimationType.VERTICAL,
       100);
 }
 

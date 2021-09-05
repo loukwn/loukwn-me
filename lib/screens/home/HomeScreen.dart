@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 
 import 'package:mybio/navigation/MainContentNavigator.dart';
 
