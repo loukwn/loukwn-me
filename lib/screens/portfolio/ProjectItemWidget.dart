@@ -11,7 +11,7 @@ class ProjectItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+      padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -46,20 +46,21 @@ class ProjectItemWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 15),
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                height: 150,
-                child: Image.asset(project.bgImage),
+            if (project.bgImage.isNotEmpty)
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: 150,
+                  child: Image.asset(project.bgImage),
+                ),
               ),
-            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                 child: IconButton(
                   icon: Image.asset(
-                    "assets/images/github_white.png",
+                    "images/contact_me/github_white.png",
                     width: 32,
                     height: 32,
                     color: Colors.black,

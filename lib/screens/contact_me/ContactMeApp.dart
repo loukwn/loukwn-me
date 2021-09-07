@@ -88,7 +88,7 @@ class ContactMeApp extends StatelessWidget {
                   height: 58,
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Image.asset('assets/images/$imageFileName'),
+                    child: Image.asset('images/contact_me/$imageFileName'),
                   )),
               color: bgColor,
               elevation: 4,

@@ -1,9 +1,15 @@
 class AboutMeDataModel {
   final String summary;
+  final String generalText;
   final Education education;
-  final List<Skill> skills;
+  final String interestsText;
 
-  AboutMeDataModel({this.summary, this.education, this.skills});
+  AboutMeDataModel({
+    this.summary,
+    this.generalText,
+    this.education,
+    this.interestsText,
+  });
 }
 
 class Education {
@@ -12,28 +18,28 @@ class Education {
   final String iconPath;
   final String durationString;
 
-  Education({this.title, this.schoolName, this.durationString, this.iconPath});
-}
-
-class Skill {
-  final String name;
-  final int value;
-
-  Skill({this.name, this.value});
+  Education({
+    this.title,
+    this.schoolName,
+    this.durationString,
+    this.iconPath,
+  });
 }
 
 // Till a better solution is found, this data will remain hardcoded here
 class AboutMeDataBuilder {
   static AboutMeDataModel getModel() {
     return AboutMeDataModel(
-      summary: "Welcome to my corner on the internet!",
-      education:
-        Education(
-          title: "Integrated Master, Computer Engineering and Informatics Department",
-          schoolName: "University of Patras",
-          iconPath: "images/about_me/uop.png",
-          durationString: "2012-2019"
-        )
-    );
+        summary: "Welcome to my corner on the internet!",
+        generalText:
+            "Hello there!\n\nMy name is Konstantinos, I am from Greece and currently living and working in London, UK as a full time Android Engineer.\n\nCoding mostly on native Android and a bit of Flutter but love all things mobile dev in general. In my spare time I enjoy messing around with other programming languages like Rust and working on various side projects on my GitHub.",
+        education: Education(
+            title:
+                "Integrated Master, Computer Engineering and Informatics Department",
+            schoolName: "University of Patras",
+            iconPath: "images/about_me/uop.png",
+            durationString: "2012-2019"),
+        interestsText:
+            "When I am not working / coding I like to play video games, cycle, and learn about other languages (non programming ones).\n\nI also enjoy listening to all sorts of music but particularly Synthwave / Retrowave. Check my playlist below if you want to get a taste!");
   }
 }

@@ -35,21 +35,18 @@ class _AboutMeAppState extends State<AboutMeApp> {
       [
         AboutMeListItemModel(
           title: "General",
-          content: _getGeneralContent(),
+          content: _getGeneralContent(model.generalText),
           textColor: Colors.white,
-          titleBg: Colors.teal,
         ),
         AboutMeListItemModel(
           title: "Education",
           content: _getEducationContent(model.education),
           textColor: Colors.white,
-          titleBg: Colors.teal,
         ),
         AboutMeListItemModel(
           title: "Interests",
-          content: _getHobbiesContent(),
+          content: _getInterestsContent(model.interestsText),
           textColor: Colors.white,
-          titleBg: Colors.teal,
         )
       ],
     ));
@@ -59,11 +56,11 @@ class _AboutMeAppState extends State<AboutMeApp> {
     return widgets;
   }
 
-  Widget _getGeneralContent() {
+  Widget _getGeneralContent(String generalText) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       child: Text(
-        "Hello there!\n\nMy name is Konstantinos, I am from Greece and currently living and working in London, UK as a full time Android Engineer.\n\nCoding mostly on native Android and a bit of Flutter but love all things mobile dev in general. In my spare time I enjoy messing around with other programming languages like Rust and working on various side projects on my GitHub.",
+        generalText,
         style: TextStyle(fontSize: 15),
       ),
     );
@@ -109,14 +106,14 @@ class _AboutMeAppState extends State<AboutMeApp> {
     );
   }
 
-  Widget _getHobbiesContent() {
+  Widget _getInterestsContent(String interestsText) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "When I am not working / coding I like to play video games, cycle, and learn about other languages (non programming ones).\n\nI also enjoy listening to all sorts of music but particularly Synthwave / Retrowave. Check my playlist below if you want to get a taste!",
+            interestsText,
             style: TextStyle(fontSize: 15),
           ),
           Padding(

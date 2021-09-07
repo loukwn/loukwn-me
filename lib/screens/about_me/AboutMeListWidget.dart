@@ -98,7 +98,7 @@ class _AboutMeListItemWidgetState extends State<_AboutMeListItemWidget>
         child: Column(children: [
           // Title
           Material(
-              color: widget.item.titleBg,
+              color: Color.fromRGBO(79, 93, 115, 1),
               child: InkWell(
                 onTap: widget.onTap,
                 child: Container(
@@ -124,13 +124,11 @@ class _AboutMeListItemWidgetState extends State<_AboutMeListItemWidget>
 class AboutMeListItemModel {
   final String title;
   final Widget content;
-  final Color titleBg;
   final Color textColor;
 
   AboutMeListItemModel({
     this.title,
     this.content,
-    this.titleBg,
     this.textColor,
   });
 }
