@@ -164,7 +164,7 @@ class _JobItemWidgetState extends State<JobItemWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildDotAndLine(Color.fromRGBO(75, 193, 205, 1)),
+        _buildDotAndLine(Color.fromRGBO(79, 93, 115, 1)),
         _buildJobBubble(widget.job),
       ],
     );
