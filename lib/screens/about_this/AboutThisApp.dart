@@ -53,7 +53,9 @@ class AboutThisApp extends StatelessWidget {
                       "/images/contact_me/github_white.png",
                       color: Colors.black,
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      launch("https://github.com/loukwn/loukwn-me")
+                    },
                     iconSize: 32,
                     splashRadius: 24,
                   ),
