@@ -33,7 +33,6 @@ class DesktopScreenState extends State<DesktopScreen> {
             padding: const EdgeInsets.all(20),
             crossAxisCount: 3,
             children: <Widget>[
-              //<a href="https://iconscout.com/icons/avatar" target="_blank">Avatar Icon</a> by <a href="https://iconscout.com/contributors/dmitriy-bondarchuk">Dmitriy Bondarchuk</a> on <a href="https://iconscout.com">Iconscout</a>
               DesktopAppShortcut(
                   key: UniqueKey(),
                   config: PortfolioAppConfiguration.ABOUT_ME,
