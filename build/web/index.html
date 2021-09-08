@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="My bio.">
+
+  <title>Konstantinos Lountzis</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div id="background-container" style="width: 100%; height: 100%; position: fixed; z-index: -1;">
+    <img class="opaque" src="/images/desktop_bg.jpg" />
+    <img src="/images/about_me_bg_main.jpg" />
+    <img src="/images/experience_bg_main.jpg" />
+    <img src="/images/contact_me_bg_main.jpg" />
+    <img src="/images/about_this_bg_main.jpg" />
+  </div>
+  <div id="main-container">
+    <div id="header-row">
+      <h2 id="title">KONSTANTINOS LOUNTZIS<br />
+        <span style="font-size: 16px; color:gray">Android / Mobile Developer @London, UK</span>
+      </h2>
+      <div id="social-wrapper">
+        <a href="mailto:loukwn@gmail.com"><img src="/images/mail.png" /></a>
+        <a href="https://www.linkedin.com/in/klountzis"><img src="/images/linkedin.png" /></a>
+        <a href="https://github.com/loukwn"><img src="/images/github.png" /></a>
+        <a href="https://medium.com/@loukwn"><img src="/images/medium.png" /></a>
+      </div>
+    </div>
+    <div id="content-row">
+      <div id="phone-container">
+        <img id="phone-frame" src="/images/phone_frame.png" />
+        <div id="loading-screen">
+          <div id="loader"></div>
+          <p style="color: white; margin: 20px;">Loading...</p>
+        </div>
+        <iframe id="app-content" src="/bio_app.html" height="696" width="358" onload=""></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
