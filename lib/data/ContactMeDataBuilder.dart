@@ -2,14 +2,14 @@ class Link {
   final String type;
   final String link;
 
-  Link({this.type, this.link});
+  Link({required this.type, required this.link});
 }
 
 class ContactMeDataModel {
   final String description;
   final List<Link> links;
 
-  ContactMeDataModel({this.description, this.links});
+  ContactMeDataModel({required this.description, required this.links});
 }
 
 // Till a better solution is found, this data will remain hardcoded here

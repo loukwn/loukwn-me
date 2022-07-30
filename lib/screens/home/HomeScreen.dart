@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var timeToDisplay = "";
 
-  Widget _mainContentWidget;
+  late Widget _mainContentWidget;
 
   _HomeScreenState(String timeToDisplay) {
     this.timeToDisplay = timeToDisplay;
@@ -77,12 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getMainContent() {
-    if (_mainContentWidget == null) {
-      _mainContentWidget = Expanded(
-          child: MainContentNavigator(
-        navigatorKey: widget.navigatorKey,
-      ));
-    }
+    _mainContentWidget = Expanded(
+        child: MainContentNavigator(
+          navigatorKey: widget.navigatorKey,
+        ));
 
     return _mainContentWidget;
   }
@@ -105,10 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   // Send a notification to close the current screen
                   widget.navigatorKey.currentState
-                      .popUntil((route) => route.isFirst);
+                      ?.popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-                  html.window.parent.postMessage('desktop', '*');
+                  html.window.parent?.postMessage('desktop', '*');
                 },
               ),
             ),
@@ -121,10 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   // Send a notification to close the current screen
                   widget.navigatorKey.currentState
-                      .popUntil((route) => route.isFirst);
+                      ?.popUntil((route) => route.isFirst);
 
                   // Let outside html know that we are back to desktop
-                  html.window.parent.postMessage('desktop', '*');
+                  html.window.parent?.postMessage('desktop', '*');
                 }),
             IconButton(
                 icon: new Icon(

@@ -5,10 +5,10 @@ class AboutThisDataModel {
   final String logoTrademarksText;
 
   AboutThisDataModel({
-    this.builtWithSummary,
-    this.unsplashLinks,
-    this.otherMediaLinks,
-    this.logoTrademarksText,
+    required this.builtWithSummary,
+    required this.unsplashLinks,
+    required this.otherMediaLinks,
+    required this.logoTrademarksText,
   });
 }
 
@@ -17,7 +17,11 @@ class UnsplashLink {
   final String artistLink;
   final String unsplashLink;
 
-  UnsplashLink({this.artistName, this.artistLink, this.unsplashLink});
+  UnsplashLink({
+    required this.artistName,
+    required this.artistLink,
+    required this.unsplashLink,
+  });
 }
 
 // Till a better solution is found, this data will remain hardcoded here

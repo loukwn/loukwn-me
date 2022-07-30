@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AboutMeListWidget extends StatefulWidget {
   final List<AboutMeListItemModel> _items;
@@ -11,7 +10,7 @@ class AboutMeListWidget extends StatefulWidget {
 }
 
 class _AboutMeListWidgetState extends State<AboutMeListWidget> {
-  List<bool> _expandedItems;
+  late List<bool> _expandedItems;
 
   @override
   void initState() {
@@ -44,7 +43,11 @@ class _AboutMeListItemWidget extends StatefulWidget {
   final bool expanded;
   final Function onTap;
 
-  _AboutMeListItemWidget({this.item, this.expanded, this.onTap});
+  _AboutMeListItemWidget({
+    required this.item,
+    required this.expanded,
+    required this.onTap,
+  });
 
   @override
   State<StatefulWidget> createState() => _AboutMeListItemWidgetState();
@@ -52,8 +55,8 @@ class _AboutMeListItemWidget extends StatefulWidget {
 
 class _AboutMeListItemWidgetState extends State<_AboutMeListItemWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController _expandController;
-  Animation<double> _animation;
+  late AnimationController _expandController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -100,7 +103,7 @@ class _AboutMeListItemWidgetState extends State<_AboutMeListItemWidget>
           Material(
               color: Color.fromRGBO(79, 93, 115, 1),
               child: InkWell(
-                onTap: widget.onTap,
+                onTap: () => { widget.onTap() },
                 child: Container(
                     width: double.infinity,
                     padding: EdgeInsets.all(8),
@@ -127,9 +130,9 @@ class AboutMeListItemModel {
   final Color textColor;
 
   AboutMeListItemModel({
-    this.title,
-    this.content,
-    this.textColor,
+    required this.title,
+    required this.content,
+    required this.textColor,
   });
 }
 

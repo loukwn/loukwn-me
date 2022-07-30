@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/data/AboutThisDataBuilder.dart';
+import 'package:mybio/data/Version.dart';
 import 'package:mybio/screens/common/BioAppScaffold.dart';
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutThisApp extends StatelessWidget {
   final Function onPop;
 
-  const AboutThisApp({key: Key, this.onPop});
+  const AboutThisApp({key: Key, required this.onPop});
 
   List<Widget> _getListItems(AboutThisDataModel model) {
     var widgets = <Widget>[];
@@ -59,6 +59,10 @@ class AboutThisApp extends StatelessWidget {
                     iconSize: 32,
                     splashRadius: 24,
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(Constants.version),
                 ),
               ],
             ),

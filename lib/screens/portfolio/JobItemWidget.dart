@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mybio/data/PortfolioDataBuilder.dart';
 
 class JobItemWidget extends StatefulWidget {
@@ -15,15 +14,15 @@ class JobItemWidget extends StatefulWidget {
   final bool isFirst;
   final bool isLast;
 
-  JobItemWidget.first({this.job})
+  JobItemWidget.first({required this.job})
       : this.isFirst = true,
         this.isLast = false;
 
-  JobItemWidget.last({this.job})
+  JobItemWidget.last({required this.job})
       : this.isLast = true,
         this.isFirst = false;
 
-  JobItemWidget({this.job})
+  JobItemWidget({required this.job})
       : this.isLast = false,
         this.isFirst = false;
 
@@ -153,11 +152,13 @@ class _JobItemWidgetState extends State<JobItemWidget> {
   }
 
   void _saveBubbleUpdatedHeightAndRebuild() {
-    final RenderBox bubbleRenderBox =
-        widget._keyBubble.currentContext.findRenderObject();
-    setState(() {
-      heightOfBubble = bubbleRenderBox.size.height;
-    });
+    final RenderObject? bubbleRenderBox =
+        widget._keyBubble.currentContext?.findRenderObject();
+    if (bubbleRenderBox != null) {
+      setState(() {
+        heightOfBubble = (bubbleRenderBox as RenderBox).size.height;
+      });
+    }
   }
 
   @override
@@ -172,8 +173,8 @@ class _JobItemWidgetState extends State<JobItemWidget> {
 }
 
 class _LinePainter extends CustomPainter {
-  double startY;
-  double endY;
+  double? startY;
+  double? endY;
 
   _LinePainter(this.startY, this.endY);
 
@@ -189,8 +190,8 @@ class _LinePainter extends CustomPainter {
     if (startY == null) startY = 0;
     if (endY == null) endY = size.height;
 
-    path.moveTo(size.width / 2, startY);
-    path.lineTo(size.width / 2, endY);
+    path.moveTo(size.width / 2, startY!);
+    path.lineTo(size.width / 2, endY!);
     canvas.drawPath(path, _paint);
   }
 

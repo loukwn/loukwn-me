@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/data/PortfolioDataBuilder.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectItemWidget extends StatelessWidget {
   final Project project;
 
-  const ProjectItemWidget({Key key, this.project}) : super(key: key);
+  const ProjectItemWidget({Key? key, required this.project}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

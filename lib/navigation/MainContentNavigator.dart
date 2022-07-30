@@ -16,7 +16,7 @@ class MainContentRoutes {
 }
 
 class MainContentNavigator extends StatefulWidget {
-  MainContentNavigator({this.navigatorKey});
+  MainContentNavigator({required this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
   final GlobalKey<DesktopScreenState> desktopKey =
@@ -27,7 +27,7 @@ class MainContentNavigator extends StatefulWidget {
 }
 
 class MainContentNavigatorState extends State<MainContentNavigator> {
-  HeroController _heroController;
+  late HeroController _heroController;
 
   void _push(BuildContext context, String dest, String htmlEventPayload) {
     Navigator.push(
@@ -36,14 +36,14 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
     );
 
     // Notify outer JS that we navigated to another screen
-    html.window.parent.postMessage(htmlEventPayload, '*');
+    html.window.parent?.postMessage(htmlEventPayload, '*');
   }
 
   void _pop(BuildContext context) {
     Navigator.pop(context);
 
     // Notify outer JS that we navigated back
-    html.window.parent.postMessage('desktop', '*');
+    html.window.parent?.postMessage('desktop', '*');
   }
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
@@ -69,7 +69,7 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
   Widget _getRouteFromDest(BuildContext context, String dest) {
     var routeBuilders = _routeBuilders(context);
 
-    return routeBuilders[dest](context);
+    return routeBuilders[dest]!(context);
   }
 
   @override
@@ -87,7 +87,7 @@ class MainContentNavigatorState extends State<MainContentNavigator> {
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
             builder: (context) =>
-                _getRouteFromDest(context, routeSettings.name),
+                _getRouteFromDest(context, routeSettings.name!),
           );
         });
   }

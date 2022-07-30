@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
@@ -6,7 +5,11 @@ class DesktopAppShortcut extends StatelessWidget {
   final PortfolioAppConfiguration config;
   final Function onClick;
 
-  DesktopAppShortcut({Key key, this.config, this.onClick}) : super(key: key);
+  DesktopAppShortcut({
+    Key? key,
+    required this.config,
+    required this.onClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:mybio/screens/portfolio/ProjectItemWidget.dart';
 class PortfolioApp extends StatelessWidget {
   final Function onPop;
 
-  const PortfolioApp({key: Key, this.onPop});
+  const PortfolioApp({key: Key, required this.onPop});
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(PortfolioDataModel model) {

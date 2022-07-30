@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class SlideAnimationRouteBuilder extends PageRouteBuilder {
   final Widget page;
 
-  SlideAnimationRouteBuilder({this.page})
+  SlideAnimationRouteBuilder({required this.page})
       : super(
             pageBuilder: (BuildContext context, Animation<double> animation,
                     Animation<double> secondaryAnimation) =>

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mybio/data/AboutMeDataBuilder.dart';
 import 'package:mybio/screens/about_me/AboutMeListWidget.dart';
 
@@ -11,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutMeApp extends StatefulWidget {
   final Function onPop;
 
-  const AboutMeApp({key: Key, this.onPop});
+  const AboutMeApp({key: Key, required this.onPop});
 
   @override
   State<StatefulWidget> createState() => _AboutMeAppState();
@@ -119,7 +117,7 @@ class _AboutMeAppState extends State<AboutMeApp> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: IconButton(
-              icon: Image.asset("images/about_me/spotify.ico",
+              icon: Image.asset("images/about_me/spotify.png",
                   width: 32, height: 32),
               onPressed: () => {
                 launch(

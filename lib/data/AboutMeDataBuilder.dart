@@ -5,10 +5,10 @@ class AboutMeDataModel {
   final String interestsText;
 
   AboutMeDataModel({
-    this.summary,
-    this.generalText,
-    this.education,
-    this.interestsText,
+    required this.summary,
+    required this.generalText,
+    required this.education,
+    required this.interestsText,
   });
 }
 
@@ -19,10 +19,10 @@ class Education {
   final String durationString;
 
   Education({
-    this.title,
-    this.schoolName,
-    this.durationString,
-    this.iconPath,
+    required this.title,
+    required this.schoolName,
+    required this.durationString,
+    required this.iconPath,
   });
 }
 

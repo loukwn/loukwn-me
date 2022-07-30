@@ -8,11 +8,11 @@ import 'package:mybio/screens/common/BioAppConfiguration.dart';
 class DesktopScreen extends StatefulWidget {
   final Function onPush;
 
-  const DesktopScreen({key: Key, this.onPush});
+  const DesktopScreen({key: Key, required this.onPush});
 
   @override
   State<StatefulWidget> createState() {
-    html.window.parent.postMessage('desktop', '*');
+    html.window.parent?.postMessage('desktop', '*');
     return DesktopScreenState();
   }
 }

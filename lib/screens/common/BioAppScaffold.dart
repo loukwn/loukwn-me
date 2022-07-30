@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
 
 /// This widget represents an "app" that a user clicks on my "device". It is
@@ -12,7 +10,12 @@ class BioAppScaffold extends StatefulWidget {
   final List<Widget> listItems;
   final Function onPop;
 
-  BioAppScaffold({Key key, this.config, this.listItems, this.onPop}) : super(key: key);
+  BioAppScaffold({
+    Key? key,
+    required this.config,
+    required this.listItems,
+    required this.onPop,
+  }) : super(key: key);
 
   @override
   _BioAppScaffoldState createState() => _BioAppScaffoldState();
@@ -24,10 +27,10 @@ class _BioAppScaffoldState extends State<BioAppScaffold> {
       GlobalKey<SliverAnimatedListState>();
 
   // Scroll controller tracks the scrolling position so that the avatar is animated
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   // Data structure that helps operate on both local list and animated one
-  _ListModel<Widget> _list;
+  late _ListModel<Widget> _list;
 
   @override
   void initState() {
@@ -69,7 +72,6 @@ class _BioAppScaffoldState extends State<BioAppScaffold> {
   // Used to build list items that haven't been removed.
   Widget _buildItem(
       BuildContext context, int index, Animation<double> animation) {
-
     // Setup item animation
     var beginOffset = widget.config.itemAnimationType == AnimationType.VERTICAL
         ? Offset(0, 1)
@@ -134,7 +136,10 @@ class _BioAppScaffoldState extends State<BioAppScaffold> {
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: new Text(
                         widget.config.title,
-                        style: TextStyle(fontFamily: 'Oswald', fontWeight: FontWeight.w500,),
+                        style: TextStyle(
+                          fontFamily: 'Oswald',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     background: Image.asset(
@@ -161,19 +166,18 @@ class _BioAppScaffoldState extends State<BioAppScaffold> {
 /// Keeps a Dart [List] in sync with an [AnimatedList].
 class _ListModel<E> {
   _ListModel({
-    @required this.listKey,
-    Iterable<E> initialItems,
-  })  : assert(listKey != null),
-        _items = List<E>.from(initialItems ?? <E>[]);
+    required this.listKey,
+    required Iterable<E> initialItems,
+  })  : _items = List<E>.from(initialItems);
 
   final GlobalKey<SliverAnimatedListState> listKey;
   final List<E> _items;
 
-  SliverAnimatedListState get _animatedList => listKey.currentState;
+  SliverAnimatedListState? get _animatedList => listKey.currentState;
 
   void insert(int index, E item) {
     _items.insert(index, item);
-    _animatedList.insertItem(index);
+    _animatedList?.insertItem(index);
   }
 
   int get length => _items.length;
