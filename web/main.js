@@ -77,3 +77,40 @@ function updateWebsiteLook(screen) {
 //            break
 //    }
 //}
+
+const MIN_PHONE_HEIGHT = 500;
+const WINDOW_WIDTH_SMALL_SCREEN_CUTOFF_POINT = 780;
+const MARGIN = 140;
+
+handleResize();
+window.onresize = handleResize;
+
+function handleResize(event) {
+    if (window.innerWidth <= 780) return;
+
+    let phonecontainer = document.getElementById("phone-container");
+    let windowHeight = window.innerHeight;
+    let newPhoneContainerHeight = Math.max(windowHeight - 2 * MARGIN, MIN_PHONE_HEIGHT);
+    let newPhoneContainerWidth = newPhoneContainerHeight / 2;
+    phonecontainer.style.height = newPhoneContainerHeight + "px";
+    phonecontainer.style.width = newPhoneContainerWidth + "px";
+
+    resizeAppContent(newPhoneContainerWidth, newPhoneContainerHeight);
+}
+
+function resizeAppContent(containerWidth, containerHeight) {
+    let appContent = document.getElementById("app-content");
+
+    let containerHeightRatio = containerHeight / 800;
+    let containerWidthRatio = containerWidth / 400;
+
+    let newHeight = 693 * containerHeightRatio;
+    let newWidth = 357 * containerWidthRatio;
+    let newTop = 56 * containerHeightRatio;
+    let newLeft = 19 * containerWidthRatio;
+
+    appContent.style.top = newTop + "px";
+    appContent.style.left = newLeft + "px";
+    appContent.style.height = newHeight + "px";
+    appContent.style.width = newWidth + "px";
+}
