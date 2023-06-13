@@ -79,18 +79,25 @@ function updateWebsiteLook(screen) {
 //}
 
 const MIN_PHONE_HEIGHT = 500;
+const MAX_PHONE_HEIGHT = 1200;
 const WINDOW_WIDTH_SMALL_SCREEN_CUTOFF_POINT = 780;
-const MARGIN = 140;
+const MIN_PHONE_VERTICAL_MARGIN = 80;
+const INITIAL_APP_CONTENT_HEIGHT = 696;
+const INITIAL_APP_CONTENT_WIDTH = 358;
+const INITIAL_APP_CONTENT_TOP = 56;
+const INITIAL_APP_CONTENT_LEFT = 21;
+const INITIAL_PHONE_HEIGHT = 800;
+const INITIAL_PHONE_WIDTH = 400;
 
 handleResize();
 window.onresize = handleResize;
 
 function handleResize(event) {
-    if (window.innerWidth <= 780) return;
+    if (window.innerWidth <= WINDOW_WIDTH_SMALL_SCREEN_CUTOFF_POINT) return;
 
     let phonecontainer = document.getElementById("phone-container");
     let windowHeight = window.innerHeight;
-    let newPhoneContainerHeight = Math.max(windowHeight - 2 * MARGIN, MIN_PHONE_HEIGHT);
+    let newPhoneContainerHeight = Math.min(Math.max(windowHeight - 2 * MIN_PHONE_VERTICAL_MARGIN, MIN_PHONE_HEIGHT), MAX_PHONE_HEIGHT);
     let newPhoneContainerWidth = newPhoneContainerHeight / 2;
     phonecontainer.style.height = newPhoneContainerHeight + "px";
     phonecontainer.style.width = newPhoneContainerWidth + "px";
@@ -101,13 +108,13 @@ function handleResize(event) {
 function resizeAppContent(containerWidth, containerHeight) {
     let appContent = document.getElementById("app-content");
 
-    let containerHeightRatio = containerHeight / 800;
-    let containerWidthRatio = containerWidth / 400;
+    let containerHeightRatio = containerHeight / INITIAL_PHONE_HEIGHT;
+    let containerWidthRatio = containerWidth / INITIAL_PHONE_WIDTH;
 
-    let newHeight = 693 * containerHeightRatio;
-    let newWidth = 357 * containerWidthRatio;
-    let newTop = 56 * containerHeightRatio;
-    let newLeft = 19 * containerWidthRatio;
+    let newHeight = INITIAL_APP_CONTENT_HEIGHT * containerHeightRatio;
+    let newWidth = INITIAL_APP_CONTENT_WIDTH * containerWidthRatio;
+    let newTop = INITIAL_APP_CONTENT_TOP * containerHeightRatio;
+    let newLeft = INITIAL_APP_CONTENT_LEFT * containerWidthRatio;
 
     appContent.style.top = newTop + "px";
     appContent.style.left = newLeft + "px";
