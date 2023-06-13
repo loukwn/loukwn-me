@@ -93,9 +93,19 @@ handleResize();
 window.onresize = handleResize;
 
 function handleResize(event) {
-    if (window.innerWidth <= WINDOW_WIDTH_SMALL_SCREEN_CUTOFF_POINT) return;
+    resizePhone()
+}
 
+function resizePhone() {
     let phonecontainer = document.getElementById("phone-container");
+
+    if (window.innerWidth <= WINDOW_WIDTH_SMALL_SCREEN_CUTOFF_POINT) {
+        phonecontainer.style.height = "100%";
+        phonecontainer.style.width = "100%";
+        resizeAppContentToMax()
+        return;
+    }
+
     let windowHeight = window.innerHeight;
     let newPhoneContainerHeight = Math.min(Math.max(windowHeight - 2 * MIN_PHONE_VERTICAL_MARGIN, MIN_PHONE_HEIGHT), MAX_PHONE_HEIGHT);
     let newPhoneContainerWidth = newPhoneContainerHeight / 2;
@@ -103,6 +113,15 @@ function handleResize(event) {
     phonecontainer.style.width = newPhoneContainerWidth + "px";
 
     resizeAppContent(newPhoneContainerWidth, newPhoneContainerHeight);
+}
+
+function resizeAppContentToMax() {
+    let appContent = document.getElementById("app-content");
+
+    appContent.style.top = "0px";
+    appContent.style.left = "0px";
+    appContent.style.height = "100%";
+    appContent.style.width = "100%";
 }
 
 function resizeAppContent(containerWidth, containerHeight) {
