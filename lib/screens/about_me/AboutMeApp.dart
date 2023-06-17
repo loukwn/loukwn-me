@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutMeApp extends StatefulWidget {
   final Function onPop;
 
-  const AboutMeApp({key: Key, required this.onPop});
+  const AboutMeApp({key = Key, required this.onPop});
 
   @override
   State<StatefulWidget> createState() => _AboutMeAppState();

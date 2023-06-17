@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutThisApp extends StatelessWidget {
   final Function onPop;
 
-  const AboutThisApp({key: Key, required this.onPop});
+  const AboutThisApp({key = Key, required this.onPop});
 
   List<Widget> _getListItems(AboutThisDataModel model) {
     var widgets = <Widget>[];

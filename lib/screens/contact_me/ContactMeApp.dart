@@ -10,7 +10,7 @@ class ContactMeApp extends StatelessWidget {
   final config = PortfolioAppConfiguration.CONTACT_ME;
   final Function onPop;
 
-  ContactMeApp({key: Key, required this.onPop});
+  ContactMeApp({key = Key, required this.onPop});
 
   // Based on the ui model, the data will be set
   List<Widget> _getListItems(ContactMeDataModel model) {

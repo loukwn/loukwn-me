@@ -34,8 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getBgImage() {
-    return Image.asset('images/phone_bg.png',
-        fit: BoxFit.cover, height: double.infinity, width: double.infinity);
+    return Image.asset(
+      'images/phone_bg.png',
+      fit: BoxFit.cover,
+      height: double.infinity,
+      width: double.infinity,
+    );
   }
 
   Widget _getStatusBar(String timeToDisplay) {
@@ -79,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getMainContent() {
     _mainContentWidget = Expanded(
         child: MainContentNavigator(
-          navigatorKey: widget.navigatorKey,
-        ));
+      navigatorKey: widget.navigatorKey,
+    ));
 
     return _mainContentWidget;
   }

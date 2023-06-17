@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mybio/screens/common/BioAppConfiguration.dart';
+import 'package:mybio/screens/desktop/DesktopAppSizeConfiguration.dart';
+import 'package:mybio/util/SizeUtils.dart';
+import 'package:tuple/tuple.dart';
 
 class DesktopAppShortcut extends StatelessWidget {
   final PortfolioAppConfiguration config;
+  final DesktopAppSizeConfiguration sizeConfig;
   final Function onClick;
 
   DesktopAppShortcut({
     Key? key,
     required this.config,
+    required this.sizeConfig,
     required this.onClick,
   }) : super(key: key);
 
@@ -27,14 +32,14 @@ class DesktopAppShortcut extends StatelessWidget {
                 tag: 'avatar_${config.id}',
                 child: Image.asset(
                   config.avatarImagePath,
-                  width: 40,
-                  height: 40,
+                  width: sizeConfig.desktopIconSize,
+                  height: sizeConfig.desktopIconSize,
                 ),
               ),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: sizeConfig.spacerSize),
         Text(
           config.title,
           style: TextStyle(color: Colors.white, fontSize: 13),
@@ -43,3 +48,4 @@ class DesktopAppShortcut extends StatelessWidget {
     );
   }
 }
+
