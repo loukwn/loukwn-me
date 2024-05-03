@@ -5,5 +5,4 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DesktopContent(component: DesktopComponent) {
-    Text("Desktop")
 }
