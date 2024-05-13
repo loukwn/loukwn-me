@@ -126,7 +126,7 @@ private fun NavigationBarButton(
             .clip(RoundedCornerShape(24.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(true),
+                indication = rememberRipple(true, color = Color.White),
                 role = Role.Button,
                 onClick = onClick,
             ),

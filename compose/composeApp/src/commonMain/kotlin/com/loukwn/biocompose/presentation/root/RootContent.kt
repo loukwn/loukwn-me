@@ -16,12 +16,12 @@ import com.loukwn.biocompose.presentation.desktop.DesktopContent
 @Composable
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val state by remember { component.state }
-    var systemUiInLightMode by remember { mutableStateOf(true) }
+    var systemUiInLightMode by remember { mutableStateOf(false) }
 
     Box(modifier) {
         Children(
             stack = component.stack,
-            modifier = Modifier.fillMaxSize().background(Color.Cyan),
+            modifier = Modifier.fillMaxSize(),
             animation = stackAnimation(fade()),
         ) {
             when (val child = it.instance) {

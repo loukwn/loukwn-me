@@ -17,9 +17,7 @@ import com.loukwn.biocompose.presentation.util.encodeToString
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import org.w3c.dom.Document
 import org.w3c.dom.get
 import org.w3c.dom.set
@@ -53,6 +51,8 @@ fun main() {
         }
         RootContent(root, modifier = Modifier.fillMaxSize())
     }
+
+//        window.parent.postMessage("haha".toJsString(), "*")
 }
 
 private const val KEY_SAVED_STATE = "saved_state"
