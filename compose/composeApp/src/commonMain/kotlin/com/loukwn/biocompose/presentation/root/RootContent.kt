@@ -25,7 +25,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             animation = stackAnimation(fade()),
         ) {
             when (val child = it.instance) {
-                is RootComponent.Child.Desktop -> DesktopContent(component = child.component)
+                is RootComponent.Child.Desktop -> DesktopContent(component = child.component) { app -> println(app.title) }
             }
         }
         StatusBar(modifier = Modifier.fillMaxWidth(), time = state.time, inLightMode = systemUiInLightMode)
