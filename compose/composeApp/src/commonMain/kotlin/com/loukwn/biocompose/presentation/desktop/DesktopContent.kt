@@ -54,6 +54,8 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
+private const val InitialAnimationDelayMs = 500L
+
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun DesktopContent(component: DesktopComponent, onAppClicked: (DesktopApp) -> Unit) {
@@ -77,7 +79,7 @@ fun DesktopContent(component: DesktopComponent, onAppClicked: (DesktopApp) -> Un
                 DesktopItem(
                     title = it.title,
                     drawableResource = it.iconResource,
-                    animationStartDelay = index * 200L,
+                    animationStartDelay = index * 200L + InitialAnimationDelayMs,
                     onClick = { onAppClicked(it) }
                 )
             }
