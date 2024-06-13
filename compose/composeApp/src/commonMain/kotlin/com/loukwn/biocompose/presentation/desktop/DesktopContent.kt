@@ -49,6 +49,7 @@ import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.avatar
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg2
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -58,7 +59,7 @@ import org.jetbrains.compose.resources.painterResource
 fun DesktopContent(component: DesktopComponent, onAppClicked: (DesktopApp) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painterResource(Res.drawable.phone_bg),
+            painterResource(Res.drawable.phone_bg2),
             "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
