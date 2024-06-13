@@ -22,9 +22,16 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-private const val STATUS_BAR_HEIGHT_DP = 32
-private const val NAVIGATION_BAR_HEIGHT_DP = 48
-private const val STATUS_BAR_VERTICAL_PADDING_DP = 4
+private const val StatusBarHeightDp = 32
+private const val StatusBarVerticalPaddingDp = 4
+private const val NavigationBarHeightDp = 48
+
+val GlobalInsetsToConsume = PaddingValues(
+    top = StatusBarHeightDp.dp,
+    bottom = NavigationBarHeightDp.dp,
+    start = 0.dp,
+    end = 0.dp,
+)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -37,15 +44,20 @@ fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
 
     Row(
         modifier = modifier
-            .height(STATUS_BAR_HEIGHT_DP.dp)
-            .padding(vertical = STATUS_BAR_VERTICAL_PADDING_DP.dp, horizontal = 32.dp),
+            .height(StatusBarHeightDp.dp)
+            .padding(vertical = StatusBarVerticalPaddingDp.dp, horizontal = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
-        Text(text = time, color = foregroundTintColor, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = time,
+            color = foregroundTintColor,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
         Row(modifier = Modifier.fillMaxHeight()) {
-            val iconSizeDp = (STATUS_BAR_HEIGHT_DP - 2 * STATUS_BAR_VERTICAL_PADDING_DP).dp
+            val iconSizeDp = (StatusBarHeightDp - 2 * StatusBarVerticalPaddingDp).dp
 
             Image(
                 painterResource(Res.drawable.network_wifi),
@@ -86,7 +98,7 @@ fun NavigationBar(
 
     Row(
         modifier = modifier
-            .height(NAVIGATION_BAR_HEIGHT_DP.dp),
+            .height(NavigationBarHeightDp.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {

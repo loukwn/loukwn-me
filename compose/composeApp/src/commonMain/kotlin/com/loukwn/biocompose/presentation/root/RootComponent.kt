@@ -15,6 +15,7 @@ import com.loukwn.biocompose.presentation.aboutme.DefaultAboutMeComponent
 import com.loukwn.biocompose.presentation.desktop.DefaultDesktopComponent
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopComponent
+import com.loukwn.biocompose.presentation.util.update
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -27,8 +28,8 @@ interface RootComponent {
     val state: State<RootUiState>
 
     fun onBackClicked()
-
     fun onDesktopAppClicked(desktopApp: DesktopApp)
+    fun onSystemUiModeChanged(isLight: Boolean)
 
     sealed class Child {
         data class Desktop(val component: DesktopComponent) : Child()
@@ -88,18 +89,20 @@ class DefaultRootComponent(
 
     override fun onBackClicked() {
         navigation.pop()
-        _state.value = _state.value.copy(systemUiInLightMode = false)
     }
 
     override fun onDesktopAppClicked(desktopApp: DesktopApp) {
-        val (configuration, systemUiInLightMode) = when (desktopApp) {
-            DesktopApp.AboutMe -> { Configuration.AboutMe to true }
+        val configuration = when (desktopApp) {
+            DesktopApp.AboutMe -> Configuration.AboutMe
             DesktopApp.Portfolio -> TODO()
             DesktopApp.ContactMe -> TODO()
             DesktopApp.AboutThis -> TODO()
         }
         navigation.push(configuration)
-        _state.value = _state.value.copy(systemUiInLightMode = systemUiInLightMode)
+    }
+
+    override fun onSystemUiModeChanged(isLight: Boolean) {
+        _state.update { it.copy(systemUiInLightMode = isLight) }
     }
 
     @Serializable

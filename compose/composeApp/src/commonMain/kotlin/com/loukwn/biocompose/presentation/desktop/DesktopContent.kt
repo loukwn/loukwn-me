@@ -48,7 +48,6 @@ import com.loukwn.biocompose.presentation.design_system.components.HoverableText
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.avatar
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg2
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -58,7 +57,12 @@ private const val InitialAnimationDelayMs = 500L
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun DesktopContent(component: DesktopComponent, onAppClicked: (DesktopApp) -> Unit) {
+fun DesktopContent(onSystemUiModeChanged: (isLight: Boolean) -> Unit, onAppClicked: (DesktopApp) -> Unit) {
+
+    LaunchedEffect(Unit) {
+        onSystemUiModeChanged(false)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painterResource(Res.drawable.phone_bg2),
