@@ -6,9 +6,14 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.loukwn.biocompose.getFormattedTime
+import com.loukwn.biocompose.presentation.aboutme.AboutMeComponent
+import com.loukwn.biocompose.presentation.aboutme.DefaultAboutMeComponent
 import com.loukwn.biocompose.presentation.desktop.DefaultDesktopComponent
+import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -23,13 +28,17 @@ interface RootComponent {
 
     fun onBackClicked()
 
+    fun onDesktopAppClicked(desktopApp: DesktopApp)
+
     sealed class Child {
         data class Desktop(val component: DesktopComponent) : Child()
+        data class AboutMe(val component: AboutMeComponent) : Child()
     }
 }
 
 data class RootUiState(
     val time: String,
+    val systemUiInLightMode: Boolean,
 )
 
 class DefaultRootComponent(
@@ -39,7 +48,7 @@ class DefaultRootComponent(
 
     private val navigation = StackNavigation<Configuration>()
 
-    private val _state = mutableStateOf(RootUiState(getFormattedTime()))
+    private val _state = mutableStateOf(RootUiState(getFormattedTime(), false))
     override val state: State<RootUiState> = _state
 
     init {
@@ -67,14 +76,30 @@ class DefaultRootComponent(
     private fun child(configuration: Configuration, componentContext: ComponentContext): RootComponent.Child =
         when (configuration) {
             is Configuration.Desktop -> RootComponent.Child.Desktop(desktopComponent(componentContext))
+            is Configuration.AboutMe -> RootComponent.Child.AboutMe(aboutMeComponent(componentContext))
         }
 
     private fun desktopComponent(componentContext: ComponentContext): DesktopComponent =
         DefaultDesktopComponent(componentContext)
 
+    private fun aboutMeComponent(componentContext: ComponentContext): AboutMeComponent =
+        DefaultAboutMeComponent(componentContext)
+
 
     override fun onBackClicked() {
+        navigation.pop()
+        _state.value = _state.value.copy(systemUiInLightMode = false)
+    }
 
+    override fun onDesktopAppClicked(desktopApp: DesktopApp) {
+        val (configuration, systemUiInLightMode) = when (desktopApp) {
+            DesktopApp.AboutMe -> { Configuration.AboutMe to true }
+            DesktopApp.Portfolio -> TODO()
+            DesktopApp.ContactMe -> TODO()
+            DesktopApp.AboutThis -> TODO()
+        }
+        navigation.push(configuration)
+        _state.value = _state.value.copy(systemUiInLightMode = systemUiInLightMode)
     }
 
     @Serializable
@@ -82,8 +107,8 @@ class DefaultRootComponent(
         @Serializable
         data object Desktop : Configuration
 
-//        @Serializable
-//        data object AboutMe : Configuration
+        @Serializable
+        data object AboutMe : Configuration
 //
 //        @Serializable
 //        data object Portfolio : Configuration
