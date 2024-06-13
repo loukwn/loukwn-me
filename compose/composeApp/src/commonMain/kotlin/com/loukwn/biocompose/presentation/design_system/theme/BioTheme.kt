@@ -1,4 +1,4 @@
-package com.loukwn.biocompose.presentation.theme
+package com.loukwn.biocompose.presentation.design_system.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
