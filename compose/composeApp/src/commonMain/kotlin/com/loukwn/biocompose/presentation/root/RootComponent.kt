@@ -1,5 +1,6 @@
 package com.loukwn.biocompose.presentation.root
 
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
@@ -22,6 +23,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
+@Stable
 interface RootComponent {
 
     val stack: Value<ChildStack<*, Child>>
@@ -42,6 +44,7 @@ data class RootUiState(
     val systemUiInLightMode: Boolean,
 )
 
+@Stable
 class DefaultRootComponent(
     componentContext: ComponentContext,
     private val coroutineScope: CoroutineScope,

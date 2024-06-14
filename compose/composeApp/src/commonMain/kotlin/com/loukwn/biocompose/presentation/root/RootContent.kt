@@ -20,16 +20,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val state by remember { component.state }
 
     Box(modifier) {
-        Children(
-            stack = component.stack,
-            modifier = Modifier.fillMaxSize(),
-            animation = stackAnimation(fade(tween(500))),
-        ) {
-            when (val child = it.instance) {
-                is RootComponent.Child.Desktop -> DesktopContent(component::onSystemUiModeChanged, component::onDesktopAppClicked)
-                is RootComponent.Child.AboutMe -> AboutMeContent(component = child.component, component::onSystemUiModeChanged)
-            }
-        }
+        Graph(component)
         StatusBar(modifier = Modifier.fillMaxWidth(), time = state.time, inLightMode = state.systemUiInLightMode)
         NavigationBar(
             modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
@@ -38,5 +29,19 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             onHomeClicked = component::onBackClicked,
             onRecentsClicked = {},
         )
+    }
+}
+
+@Composable
+private fun Graph(component: RootComponent) {
+    Children(
+        stack = component.stack,
+        modifier = Modifier.fillMaxSize(),
+        animation = stackAnimation(fade(tween(500))),
+    ) {
+        when (val child = it.instance) {
+            is RootComponent.Child.Desktop -> DesktopContent(component::onSystemUiModeChanged, component::onDesktopAppClicked)
+            is RootComponent.Child.AboutMe -> AboutMeContent(component = child.component, component::onSystemUiModeChanged)
+        }
     }
 }
