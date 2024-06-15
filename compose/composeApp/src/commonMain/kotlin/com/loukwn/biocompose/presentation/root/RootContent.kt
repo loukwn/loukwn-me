@@ -1,6 +1,7 @@
 package com.loukwn.biocompose.presentation.root
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
@@ -19,7 +21,7 @@ import com.loukwn.biocompose.presentation.desktop.DesktopContent
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val state by remember { component.state }
 
-    Box(modifier) {
+    Box(modifier.background(Color.Black)) {
         Graph(component)
         StatusBar(modifier = Modifier.fillMaxWidth(), time = state.time, inLightMode = state.systemUiInLightMode)
         NavigationBar(

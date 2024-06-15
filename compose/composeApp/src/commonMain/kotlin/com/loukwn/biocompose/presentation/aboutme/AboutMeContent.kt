@@ -1,20 +1,20 @@
 package com.loukwn.biocompose.presentation.aboutme
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun AboutMeContent(component: AboutMeComponent, onSystemUiModeChanged: (isLight: Boolean) -> Unit) {
     LaunchedEffect(Unit) {
-        onSystemUiModeChanged(true)
+        onSystemUiModeChanged(false)
     }
 
-    Column(Modifier.padding(GlobalInsetsToConsume)) {
-        Text("About me")
+    Box(Modifier.fillMaxSize(1f).background(Color(0xff34343f))) {
+        AboutMeBg(modifier = Modifier.fillMaxSize())
     }
 }
