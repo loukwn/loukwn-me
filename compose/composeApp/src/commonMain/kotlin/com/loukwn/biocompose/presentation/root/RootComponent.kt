@@ -29,7 +29,7 @@ interface RootComponent {
     val stack: Value<ChildStack<*, Child>>
     val state: State<RootUiState>
 
-    fun onBackClicked()
+    fun onBack()
     fun onDesktopAppClicked(desktopApp: DesktopApp)
     fun onSystemUiModeChanged(isLight: Boolean)
 
@@ -90,7 +90,7 @@ class DefaultRootComponent(
         DefaultAboutMeComponent(componentContext)
 
 
-    override fun onBackClicked() {
+    override fun onBack() {
         navigation.pop()
     }
 

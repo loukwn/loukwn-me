@@ -86,9 +86,8 @@ fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
 fun NavigationBar(
     modifier: Modifier = Modifier,
     inLightMode: Boolean,
-    onBackClicked: () -> Unit,
-    onHomeClicked: () -> Unit,
-    onRecentsClicked: () -> Unit,
+    onBackPressed: () -> Unit,
+    onHomePressed: () -> Unit,
 ) {
     val foregroundTintColor = if (inLightMode) {
         Color.Black
@@ -102,21 +101,21 @@ fun NavigationBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        NavigationBarButton(onBackClicked) {
+        NavigationBarButton(onBackPressed) {
             Image(
                 painterResource(Res.drawable.back),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(foregroundTintColor)
             )
         }
-        NavigationBarButton(onHomeClicked) {
+        NavigationBarButton(onHomePressed) {
             Image(
                 painterResource(Res.drawable.home),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(foregroundTintColor)
             )
         }
-        NavigationBarButton(onRecentsClicked) {
+        NavigationBarButton({ }) {
             Image(
                 painterResource(Res.drawable.recents),
                 contentDescription = "",

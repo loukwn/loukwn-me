@@ -15,22 +15,28 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.loukwn.biocompose.presentation.aboutme.AboutMeContent
+import com.loukwn.biocompose.presentation.design_system.theme.BioTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopContent
 
 @Composable
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val state by remember { component.state }
 
-    Box(modifier.background(Color.Black)) {
-        Graph(component)
-        StatusBar(modifier = Modifier.fillMaxWidth(), time = state.time, inLightMode = state.systemUiInLightMode)
-        NavigationBar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
-            inLightMode = state.systemUiInLightMode,
-            onBackClicked = component::onBackClicked,
-            onHomeClicked = component::onBackClicked,
-            onRecentsClicked = {},
-        )
+    BioTheme {
+        Box(modifier.background(Color.Black)) {
+            Graph(component)
+            StatusBar(
+                modifier = Modifier.fillMaxWidth(),
+                time = state.time,
+                inLightMode = state.systemUiInLightMode
+            )
+            NavigationBar(
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
+                inLightMode = state.systemUiInLightMode,
+                onBackPressed = component::onBack,
+                onHomePressed = component::onBack,
+            )
+        }
     }
 }
 
@@ -42,8 +48,15 @@ private fun Graph(component: RootComponent) {
         animation = stackAnimation(fade(tween(500))),
     ) {
         when (val child = it.instance) {
-            is RootComponent.Child.Desktop -> DesktopContent(component::onSystemUiModeChanged, component::onDesktopAppClicked)
-            is RootComponent.Child.AboutMe -> AboutMeContent(component = child.component, component::onSystemUiModeChanged)
+            is RootComponent.Child.Desktop -> DesktopContent(
+                onSystemUiModeChanged = component::onSystemUiModeChanged,
+                onAppClicked = component::onDesktopAppClicked,
+            )
+            is RootComponent.Child.AboutMe -> AboutMeContent(
+                component = child.component,
+                onSystemUiModeChanged = component::onSystemUiModeChanged,
+                onBackPressed = component::onBack,
+            )
         }
     }
 }
