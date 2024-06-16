@@ -41,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
 import com.loukwn.biocompose.getWindowSizeDp
@@ -83,8 +84,6 @@ fun AboutMeContent(
             Avatar(modifier = Modifier.fillMaxWidth().weight(1f))
             FakeBottomDrawer()
         }
-
-        println(scrollProgress)
 
         Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = scrollProgress.coerceAtMost(1f))).alpha(scrollProgress))
 
@@ -146,15 +145,26 @@ private fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
 
 @Composable
 private fun FakeBottomDrawer() {
+    val windowHeightDp = getWindowSizeDp().height
+    var finishedFirstAnimation by remember { mutableStateOf(false) }
+
     var targetHeight by remember { mutableStateOf(0.dp) }
     val animatedHeight by animateDpAsState(
         targetHeight,
         spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
 
+    LaunchedEffect(windowHeightDp) {
+        if (finishedFirstAnimation) {
+            targetHeight = windowHeightDp / 4
+        }
+    }
+
+
     LaunchedEffect(Unit) {
         delay(1000)
-        targetHeight = 250.dp
+        targetHeight = windowHeightDp / 4
+        finishedFirstAnimation = true
     }
 
     Box(modifier = Modifier.height(animatedHeight).fillMaxWidth().background(Color(0xff101014)))
@@ -162,17 +172,25 @@ private fun FakeBottomDrawer() {
 
 @Composable
 private fun BottomDrawerList(scrollState: ScrollState) {
-    val windowSizeDp = getWindowSizeDp()
-//    if (windowSizeDp.height > 0.dp) {
-    var targetPaddingTop by remember { mutableStateOf(windowSizeDp.height) }
+    val windowHeightDp = getWindowSizeDp().height
+    var finishedFirstAnimation by remember { mutableStateOf(false) }
+
+    var targetPaddingTop by remember { mutableStateOf(windowHeightDp) }
     val animatingPaddingTop by animateDpAsState(
         targetPaddingTop,
         spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
 
+    LaunchedEffect(windowHeightDp) {
+        if (finishedFirstAnimation) {
+            targetPaddingTop = (3 * windowHeightDp) / 4
+        }
+    }
+
     LaunchedEffect(Unit) {
         delay(1000)
-        targetPaddingTop -= 250.dp
+        targetPaddingTop = (3 * windowHeightDp) / 4
+        finishedFirstAnimation = true
     }
 
     Column(
@@ -185,5 +203,4 @@ private fun BottomDrawerList(scrollState: ScrollState) {
             }
         }
     }
-//    }
 }
