@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.Colors
 import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -60,7 +62,7 @@ fun AboutMeContent(
 
     val scrollState = rememberScrollState()
     val scrollProgress = scrollState.value / (windowSize.height.toFloat() - 250)
-    val topBarBg = if (scrollProgress >= .7f) Color.Black else Color.Transparent
+    val topBarBg = if (scrollProgress >= .7f) AboutMeBottomSheetBgColor else Color.Transparent
 
     Box(Modifier.fillMaxSize(1f).background(Color(0xff34343f))) {
         AboutMeBg(modifier = Modifier.fillMaxSize())
@@ -99,7 +101,12 @@ private fun Avatar(modifier: Modifier = Modifier) {
 
 @Composable
 private fun DarkScrim(darknessProgress: Float) {
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = darknessProgress.coerceAtMost(1f))))
+    val tweakedProgress = if (darknessProgress > 0.5f) {
+        darknessProgress + .2f
+    } else {
+        darknessProgress
+    }
+    Box(modifier = Modifier.fillMaxSize().background(AboutMeBottomSheetBgColor.copy(alpha = (tweakedProgress).coerceAtMost(1f))))
 }
 
 @OptIn(ExperimentalResourceApi::class)
