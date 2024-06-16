@@ -1,11 +1,8 @@
 package com.loukwn.biocompose.presentation.aboutme
 
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,12 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomDrawer
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -34,37 +27,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
-import com.loukwn.biocompose.getWindowSizeDp
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.util.toPx
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.me_grayscaled
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import kotlin.math.max
-import kotlin.math.min
 
-
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AboutMeContent(
     component: AboutMeComponent,
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
     onBackPressed: () -> Unit
 ) {
-    val windowSizeDp = getWindowSizeDp()
     val windowSize = getWindowSize()
+    val windowSizeDp = windowSize.toPx(LocalDensity.current)
 
     if (windowSizeDp.height == 0.dp) return
 
@@ -74,20 +60,21 @@ fun AboutMeContent(
 
     val scrollState = rememberScrollState()
     val scrollProgress = scrollState.value / (windowSize.height.toFloat() - 250)
+    val topBarBg = if (scrollProgress >= .7f) Color.Black else Color.Transparent
 
     Box(Modifier.fillMaxSize(1f).background(Color(0xff34343f))) {
         AboutMeBg(modifier = Modifier.fillMaxSize())
 
-        val topBarBg = if (scrollProgress >= .7f) Color.Black else Color.Transparent
         TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackPressed)
+
         Column {
             Avatar(modifier = Modifier.fillMaxWidth().weight(1f))
-            FakeBottomDrawer()
+            FakeBottomDrawer(windowHeightDp = windowSizeDp.height)
         }
 
-        Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = scrollProgress.coerceAtMost(1f))).alpha(scrollProgress))
+        DarkScrim(darknessProgress = scrollProgress)
 
-        BottomDrawerList(scrollState)
+        BottomDrawerList(windowHeightDp = windowSizeDp.height, scrollState = scrollState)
     }
 }
 
@@ -108,6 +95,11 @@ private fun Avatar(modifier: Modifier = Modifier) {
         modifier = modifier.blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
         contentScale = ContentScale.Crop
     )
+}
+
+@Composable
+private fun DarkScrim(darknessProgress: Float) {
+    Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = darknessProgress.coerceAtMost(1f))))
 }
 
 @OptIn(ExperimentalResourceApi::class)
@@ -140,67 +132,5 @@ private fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
             color = Color.White.copy(alpha = .5f)
         )
-    }
-}
-
-@Composable
-private fun FakeBottomDrawer() {
-    val windowHeightDp = getWindowSizeDp().height
-    var finishedFirstAnimation by remember { mutableStateOf(false) }
-
-    var targetHeight by remember { mutableStateOf(0.dp) }
-    val animatedHeight by animateDpAsState(
-        targetHeight,
-        spring(dampingRatio = Spring.DampingRatioMediumBouncy)
-    )
-
-    LaunchedEffect(windowHeightDp) {
-        if (finishedFirstAnimation) {
-            targetHeight = windowHeightDp / 4
-        }
-    }
-
-
-    LaunchedEffect(Unit) {
-        delay(1000)
-        targetHeight = windowHeightDp / 4
-        finishedFirstAnimation = true
-    }
-
-    Box(modifier = Modifier.height(animatedHeight).fillMaxWidth().background(Color(0xff101014)))
-}
-
-@Composable
-private fun BottomDrawerList(scrollState: ScrollState) {
-    val windowHeightDp = getWindowSizeDp().height
-    var finishedFirstAnimation by remember { mutableStateOf(false) }
-
-    var targetPaddingTop by remember { mutableStateOf(windowHeightDp) }
-    val animatingPaddingTop by animateDpAsState(
-        targetPaddingTop,
-        spring(dampingRatio = Spring.DampingRatioMediumBouncy)
-    )
-
-    LaunchedEffect(windowHeightDp) {
-        if (finishedFirstAnimation) {
-            targetPaddingTop = (3 * windowHeightDp) / 4
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        delay(1000)
-        targetPaddingTop = (3 * windowHeightDp) / 4
-        finishedFirstAnimation = true
-    }
-
-    Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
-    ) {
-        Spacer(modifier = Modifier.height(animatingPaddingTop))
-        Column(modifier = Modifier.fillMaxWidth().background(Color.Black)) {
-            repeat(1000) {
-                Text("haha $it", color = Color.White)
-            }
-        }
     }
 }

@@ -9,6 +9,3 @@ expect fun getFormattedTime(): String
 
 @Composable
 expect fun getWindowSize(): IntSize
-
-@Composable
-expect fun getWindowSizeDp(): DpSize

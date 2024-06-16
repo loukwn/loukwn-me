@@ -16,12 +16,3 @@ actual external fun getFormattedTime(): String
 actual fun getWindowSize(): IntSize {
     return LocalWindowInfo.current.containerSize
 }
-
-@Composable
-actual fun getWindowSizeDp(): DpSize {
-    val pxSize = getWindowSize()
-
-    return with(LocalDensity.current) {
-        DpSize(pxSize.width.toDp(), pxSize.height.toDp())
-    }
-}
