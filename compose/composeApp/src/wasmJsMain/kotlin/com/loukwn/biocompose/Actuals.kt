@@ -16,3 +16,6 @@ actual external fun getFormattedTime(): String
 actual fun getWindowSize(): IntSize {
     return LocalWindowInfo.current.containerSize
 }
+
+@JsFun("() => { return Math.floor((new Date() - new Date('1994-04-15').getTime()) / 3.15576e+10) }")
+actual external fun getAgeInYears(): Int

@@ -9,3 +9,5 @@ expect fun getFormattedTime(): String
 
 @Composable
 expect fun getWindowSize(): IntSize
+
+expect fun getAgeInYears(): Int

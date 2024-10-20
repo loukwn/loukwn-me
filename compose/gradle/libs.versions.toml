@@ -1,10 +1,12 @@
 [versions]
-compose = "1.6.6"
-compose-plugin = "1.6.2"
+compose = "1.6.10"
+compose-plugin = "1.6.10"
 junit = "4.13.2"
-kotlin = "1.9.23"
-decompose = "3.0.0-alpha01"
+kotlin = "2.0.0"
+decompose = "3.1.0"
 kotlin-serialization = "1.6.3"
+composeIcons = "1.1.1"
+compose-emoji = "2.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -16,10 +18,23 @@ decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decom
 decompose-extensions = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose"}
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization"}
 
+composeIcons-cssGg = { module = "br.com.devsrsouza.compose.icons:css-gg", version.ref = "composeIcons" }
+composeIcons-weatherIcons = { module = "br.com.devsrsouza.compose.icons:erikflowers-weather-icons", version.ref = "composeIcons" }
+composeIcons-evaIcons = { module = "br.com.devsrsouza.compose.icons:eva-icons", version.ref = "composeIcons" }
+composeIcons-feather = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "composeIcons" }
+composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
+composeIcons-lineAwesome = { module = "br.com.devsrsouza.compose.icons:line-awesome", version.ref = "composeIcons" }
+composeIcons-linea = { module = "br.com.devsrsouza.compose.icons:linea", version.ref = "composeIcons" }
+composeIcons-octicons = { module = "br.com.devsrsouza.compose.icons:octicons", version.ref = "composeIcons" }
+composeIcons-simpleIcons = { module = "br.com.devsrsouza.compose.icons:simple-icons", version.ref = "composeIcons" }
+composeIcons-tablerIcons = { module = "br.com.devsrsouza.compose.icons:tabler-icons", version.ref = "composeIcons" }
+
+compose-emoji = { module = "org.kodein.emoji:emoji-compose-m2", version.ref = "compose-emoji" }
 [bundles]
 decompose = [ "decompose", "decompose-extensions" ]
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

@@ -2,9 +2,10 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -36,6 +37,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.bundles.decompose)
             implementation(libs.kotlin.serialization.json)
+            implementation(libs.composeIcons.lineAwesome)
+            implementation(libs.composeIcons.simpleIcons)
         }
     }
 }
