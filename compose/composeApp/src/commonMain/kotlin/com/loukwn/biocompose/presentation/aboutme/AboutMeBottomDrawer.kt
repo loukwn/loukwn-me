@@ -72,7 +72,7 @@ import org.jetbrains.compose.resources.painterResource
 
 private const val BottomDrawerAnimationDelayMs = 1000L
 private val MoreContentBottomScrimSize = GlobalInsetsToConsume.calculateBottomPadding() + 50.dp
-val AboutMeBottomSheetBgColor = Color(0xff1a1a20)
+val AboutMeBottomSheetBgColor = Color(0xff1b1a20)
 
 @Composable
 fun FakeBottomDrawer(windowHeightDp: Dp) {

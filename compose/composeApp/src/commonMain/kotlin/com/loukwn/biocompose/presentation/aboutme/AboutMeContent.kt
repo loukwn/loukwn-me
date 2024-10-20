@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.Colors
 import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -29,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -41,7 +39,7 @@ import com.loukwn.biocompose.presentation.util.toPx
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.me_grayscaled
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.me
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -64,7 +62,7 @@ fun AboutMeContent(
     val scrollProgress = scrollState.value / (windowSize.height.toFloat() - 250)
     val topBarBg = if (scrollProgress >= .7f) AboutMeBottomSheetBgColor else Color.Transparent
 
-    Box(Modifier.fillMaxSize(1f).background(Color(0xff34343f))) {
+    Box(Modifier.fillMaxSize(1f).background(Color(0xff39343f))) {
         AboutMeBg(modifier = Modifier.fillMaxSize())
 
         TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackPressed)
@@ -92,7 +90,7 @@ private fun Avatar(modifier: Modifier = Modifier) {
     }
 
     Image(
-        painterResource(Res.drawable.me_grayscaled),
+        painterResource(Res.drawable.me),
         "",
         modifier = modifier.blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
         contentScale = ContentScale.Crop
