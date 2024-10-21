@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -46,21 +45,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.getAgeInYears
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
-import compose.icons.LineAwesomeIcons
-import compose.icons.SimpleIcons
-import compose.icons.lineawesomeicons.AddressCard
-import compose.icons.lineawesomeicons.CitySolid
-import compose.icons.lineawesomeicons.GlobeEuropeSolid
-import compose.icons.lineawesomeicons.MapPinSolid
-import compose.icons.simpleicons.Android
-import compose.icons.simpleicons.Firefoxbrowser
-import compose.icons.simpleicons.Git
-import compose.icons.simpleicons.Gnubash
-import compose.icons.simpleicons.Godotengine
-import compose.icons.simpleicons.Kotlin
-import compose.icons.simpleicons.Latex
-import compose.icons.simpleicons.Linux
-import compose.icons.simpleicons.Python
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.dafni
@@ -101,6 +85,7 @@ fun FakeBottomDrawer(windowHeightDp: Dp) {
 
 @Composable
 fun BottomDrawerList(
+    state: AboutMeUiState,
     windowHeightDp: Dp,
     scrollState: ScrollState,
 ) {
@@ -141,7 +126,7 @@ fun BottomDrawerList(
                         bottom = MoreContentBottomScrimSize
                     )
             ) {
-                BottomDrawerContent()
+                BottomDrawerContent(state)
             }
         }
 
@@ -165,7 +150,9 @@ fun BottomDrawerList(
 }
 
 @Composable
-private fun ColumnScope.BottomDrawerContent() {
+private fun ColumnScope.BottomDrawerContent(
+    state: AboutMeUiState,
+) {
     val title = buildAnnotatedString {
         withStyle(
             SpanStyle(
@@ -181,18 +168,11 @@ private fun ColumnScope.BottomDrawerContent() {
 
     Spacer(modifier = Modifier.height(40.dp))
 
-    TagSection(
-        listOf(
-            Tag(LineAwesomeIcons.AddressCard, "Android / Mobile Engineer"),
-            Tag(LineAwesomeIcons.GlobeEuropeSolid, "Greek"),
-            Tag(LineAwesomeIcons.CitySolid, "London, UK"),
-            Tag(LineAwesomeIcons.MapPinSolid, "At most 12,764.221km away"),
-        )
-    )
+    TagSection(state.tags)
 
     Separator(withDivider = true)
 
-    PhraseSection()
+    PhraseSection(state.phrase)
 
     Separator(withDivider = false)
 
@@ -203,20 +183,11 @@ private fun ColumnScope.BottomDrawerContent() {
 
     Separator(withDivider = false)
 
-    TechnologiesSection()
+    TechnologiesSection(state.technologyEntries)
 
     Separator(withDivider = true)
 
-    Hobbies(
-        listOf(
-            "Game dev",
-            "Cycling",
-            "Listening to music",
-            "Playing video games",
-            "Doomscrolling",
-            "Abandoning my projects"
-        )
-    )
+    Hobbies(state.hobbies)
 
     Separator(withDivider = false)
 
@@ -256,11 +227,6 @@ private fun TagSection(tagList: List<Tag>) {
     }
 }
 
-data class Tag(
-    val image: ImageVector,
-    val text: String,
-)
-
 @Composable
 private fun ColumnScope.Separator(withDivider: Boolean) {
     Spacer(modifier = Modifier.height(52.dp))
@@ -275,7 +241,7 @@ private fun ColumnScope.Separator(withDivider: Boolean) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TechnologiesSection() {
+private fun TechnologiesSection(technologyEntries: List<TechonologyEntry>) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -286,60 +252,14 @@ private fun TechnologiesSection() {
             verticalArrangement = spacedBy(8.dp),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Android,
-                contentDescription = "Android",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Kotlin,
-                contentDescription = "Kotlin",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Gnubash,
-                contentDescription = "Shell",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Python,
-                contentDescription = "Python",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Latex,
-                contentDescription = "Latex",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Godotengine,
-                contentDescription = "Godot",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Git,
-                contentDescription = "Git",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Firefoxbrowser,
-                contentDescription = "Firefox",
-                tint = Color.White,
-            )
-            Icon(
-                modifier = Modifier.size(40.dp),
-                imageVector = SimpleIcons.Linux,
-                contentDescription = "Linux",
-                tint = Color.White,
-            )
+            technologyEntries.forEach {
+                Icon(
+                    modifier = Modifier.size(40.dp),
+                    imageVector = it.image,
+                    contentDescription = it.contentDescription,
+                    tint = Color.White,
+                )
+            }
         }
     }
 }
@@ -393,22 +313,12 @@ private fun Hobbies(hobbies: List<String>) {
 }
 
 @Composable
-private fun PhraseSection() {
+private fun PhraseSection(phrase: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
         Text("A phrase that I often use", fontSize = 14.sp, color = Color.White)
         Spacer(modifier = Modifier.height(20.dp))
-        Text(phrases.random(), fontSize = 24.sp, color = Color.White)
+        Text(phrase, fontSize = 24.sp, color = Color.White)
     }
 }
-
-private val phrases = listOf(
-    "LGTM",
-    "Works fine on my machine",
-    "Should not take too long to implement",
-    "I do not see how this can break in the future",
-    "I am pretty sure this crash is impossible to hit",
-    "I was working before",
-    "Did you try restarting?"
-)

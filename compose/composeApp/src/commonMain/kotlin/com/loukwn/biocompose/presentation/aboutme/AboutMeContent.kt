@@ -49,6 +49,7 @@ fun AboutMeContent(
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
     onBackPressed: () -> Unit
 ) {
+    val state by remember { component.state }
     val windowSize = getWindowSize()
     val windowSizeDp = windowSize.toPx(LocalDensity.current)
 
@@ -74,11 +75,14 @@ fun AboutMeContent(
 
         DarkScrim(darknessProgress = scrollProgress)
 
-        BottomDrawerList(windowHeightDp = windowSizeDp.height, scrollState = scrollState)
+        BottomDrawerList(
+            state = state,
+            windowHeightDp = windowSizeDp.height,
+            scrollState = scrollState,
+        )
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun Avatar(modifier: Modifier = Modifier) {
     var targetBlurRadius by remember { mutableStateOf(25.dp) }
@@ -104,10 +108,12 @@ private fun DarkScrim(darknessProgress: Float) {
     } else {
         darknessProgress
     }
-    Box(modifier = Modifier.fillMaxSize().background(AboutMeBottomSheetBgColor.copy(alpha = (tweakedProgress).coerceAtMost(1f))))
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(AboutMeBottomSheetBgColor.copy(alpha = (tweakedProgress).coerceAtMost(1f)))
+    )
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
     Column(
