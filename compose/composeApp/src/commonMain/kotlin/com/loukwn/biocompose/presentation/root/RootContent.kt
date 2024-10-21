@@ -17,6 +17,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.loukwn.biocompose.presentation.aboutme.AboutMeContent
 import com.loukwn.biocompose.presentation.design_system.theme.BioTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopContent
+import com.loukwn.biocompose.presentation.portfolio.PortfolioContent
 
 @Composable
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
@@ -53,6 +54,11 @@ private fun Graph(component: RootComponent) {
                 onAppClicked = component::onDesktopAppClicked,
             )
             is RootComponent.Child.AboutMe -> AboutMeContent(
+                component = child.component,
+                onSystemUiModeChanged = component::onSystemUiModeChanged,
+                onBackPressed = component::onBack,
+            )
+            is RootComponent.Child.Portfolio -> PortfolioContent(
                 component = child.component,
                 onSystemUiModeChanged = component::onSystemUiModeChanged,
                 onBackPressed = component::onBack,

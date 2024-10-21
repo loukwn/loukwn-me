@@ -16,6 +16,8 @@ import com.loukwn.biocompose.presentation.aboutme.DefaultAboutMeComponent
 import com.loukwn.biocompose.presentation.desktop.DefaultDesktopComponent
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopComponent
+import com.loukwn.biocompose.presentation.portfolio.DefaultPortfolioComponent
+import com.loukwn.biocompose.presentation.portfolio.PortfolioComponent
 import com.loukwn.biocompose.presentation.util.update
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -36,6 +38,7 @@ interface RootComponent {
     sealed class Child {
         data class Desktop(val component: DesktopComponent) : Child()
         data class AboutMe(val component: AboutMeComponent) : Child()
+        data class Portfolio(val component: PortfolioComponent) : Child()
     }
 }
 
@@ -81,6 +84,7 @@ class DefaultRootComponent(
         when (configuration) {
             is Configuration.Desktop -> RootComponent.Child.Desktop(desktopComponent(componentContext))
             is Configuration.AboutMe -> RootComponent.Child.AboutMe(aboutMeComponent(componentContext))
+            is Configuration.Portfolio -> RootComponent.Child.Portfolio(portfolioComponent(componentContext))
         }
 
     private fun desktopComponent(componentContext: ComponentContext): DesktopComponent =
@@ -88,6 +92,9 @@ class DefaultRootComponent(
 
     private fun aboutMeComponent(componentContext: ComponentContext): AboutMeComponent =
         DefaultAboutMeComponent(componentContext)
+    
+    private fun portfolioComponent(componentContext: ComponentContext): PortfolioComponent =
+        DefaultPortfolioComponent(componentContext)
 
 
     override fun onBack() {
@@ -97,7 +104,7 @@ class DefaultRootComponent(
     override fun onDesktopAppClicked(desktopApp: DesktopApp) {
         val configuration = when (desktopApp) {
             DesktopApp.AboutMe -> Configuration.AboutMe
-            DesktopApp.Portfolio -> TODO()
+            DesktopApp.Portfolio -> Configuration.Portfolio
             DesktopApp.ContactMe -> TODO()
             DesktopApp.AboutThis -> TODO()
         }
@@ -115,9 +122,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object AboutMe : Configuration
-//
-//        @Serializable
-//        data object Portfolio : Configuration
+        
+        @Serializable
+        data object Portfolio : Configuration
 //
 //        @Serializable
 //        data object ContactMe : Configuration
