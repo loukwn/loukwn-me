@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -39,12 +40,15 @@ import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.presentation.aboutme.AboutMeComponent
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PortfolioContent(
     component: PortfolioComponent,
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
     onBackPressed: () -> Unit
 ) {
+
+    val state by remember { component.state }
 //    Row(modifier = Modifier.fillMaxSize()) {
 //        val lazyListState = rememberLazyListState()
 //        LazyColumn(modifier = Modifier.fillMaxHeight().fillMaxWidth(.2f), state = lazyListState) {
@@ -59,17 +63,16 @@ fun PortfolioContent(
 //        }
 //    }
     Column(modifier = Modifier.fillMaxSize().padding(36.dp)) {
-        var cellGap by remember { mutableStateOf(100.dp) }
-        val cellGapAnimated = animateDpAsState(cellGap, tween(600))
+        val cellGapAnimated = animateDpAsState(state.baseGap, tween(600))
 
         Row {
-            Button(onClick = {cellGap = 50.dp}) {
+            Button(onClick = { component.onScaleChange(Scale.YEAR_2) }) {
                 Text("2 Year")
             }
-            Button(onClick = {cellGap = 100.dp}) {
+            Button(onClick = { component.onScaleChange(Scale.YEAR) }) {
                 Text("Year")
             }
-            Button(onClick = {cellGap = 600.dp}) {
+            Button(onClick = { component.onScaleChange(Scale.MONTH_6) }) {
                 Text("6 month")
             }
         }
@@ -97,13 +100,15 @@ fun PortfolioContent(
                 state = stateRowX,
                 userScrollEnabled = false
             ) {
-                items(7) {
+                items(state.timeLabels.size) {
                     Column(modifier = Modifier.height(cellGapAnimated.value)) {
-                        Divider(color = Color.White)
-                        Text(
-                            text = (2019 + it).toString(),
-                            color = Color.White,
-                        )
+                        if (state.timeLabels[it].isNotEmpty()) {
+                            Divider(color = Color.White)
+                            Text(
+                                text = state.timeLabels[it],
+                                color = Color.White,
+                            )
+                        }
                     }
                 }
             }
@@ -121,8 +126,10 @@ fun PortfolioContent(
                             .background(Color.Red, RoundedCornerShape(16.dp))
                             .height(2.5 * cellGapAnimated.value)
                             .fillMaxWidth()
-                            .clickable(onClick = { cellGap -= 50.dp }),
-                    )
+                            .clickable(onClick = { }),
+                    ) {
+                        Text("Nutmeg asdf \nas dsg \ndsf ")
+                    }
                 }
                 item(2) {
                     Spacer(modifier = Modifier.height(1.5 * cellGapAnimated.value).fillMaxWidth())

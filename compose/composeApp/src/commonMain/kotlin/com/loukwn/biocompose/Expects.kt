@@ -5,6 +5,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 
+expect fun getCurrentYear(): String
+
 expect fun getFormattedTime(): String
 
 @Composable
