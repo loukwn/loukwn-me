@@ -8,8 +8,11 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 
-@JsFun("() => { return String(new Date().getFullYear()) }")
-actual external fun getCurrentYear(): String
+@JsFun("() => { return new Date().getFullYear() }")
+actual external fun getCurrentYear(): Int
+
+@JsFun("() => { return new Date().getFullYear() }")
+actual external fun getCurrentMonth(): Int
 
 @JsFun("() => { var date = new Date(); return String(date.getHours()).padStart(2, '0') + \":\" + String(date.getMinutes()).padStart(2, '0') }")
 actual external fun getFormattedTime(): String

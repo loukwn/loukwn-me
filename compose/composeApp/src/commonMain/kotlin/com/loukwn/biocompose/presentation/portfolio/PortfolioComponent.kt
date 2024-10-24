@@ -6,7 +6,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ComponentContext
 import com.loukwn.biocompose.getCurrentYear
-import com.loukwn.biocompose.presentation.aboutme.AboutMeUiState
 import com.loukwn.biocompose.presentation.util.update
 
 interface PortfolioComponent {
@@ -38,7 +37,7 @@ class DefaultPortfolioComponent(
     }
 
     private fun getTimeLabelsForScale(scale: Scale): List<String> {
-        val currentYear = getCurrentYear().toInt() + 1
+        val currentYear = getCurrentYear()
         val yearsToDisplay = currentYear - STARTING_YEAR + 2
 
         return when (scale) {
@@ -47,8 +46,15 @@ class DefaultPortfolioComponent(
                     repeat(yearsToDisplay) {
                         add((it + STARTING_YEAR).toString())
                     }
-                }.mapIndexed { index, label -> if (index % 2 == 0) label else "" }
-                    .flatMap { listOf(it, "") }
+                }.mapIndexed { index, label ->
+                    when {
+                        index % 2 == 0 && label == (currentYear + 1).toString() -> listOf(label)
+                        index % 2 == 0 && label == currentYear.toString() -> listOf(label)
+                        index % 2 == 0 -> listOf(label, "")
+                        else -> listOf("", "")
+                    }
+                }
+                    .flatten()
                     .reversed()
             }
             Scale.YEAR -> {
