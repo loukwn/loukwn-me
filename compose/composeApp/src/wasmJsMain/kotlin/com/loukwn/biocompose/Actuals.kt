@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.IntSize
 @JsFun("() => { return new Date().getFullYear() }")
 actual external fun getCurrentYear(): Int
 
-@JsFun("() => { return new Date().getFullYear() }")
+@JsFun("() => { return new Date().getMonth() + 1 }")
 actual external fun getCurrentMonth(): Int
 
 @JsFun("() => { var date = new Date(); return String(date.getHours()).padStart(2, '0') + \":\" + String(date.getMinutes()).padStart(2, '0') }")

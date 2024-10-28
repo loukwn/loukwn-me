@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -96,7 +97,7 @@ fun PortfolioContent(
             ).fillMaxSize()
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxHeight().fillMaxWidth(.5f),
+                modifier = Modifier.fillMaxWidth(.5f),
                 state = stateRowX,
                 userScrollEnabled = false
             ) {
@@ -113,29 +114,32 @@ fun PortfolioContent(
                 }
             }
             LazyColumn(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.fillMaxWidth(1f),
                 state = stateRowY,
                 userScrollEnabled = false
             ) {
-                item(0) {
-                    Spacer(modifier = Modifier.height(3 * cellGapAnimated.value).fillMaxWidth())
-                }
-                item(1) {
-                    Box(
-                        modifier = Modifier
-                            .background(Color.Red, RoundedCornerShape(16.dp))
-                            .height(2.5 * cellGapAnimated.value)
-                            .fillMaxWidth()
-                            .clickable(onClick = { }),
-                    ) {
-                        Text("Nutmeg asdf \nas dsg \ndsf ")
+                items(state.calendarItems[0].size) {
+                    when (val item = state.calendarItems[0][it]) {
+                        is CalendarItem.Gap -> {
+                            Spacer(modifier = Modifier.height(item.size * cellGapAnimated.value).fillMaxWidth())
+                        }
+                        is CalendarItem.Job -> {
+                            Box(
+                                modifier = Modifier
+                                    .background(Color.Red, RoundedCornerShape(16.dp))
+                                    .height(item.size * cellGapAnimated.value)
+                                    .fillMaxWidth()
+                                    .clickable(onClick = { }),
+                            ) {
+                                Text(item.title)
+                            }
+                        }
                     }
                 }
-                item(2) {
-                    Spacer(modifier = Modifier.height(1.5 * cellGapAnimated.value).fillMaxWidth())
+                item(state.calendarItems[0].size) {
+                    Spacer(modifier = Modifier.height((Scale.MONTH_6.baseGap / state.baseGap) * cellGapAnimated.value).fillMaxWidth())
                 }
             }
-
         }
     }
 }
