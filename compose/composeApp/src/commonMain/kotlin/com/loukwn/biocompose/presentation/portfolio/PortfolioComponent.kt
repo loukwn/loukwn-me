@@ -23,12 +23,24 @@ class DefaultPortfolioComponent(
     override val state: State<PortfolioUiState> = _state
 
     private fun getInitialState(): PortfolioUiState {
+        val initialScale = Scale.YEAR
+
         return PortfolioUiState(
-            baseGap = Scale.YEAR_2.baseGap,
-            timeLabels = getTimeLabelsForScale(Scale.YEAR_2),
+            baseGap = initialScale.baseGap,
+//            currentDateLineOffset = getCurrentDateLineOffset(initialScale),
+            timeLabels = getTimeLabelsForScale(initialScale),
             calendarItems = getCalendarItems(),
         )
     }
+
+//    private fun getCurrentDateLineOffset(scale: Scale): Dp {
+//        val numberOfMonthsTillNextYear = (getCurrentYear() + 1) * 12 - (getCurrentYear() * 12 + getCurrentMonth())
+//        return when (scale) {
+//            Scale.YEAR_2 -> numberOfMonthsTillNextYear * 100 / 24f
+//            Scale.YEAR -> numberOfMonthsTillNextYear * 100 / 12f
+//            Scale.MONTH_6 -> numberOfMonthsTillNextYear * 100 / 6f
+//        }.dp
+//    }
 
     private fun getTimeLabelsForScale(scale: Scale): List<String> {
         val currentYear = getCurrentYear()
@@ -83,12 +95,32 @@ class DefaultPortfolioComponent(
         val jobs = mutableListOf<CalendarItem>()
 
         val jobsSortedByStartDate = myJobs.sortedBy { it.started.year * 12 + it.started.month }
-        val gapFromStart = abs(jobsSortedByStartDate.first().started.diffIn6MonthsWith(Date(month = 1, year = STARTING_YEAR)))
-        val gapFromEnd = abs(jobsSortedByStartDate.last().ended.diffIn6MonthsWith(Date(month = 12, year = getCurrentYear())))
+        val gapFromStart = abs(
+            jobsSortedByStartDate.first().started.diffIn6MonthsWith(
+                Date(
+                    month = 1,
+                    year = STARTING_YEAR
+                )
+            )
+        )
+        val gapFromEnd = abs(
+            jobsSortedByStartDate.last().ended.diffIn6MonthsWith(
+                Date(
+                    month = 12,
+                    year = getCurrentYear()
+                )
+            )
+        )
 
         jobs.add(CalendarItem.Gap(gapFromStart))
         jobsSortedByStartDate.forEachIndexed { index, job ->
-            jobs.add(CalendarItem.Job(job.title, job.durationIn6Months()))
+            jobs.add(
+                CalendarItem.Job(
+                    title = job.title,
+                    durationText = job.durationString(),
+                    size = job.durationIn6Months(),
+                )
+            )
             if (index != myJobs.lastIndex) {
                 jobs.add(CalendarItem.Gap(job.ended.diffIn6MonthsWith(jobsSortedByStartDate[index + 1].started)))
             }
@@ -103,6 +135,7 @@ class DefaultPortfolioComponent(
         _state.update {
             it.copy(
                 baseGap = scale.baseGap,
+//                currentDateLineOffset = getCurrentDateLineOffset(scale),
                 timeLabels = getTimeLabelsForScale(scale),
             )
         }
@@ -153,4 +186,31 @@ val myJobs by lazy {
 
 fun Job.durationIn6Months(): Float {
     return started.diffIn6MonthsWith(ended)
+}
+
+fun Job.durationString(): String {
+    val startPart = "${getMonthNameForNumber(started.month)} ${started.year}"
+    val endPart = if (ended.year == getCurrentYear() && ended.month == getCurrentMonth()) {
+        "Present"
+    } else {
+        "${getMonthNameForNumber(ended.month)} ${ended.year}"
+    }
+    return "$startPart - $endPart"
+}
+
+fun getMonthNameForNumber(month: Int): String {
+    return when (month) {
+        1 -> "Jan"
+        2 -> "Feb"
+        3 -> "Mar"
+        4 -> "Apr"
+        5 -> "May"
+        6 -> "Jun"
+        7 -> "Jul"
+        8 -> "Aug"
+        9 -> "Sep"
+        10 -> "Oct"
+        11 -> "Nov"
+        else -> "Dec"
+    }
 }

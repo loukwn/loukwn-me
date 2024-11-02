@@ -9,6 +9,7 @@ enum class Scale(val baseGap: Dp) {
 
 data class PortfolioUiState(
     val baseGap: Dp,
+//    val currentDateLineOffset: Dp,
     val timeLabels: List<String>,
     val calendarItems: List<List<CalendarItem>>,
 )
@@ -18,6 +19,7 @@ sealed class CalendarItem {
 
     data class Job(
         val title: String,
+        val durationText: String,
         override val size: Float,
     ): CalendarItem()
 

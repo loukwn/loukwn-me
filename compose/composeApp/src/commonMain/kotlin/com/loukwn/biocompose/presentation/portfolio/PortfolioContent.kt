@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,10 +35,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.presentation.aboutme.AboutMeComponent
 import kotlinx.coroutines.launch
@@ -63,7 +68,7 @@ fun PortfolioContent(
 //            }
 //        }
 //    }
-    Column(modifier = Modifier.fillMaxSize().padding(36.dp)) {
+    Column(modifier = Modifier.fillMaxSize().background(Color(0xff1a1832)).padding(36.dp)) {
         val cellGapAnimated = animateDpAsState(state.baseGap, tween(600))
 
         Row {
@@ -89,55 +94,80 @@ fun PortfolioContent(
             delta
         }
 
-        Row(
+//        val currentDateLineOffsetAnimated = animateDpAsState(state.currentDateLineOffset, tween(600))
+
+        Box(
             modifier = Modifier.scrollable(
                 scrollState,
                 Orientation.Vertical,
                 flingBehavior = ScrollableDefaults.flingBehavior()
             ).fillMaxSize()
         ) {
+//            Divider(
+//                color = Color.Red.copy(alpha = .4f),
+//                modifier = Modifier.height(1.dp).offset(y = currentDateLineOffsetAnimated.value)
+//            )
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(.5f),
+                modifier = Modifier.fillMaxSize(),
                 state = stateRowX,
                 userScrollEnabled = false
             ) {
                 items(state.timeLabels.size) {
                     Column(modifier = Modifier.height(cellGapAnimated.value)) {
                         if (state.timeLabels[it].isNotEmpty()) {
-                            Divider(color = Color.White)
+                            Divider(
+                                color = Color.White.copy(alpha = .7f),
+                                modifier = Modifier.height(0.5.dp)
+                            )
                             Text(
                                 text = state.timeLabels[it],
-                                color = Color.White,
+                                color = Color.White.copy(alpha = .7f),
                             )
                         }
                     }
                 }
             }
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(1f),
+                modifier = Modifier.fillMaxHeight().fillMaxWidth(.66f).align(Alignment.CenterEnd),
                 state = stateRowY,
-                userScrollEnabled = false
+                userScrollEnabled = false,
             ) {
                 items(state.calendarItems[0].size) {
                     when (val item = state.calendarItems[0][it]) {
                         is CalendarItem.Gap -> {
-                            Spacer(modifier = Modifier.height(item.size * cellGapAnimated.value).fillMaxWidth())
+                            Spacer(
+                                modifier = Modifier.height(item.size * cellGapAnimated.value)
+                                    .fillMaxWidth()
+                            )
                         }
+
                         is CalendarItem.Job -> {
-                            Box(
+                            Row(
                                 modifier = Modifier
-                                    .background(Color.Red, RoundedCornerShape(16.dp))
+                                    .padding(1.dp)
+                                    .background(Color(0xff151224), RoundedCornerShape(16.dp))
                                     .height(item.size * cellGapAnimated.value)
                                     .fillMaxWidth()
+                                    .clip(RoundedCornerShape(16.dp))
                                     .clickable(onClick = { }),
                             ) {
-                                Text(item.title)
+                                Box(
+                                    modifier = Modifier.fillMaxHeight().width(12.dp)
+                                        .background(Color(0xff9c1c49))
+                                )
+                                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = spacedBy(2.dp)) {
+                                    Text(item.title, color = Color.White)
+                                    Text(item.durationText, color = Color.White.copy(.7f), fontSize = 12.sp)
+                                }
                             }
                         }
                     }
                 }
                 item(state.calendarItems[0].size) {
-                    Spacer(modifier = Modifier.height((Scale.MONTH_6.baseGap / state.baseGap) * cellGapAnimated.value).fillMaxWidth())
+                    Spacer(
+                        modifier = Modifier.height((Scale.MONTH_6.baseGap / state.baseGap) * cellGapAnimated.value)
+                            .fillMaxWidth()
+                    )
                 }
             }
         }
