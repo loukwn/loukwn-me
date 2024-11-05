@@ -1,6 +1,5 @@
 package com.loukwn.biocompose.presentation.design_system.components
 
-import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.material.Text

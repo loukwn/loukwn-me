@@ -2,8 +2,6 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ComponentContext
 import com.loukwn.biocompose.getCurrentMonth
 import com.loukwn.biocompose.getCurrentYear

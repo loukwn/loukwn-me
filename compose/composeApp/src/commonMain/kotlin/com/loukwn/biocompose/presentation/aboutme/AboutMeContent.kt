@@ -40,7 +40,6 @@ import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.me
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

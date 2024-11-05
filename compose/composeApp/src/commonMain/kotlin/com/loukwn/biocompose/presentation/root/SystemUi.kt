@@ -2,24 +2,42 @@ package com.loukwn.biocompose.presentation.root
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.*
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.back
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.battery_5_bar_24
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.home
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.network_cell
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.network_wifi
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.recents
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 private const val StatusBarHeightDp = 32
@@ -33,7 +51,6 @@ val GlobalInsetsToConsume = PaddingValues(
     end = 0.dp,
 )
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
     val foregroundTintColor = if (inLightMode) {
@@ -81,7 +98,6 @@ fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun NavigationBar(
     modifier: Modifier = Modifier,
@@ -101,49 +117,43 @@ fun NavigationBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        NavigationBarButton(onBackPressed) {
-            Image(
-                painterResource(Res.drawable.back),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(foregroundTintColor)
-            )
-        }
-        NavigationBarButton(onHomePressed) {
-            Image(
-                painterResource(Res.drawable.home),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(foregroundTintColor)
-            )
-        }
-        NavigationBarButton({ }) {
-            Image(
-                painterResource(Res.drawable.recents),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(foregroundTintColor)
-            )
-        }
+        NavigationBarButton(Res.drawable.back, foregroundTintColor, onBackPressed)
+        NavigationBarButton(Res.drawable.home, foregroundTintColor, onHomePressed)
+        NavigationBarButton(Res.drawable.recents, foregroundTintColor) { }
     }
 }
 
 @Composable
 private fun NavigationBarButton(
+    drawableResource: DrawableResource,
+    tintColor: Color,
     onClick: () -> Unit,
-    content: @Composable () -> Unit,
 ) {
+
+    val hoverInteractionSource = remember { MutableInteractionSource() }
+    val isHovered by hoverInteractionSource.collectIsHoveredAsState()
+    val tint = if (isHovered) tintColor.copy(alpha = .5f) else tintColor
+
     Row(
         modifier = Modifier
             .fillMaxHeight()
             .width(100.dp)
             .clip(RoundedCornerShape(24.dp))
+            .hoverable(hoverInteractionSource)
+            .pointerHoverIcon(PointerIcon.Hand)
             .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(true, color = Color.White),
-                role = Role.Button,
                 onClick = onClick,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(true, color = Color.White),
+                role = Role.Button,
             ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        content()
+        Image(
+            painterResource(drawableResource),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(tint)
+        )
     }
 }

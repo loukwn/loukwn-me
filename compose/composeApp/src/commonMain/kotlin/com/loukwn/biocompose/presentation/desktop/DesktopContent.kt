@@ -50,14 +50,15 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.avatar
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg2
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 private const val InitialAnimationDelayMs = 500L
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun DesktopContent(onSystemUiModeChanged: (isLight: Boolean) -> Unit, onAppClicked: (DesktopApp) -> Unit) {
+fun DesktopContent(
+    onSystemUiModeChanged: (isLight: Boolean) -> Unit,
+    onAppClicked: (DesktopApp) -> Unit
+) {
 
     LaunchedEffect(Unit) {
         onSystemUiModeChanged(false)
@@ -91,7 +92,6 @@ fun DesktopContent(onSystemUiModeChanged: (isLight: Boolean) -> Unit, onAppClick
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 enum class DesktopApp(val title: String, val iconResource: DrawableResource) {
     AboutMe("About me", Res.drawable.avatar),
     Portfolio("Portfolio", Res.drawable.avatar),
@@ -99,7 +99,6 @@ enum class DesktopApp(val title: String, val iconResource: DrawableResource) {
     AboutThis("About This", Res.drawable.avatar)
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun DesktopItem(
     drawableResource: DrawableResource,
