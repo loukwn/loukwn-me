@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.ComponentContext
 import com.loukwn.biocompose.getCurrentMonth
 import com.loukwn.biocompose.getCurrentYear
@@ -115,6 +116,7 @@ class DefaultPortfolioComponent(
             jobs.add(
                 CalendarItem.Job(
                     title = job.title,
+                    accentColor = job.accentColor,
                     durationText = job.durationString(),
                     size = job.durationIn6Months(),
                 )
@@ -140,7 +142,7 @@ class DefaultPortfolioComponent(
     }
 
     companion object {
-        private const val STARTING_YEAR = 2017
+        private const val STARTING_YEAR = 2019
     }
 }
 
@@ -149,6 +151,7 @@ data class Job(
     val title: String,
     val started: Date,
     val ended: Date,
+    val accentColor: Color,
 )
 
 data class Date(
@@ -167,18 +170,15 @@ val myJobs by lazy {
         Job(
             title = "Nutmeg",
             started = Date(month = 3, year = 2023),
-            ended = Date(month = getCurrentMonth(), year = getCurrentYear())
+            ended = Date(month = getCurrentMonth(), year = getCurrentYear()),
+            accentColor = Color(0xff0060f0)
         ),
         Job(
             title = "Muzz",
             started = Date(month = 10, year = 2019),
-            ended = Date(month = 3, year = 2023)
+            ended = Date(month = 3, year = 2023),
+            accentColor = Color(0xfffb406c)
         ),
-        Job(
-            title = "Nup",
-            started = Date(month = 1, year = 2017),
-            ended = Date(month = 1, year = 2019),
-        )
     )
 }
 

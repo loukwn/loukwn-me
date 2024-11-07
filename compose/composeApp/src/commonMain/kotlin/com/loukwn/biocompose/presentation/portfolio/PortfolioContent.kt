@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import kotlinx.coroutines.launch
 
+private val bgColor = Color(0xff191919)
+
 @Composable
 fun PortfolioContent(
     component: PortfolioComponent,
@@ -60,7 +62,7 @@ fun PortfolioContent(
 //            }
 //        }
 //    }
-    Column(modifier = Modifier.fillMaxSize().background(Color(0xff1a1832)).padding(36.dp)) {
+    Column(modifier = Modifier.fillMaxSize().background(bgColor).padding(36.dp)) {
         val cellGapAnimated = animateDpAsState(state.baseGap, tween(600))
 
         Row {
@@ -137,7 +139,8 @@ fun PortfolioContent(
                             Row(
                                 modifier = Modifier
                                     .padding(1.dp)
-                                    .background(Color(0xff151224), RoundedCornerShape(16.dp))
+                                    .background(bgColor)
+                                    .background(item.accentColor.copy(alpha = .15f), RoundedCornerShape(16.dp))
                                     .height(item.size * cellGapAnimated.value)
                                     .fillMaxWidth()
                                     .clip(RoundedCornerShape(16.dp))
@@ -145,7 +148,7 @@ fun PortfolioContent(
                             ) {
                                 Box(
                                     modifier = Modifier.fillMaxHeight().width(12.dp)
-                                        .background(Color(0xff9c1c49))
+                                        .background(item.accentColor)
                                 )
                                 Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = spacedBy(2.dp)) {
                                     Text(item.title, color = Color.White)

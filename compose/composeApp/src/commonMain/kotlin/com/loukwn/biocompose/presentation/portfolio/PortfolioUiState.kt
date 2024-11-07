@@ -1,5 +1,6 @@
 package com.loukwn.biocompose.presentation.portfolio
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -19,6 +20,7 @@ sealed class CalendarItem {
 
     data class Job(
         val title: String,
+        val accentColor: Color,
         val durationText: String,
         override val size: Float,
     ): CalendarItem()
