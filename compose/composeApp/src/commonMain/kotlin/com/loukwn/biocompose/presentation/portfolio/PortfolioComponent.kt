@@ -14,6 +14,7 @@ interface PortfolioComponent {
 
     fun onScaleChange(scale: Scale)
     fun onFilterButtonPressed()
+    fun onPageChanged(pageIndex: Int)
 }
 
 class DefaultPortfolioComponent(
@@ -83,7 +84,7 @@ class DefaultPortfolioComponent(
         }
     }
 
-    private fun getCalendarItems(): List<List<CalendarItem>> {
+    private fun getCalendarItems(): List<CalendarItem> {
         val jobs = mutableListOf<CalendarItem>()
 
         val jobsSortedByStartDate = myJobs.sortedBy { it.started.year * 12 + it.started.month }
@@ -120,8 +121,7 @@ class DefaultPortfolioComponent(
         }
         jobs.add(CalendarItem.Gap(gapFromEnd))
 
-
-        return listOf(jobs.reversed())
+        return jobs.reversed()
     }
 
     override fun onScaleChange(scale: Scale) {
@@ -137,6 +137,15 @@ class DefaultPortfolioComponent(
         _state.update {
             it.copy(
                 isCalendarScaleComponentVisible = !state.value.isCalendarScaleComponentVisible
+            )
+        }
+    }
+
+    override fun onPageChanged(pageIndex: Int) {
+        _state.update {
+            it.copy(
+                isCalendarScaleComponentVisible = false,
+                isFilterButtonVisible = pageIndex == 0
             )
         }
     }

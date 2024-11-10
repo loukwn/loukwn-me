@@ -12,9 +12,8 @@ data class PortfolioUiState(
     val baseGap: Dp,
     val isFilterButtonVisible: Boolean,
     val isCalendarScaleComponentVisible: Boolean,
-//    val currentDateLineOffset: Dp,
     val timeLabels: List<String>,
-    val calendarItems: List<List<CalendarItem>>,
+    val calendarItems: List<CalendarItem>,
 )
 
 sealed class CalendarItem {
@@ -31,9 +30,3 @@ sealed class CalendarItem {
         override val size: Float,
     ): CalendarItem()
 }
-
-data class PortfolioJob(
-    val title: String,
-    val monthStarted: Int,
-    val yearStarted: Int,
-)

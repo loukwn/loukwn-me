@@ -7,16 +7,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableDefaults
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollBy
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,13 +21,16 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
@@ -42,16 +39,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
-import com.loukwn.biocompose.presentation.aboutme.AboutMeBottomSheetBgColor
+import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.ListSolid
@@ -60,7 +54,7 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
 import org.jetbrains.compose.resources.painterResource
 
-private val bgColor = AboutMeBottomSheetBgColor
+val bgColor = Color(0xff1b1a20)
 private val accentColor = Color(0xff9164fa)
 
 @Composable
@@ -84,11 +78,24 @@ fun PortfolioContent(
                 )
         ) {
             TopBar(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp),
                 showFilterButton = state.isFilterButtonVisible,
                 onBackButtonPressed = onBackPressed,
                 onFilterButtonPressed = component::onFilterButtonPressed
             )
+
+            val pagerState = rememberPagerState { 2 }
+            val coroutineScope = rememberCoroutineScope()
+
+            Tabs(
+                selectedTabIndex = pagerState.currentPage,
+                tabs = listOf("Work Experience", "Projects")
+            ) { pageIndex ->
+                coroutineScope.launch {
+                    component.onPageChanged(pageIndex)
+                    pagerState.animateScrollToPage(pageIndex)
+                }
+            }
 
             AnimatedVisibility(
                 state.isCalendarScaleComponentVisible,
@@ -101,119 +108,68 @@ fun PortfolioContent(
                 )
             }
 
-            val cellGapAnimated = animateDpAsState(state.baseGap, tween(600))
-
-            val stateRowX = rememberLazyListState() // State for the first Row, X
-            val stateRowY = rememberLazyListState() // State for the second Row, Y
-            val scope = rememberCoroutineScope()
-            val scrollState = rememberScrollableState { delta ->
-                scope.launch {
-                    stateRowX.scrollBy(-delta)
-                    stateRowY.scrollBy(-delta)
-                }
-                delta
-            }
-
-            Box(
-                modifier = Modifier.scrollable(
-                    scrollState,
-                    Orientation.Vertical,
-                    flingBehavior = ScrollableDefaults.flingBehavior()
-                ).fillMaxSize()
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    state = stateRowX,
-                    userScrollEnabled = false
-                ) {
-                    items(state.timeLabels.size) {
-                        Column(modifier = Modifier.height(cellGapAnimated.value)) {
-                            if (state.timeLabels[it].isNotEmpty()) {
-                                Divider(
-                                    color = Color.White.copy(alpha = .7f),
-                                    modifier = Modifier.height(0.5.dp)
-                                )
-                                Text(
-                                    text = state.timeLabels[it],
-                                    color = Color.White.copy(alpha = .7f),
-                                )
-                            }
-                        }
-                    }
-                }
-                LazyColumn(
-                    modifier = Modifier.fillMaxHeight().fillMaxWidth(.66f)
-                        .align(Alignment.CenterEnd),
-                    state = stateRowY,
-                    userScrollEnabled = false,
-                ) {
-                    items(state.calendarItems[0].size) {
-                        when (val item = state.calendarItems[0][it]) {
-                            is CalendarItem.Gap -> {
-                                Spacer(
-                                    modifier = Modifier.height(item.size * cellGapAnimated.value)
-                                        .fillMaxWidth()
-                                )
-                            }
-
-                            is CalendarItem.Job -> {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(1.dp)
-                                        .background(bgColor)
-                                        .background(
-                                            item.accentColor.copy(alpha = .15f),
-                                            RoundedCornerShape(16.dp)
-                                        )
-                                        .height(item.size * cellGapAnimated.value)
-                                        .fillMaxWidth()
-                                        .clip(RoundedCornerShape(16.dp))
-                                        .clickable(onClick = { }),
-                                ) {
-                                    Box(
-                                        modifier = Modifier.fillMaxHeight().width(12.dp)
-                                            .background(item.accentColor)
-                                    )
-                                    Column(
-                                        modifier = Modifier.padding(
-                                            horizontal = 16.dp,
-                                            vertical = 8.dp
-                                        ), verticalArrangement = spacedBy(2.dp)
-                                    ) {
-                                        Text(item.title, color = Color.White)
-                                        Text(
-                                            item.durationText,
-                                            color = Color.White.copy(.7f),
-                                            fontSize = 12.sp
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    item(state.calendarItems[0].size) {
-                        Spacer(
-                            modifier = Modifier.height((Scale.MONTH_6.baseGap / state.baseGap) * cellGapAnimated.value)
-                                .fillMaxWidth()
+            HorizontalPager(
+                state = pagerState,
+                userScrollEnabled = false,
+                modifier = Modifier.fillMaxSize(),
+            ) { page ->
+                when (page) {
+                    0 -> {
+                        WorkExperiencePage(
+                            baseGap = state.baseGap,
+                            timeLabels = state.timeLabels,
+                            calendarItems = state.calendarItems,
+                            modifier = Modifier.fillMaxSize(),
                         )
+                    }
+
+                    1 -> {
+                        ProjectsPage()
                     }
                 }
             }
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(GlobalInsetsToConsume.calculateBottomPadding() + 50.dp)
-                .align(Alignment.BottomCenter)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(
-                            Color.Transparent,
-                            bgColor
+        SystemUiGradientOverlay(endColor = bgColor)
+    }
+}
+
+@Composable
+private fun Tabs(
+    selectedTabIndex: Int,
+    tabs: List<String>,
+    onTabSelected: (Int) -> Unit,
+) {
+    ScrollableTabRow(
+        modifier = Modifier.padding(bottom = 32.dp),
+        selectedTabIndex = selectedTabIndex,
+        backgroundColor = Color.Transparent,
+        edgePadding = 0.dp,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                color = accentColor
+            )
+        }
+    ) {
+        tabs.forEachIndexed { index, tabTitle ->
+            Tab(
+                selected = selectedTabIndex == index,
+                selectedContentColor = accentColor,
+                unselectedContentColor = Color.White,
+                onClick = { onTabSelected(index) }
+            ) {
+                Text(
+                    text = tabTitle,
+                    modifier = Modifier
+                        .padding(
+                            bottom = 8.dp,
+//                            start = 16.dp,
+//                            end = 16.dp,
+                            top = 8.dp,
                         )
-                    )
                 )
-        )
+            }
+        }
     }
 }
 

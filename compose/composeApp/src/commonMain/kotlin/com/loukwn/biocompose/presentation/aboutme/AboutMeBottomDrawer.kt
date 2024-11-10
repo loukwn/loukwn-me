@@ -33,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -44,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.getAgeInYears
+import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
@@ -131,20 +131,7 @@ fun BottomDrawerList(
         }
 
         if (finishedFirstAnimation) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(MoreContentBottomScrimSize)
-                    .align(Alignment.BottomCenter)
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                Color.Transparent,
-                                AboutMeBottomSheetBgColor
-                            )
-                        )
-                    )
-            )
+            SystemUiGradientOverlay(endColor = AboutMeBottomSheetBgColor)
         }
     }
 }
