@@ -114,12 +114,12 @@ private fun DarkScrim(darknessProgress: Float) {
 }
 
 @Composable
-private fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
+fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
     Column(
         modifier = modifier.padding(top = GlobalInsetsToConsume.calculateTopPadding())
             .fillMaxWidth()
     ) {
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(24.dp))
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
             color = Color.White.copy(alpha = .5f)

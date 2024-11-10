@@ -22,7 +22,7 @@ class DefaultPortfolioComponent(
     override val state: State<PortfolioUiState> = _state
 
     private fun getInitialState(): PortfolioUiState {
-        val initialScale = Scale.YEAR
+        val initialScale = Scale.MONTH_6
 
         return PortfolioUiState(
             baseGap = initialScale.baseGap,

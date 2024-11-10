@@ -34,7 +34,7 @@ class DefaultAboutMeComponent(
         "Should not take too long to implement",
         "I do not see how this can break in the future",
         "I am pretty sure this crash is impossible to hit",
-        "I was working before",
+        "It was working before",
         "Did you try restarting?"
     )
 
