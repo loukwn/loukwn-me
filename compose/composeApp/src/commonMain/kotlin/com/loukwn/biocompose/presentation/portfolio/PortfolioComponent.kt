@@ -13,6 +13,7 @@ interface PortfolioComponent {
     val state: State<PortfolioUiState>
 
     fun onScaleChange(scale: Scale)
+    fun onFilterButtonPressed()
 }
 
 class DefaultPortfolioComponent(
@@ -26,20 +27,12 @@ class DefaultPortfolioComponent(
 
         return PortfolioUiState(
             baseGap = initialScale.baseGap,
-//            currentDateLineOffset = getCurrentDateLineOffset(initialScale),
+            isFilterButtonVisible = true,
+            isCalendarScaleComponentVisible = false,
             timeLabels = getTimeLabelsForScale(initialScale),
             calendarItems = getCalendarItems(),
         )
     }
-
-//    private fun getCurrentDateLineOffset(scale: Scale): Dp {
-//        val numberOfMonthsTillNextYear = (getCurrentYear() + 1) * 12 - (getCurrentYear() * 12 + getCurrentMonth())
-//        return when (scale) {
-//            Scale.YEAR_2 -> numberOfMonthsTillNextYear * 100 / 24f
-//            Scale.YEAR -> numberOfMonthsTillNextYear * 100 / 12f
-//            Scale.MONTH_6 -> numberOfMonthsTillNextYear * 100 / 6f
-//        }.dp
-//    }
 
     private fun getTimeLabelsForScale(scale: Scale): List<String> {
         val currentYear = getCurrentYear()
@@ -135,8 +128,15 @@ class DefaultPortfolioComponent(
         _state.update {
             it.copy(
                 baseGap = scale.baseGap,
-//                currentDateLineOffset = getCurrentDateLineOffset(scale),
                 timeLabels = getTimeLabelsForScale(scale),
+            )
+        }
+    }
+
+    override fun onFilterButtonPressed() {
+        _state.update {
+            it.copy(
+                isCalendarScaleComponentVisible = !state.value.isCalendarScaleComponentVisible
             )
         }
     }

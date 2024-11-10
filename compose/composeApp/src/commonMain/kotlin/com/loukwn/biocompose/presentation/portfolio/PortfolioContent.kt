@@ -1,7 +1,9 @@
 package com.loukwn.biocompose.presentation.portfolio
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,6 +16,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,11 +25,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
@@ -44,10 +51,17 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import com.loukwn.biocompose.presentation.aboutme.AboutMeBottomSheetBgColor
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import compose.icons.LineAwesomeIcons
+import compose.icons.lineawesomeicons.ListSolid
 import kotlinx.coroutines.launch
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
+import org.jetbrains.compose.resources.painterResource
 
-private val bgColor = Color(0xff191919)
+private val bgColor = AboutMeBottomSheetBgColor
+private val accentColor = Color(0xff9164fa)
 
 @Composable
 fun PortfolioContent(
@@ -69,20 +83,25 @@ fun PortfolioContent(
                     end = 36.dp,
                 )
         ) {
+            TopBar(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                showFilterButton = state.isFilterButtonVisible,
+                onBackButtonPressed = onBackPressed,
+                onFilterButtonPressed = component::onFilterButtonPressed
+            )
+
+            AnimatedVisibility(
+                state.isCalendarScaleComponentVisible,
+                modifier = Modifier.align(Alignment.End),
+            ) {
+                TimeScaleSelector(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    scale = Scale.entries.first { it.baseGap == state.baseGap },
+                    onScaleSelected = component::onScaleChange
+                )
+            }
+
             val cellGapAnimated = animateDpAsState(state.baseGap, tween(600))
-
-            Text(
-                "PORTFOLIO",
-                fontSize = 20.sp,
-                color = Color.White,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
-
-            TimescaleSelector(
-                modifier = Modifier.padding(vertical = 16.dp).align(Alignment.End),
-                scale = Scale.entries.first { it.baseGap == state.baseGap },
-                onScaleSelected = component::onScaleChange
-            )
 
             val stateRowX = rememberLazyListState() // State for the first Row, X
             val stateRowY = rememberLazyListState() // State for the second Row, Y
@@ -199,86 +218,137 @@ fun PortfolioContent(
 }
 
 @Composable
-private fun TimescaleSelector(
+private fun TopBar(
+    modifier: Modifier = Modifier,
+    showFilterButton: Boolean,
+    onBackButtonPressed: () -> Unit,
+    onFilterButtonPressed: () -> Unit,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = onBackButtonPressed) {
+            Image(
+                painterResource(Res.drawable.back_toolbar),
+                modifier = Modifier.size(24.dp),
+                contentDescription = null,
+            )
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = "Portfolio",
+            style = MaterialTheme.typography.h1,
+            color = Color.White,
+            modifier = Modifier.weight(1f),
+        )
+        if (showFilterButton) {
+            IconButton(onClick = onFilterButtonPressed) {
+                Icon(
+                    imageVector = LineAwesomeIcons.ListSolid,
+                    contentDescription = null,
+                    tint = Color.White,
+                )
+            }
+        }
+    }
+
+}
+
+@Composable
+private fun TimeScaleSelector(
     scale: Scale,
     modifier: Modifier = Modifier,
     onScaleSelected: (Scale) -> Unit,
 ) {
-    Box(
-        modifier
-            .height(36.dp)
-            .width(150.dp)
-            .background(bgColor, shape = RoundedCornerShape(24.dp))
-            .border(1.dp, Color.White.copy(.2f), RoundedCornerShape(24.dp)),
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = spacedBy(8.dp),
     ) {
-        val targetOffset = when (scale) {
-            Scale.YEAR_2 -> 0.dp
-            Scale.YEAR -> 50.dp
-            Scale.MONTH_6 -> 100.dp
-        }
-
-        val xOffsetAnimated by animateDpAsState(targetOffset,  tween(600))
-
-        Box(
-            modifier = Modifier
-                .width(50.dp)
-                .fillMaxHeight()
-                .offset(x = xOffsetAnimated)
-                .background(Color.Magenta, RoundedCornerShape(24.dp))
+        Text(
+            text = "Time scale:",
+            fontSize = 12.sp,
+            color = Color.White,
+            modifier = Modifier.padding(bottom = 2.dp)
         )
 
-        Row(
-            modifier = Modifier.align(Alignment.Center),
-            horizontalArrangement = spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Box(
+            Modifier
+                .height(36.dp)
+                .width(150.dp)
+                .background(bgColor, shape = RoundedCornerShape(24.dp))
+                .border(1.dp, Color.White.copy(.2f), RoundedCornerShape(24.dp)),
         ) {
-            Box(
-                modifier = Modifier
-                    .pointerHoverIcon(PointerIcon.Hand)
-                    .weight(1f, fill = true)
-                    .fillMaxWidth()
-                    .clickable(
-                        onClick = { onScaleSelected(Scale.YEAR_2) },
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(true, color = Color.White, radius = 19.dp),
-                        role = Role.Button,
-                    )
-                    .padding(start = 8.dp, bottom = 4.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text("2Y", fontSize = 11.sp, color = Color.White)
+            val targetOffset = when (scale) {
+                Scale.YEAR_2 -> 0.dp
+                Scale.YEAR -> 50.dp
+                Scale.MONTH_6 -> 100.dp
             }
+
+            val xOffsetAnimated by animateDpAsState(targetOffset, tween(600))
+
             Box(
                 modifier = Modifier
-                    .pointerHoverIcon(PointerIcon.Hand)
-                    .weight(1f, fill = true)
-                    .fillMaxWidth()
-                    .clickable(
-                        onClick = { onScaleSelected(Scale.YEAR) },
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(true, color = Color.White, radius = 21.dp),
-                        role = Role.Button,
-                    )
-                    .padding(bottom = 4.dp),
-                contentAlignment = Alignment.Center,
+                    .width(50.dp)
+                    .fillMaxHeight()
+                    .offset(x = xOffsetAnimated)
+                    .background(Color(0xff9164fa), RoundedCornerShape(24.dp))
+            )
+
+            Row(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalArrangement = spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("1Y", fontSize = 11.sp, color = Color.White)
-            }
-            Box(
-                modifier = Modifier
-                    .pointerHoverIcon(PointerIcon.Hand)
-                    .weight(1f, fill = true)
-                    .fillMaxWidth()
-                    .clickable(
-                        onClick = { onScaleSelected(Scale.MONTH_6) },
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(true, color = Color.White, radius = 19.dp),
-                        role = Role.Button,
-                    )
-                    .padding(end = 8.dp, bottom = 4.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text("6M", fontSize = 11.sp, color = Color.White)
+                Box(
+                    modifier = Modifier
+                        .pointerHoverIcon(PointerIcon.Hand)
+                        .weight(1f, fill = true)
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = { onScaleSelected(Scale.YEAR_2) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = ripple(true, color = Color.White, radius = 19.dp),
+                            role = Role.Button,
+                        )
+                        .padding(start = 8.dp, bottom = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text("2Y", fontSize = 11.sp, color = Color.White)
+                }
+                Box(
+                    modifier = Modifier
+                        .pointerHoverIcon(PointerIcon.Hand)
+                        .weight(1f, fill = true)
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = { onScaleSelected(Scale.YEAR) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = ripple(true, color = Color.White, radius = 21.dp),
+                            role = Role.Button,
+                        )
+                        .padding(bottom = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text("1Y", fontSize = 11.sp, color = Color.White)
+                }
+                Box(
+                    modifier = Modifier
+                        .pointerHoverIcon(PointerIcon.Hand)
+                        .weight(1f, fill = true)
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = { onScaleSelected(Scale.MONTH_6) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = ripple(true, color = Color.White, radius = 19.dp),
+                            role = Role.Button,
+                        )
+                        .padding(end = 8.dp, bottom = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text("6M", fontSize = 11.sp, color = Color.White)
+                }
             }
         }
     }
