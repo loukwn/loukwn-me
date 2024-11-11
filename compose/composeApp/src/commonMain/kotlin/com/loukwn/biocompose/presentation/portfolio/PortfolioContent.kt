@@ -1,8 +1,18 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.loukwn.biocompose.presentation.portfolio
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,9 +44,13 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,8 +68,11 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
 import org.jetbrains.compose.resources.painterResource
 
-val bgColor = Color(0xff1b1a20)
+internal val bgColor = Color(0xff1b1a20)
 private val accentColor = Color(0xff9164fa)
+
+internal val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
+internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
 
 @Composable
 fun PortfolioContent(
@@ -65,71 +82,132 @@ fun PortfolioContent(
 ) {
     val state by remember { component.state }
 
-    Box {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(bgColor)
-                .padding(
-                    top = GlobalInsetsToConsume.calculateTopPadding(),
-                    bottom = 0.dp,
-                    start = 36.dp,
-                    end = 36.dp,
-                )
+    var selectedCalendarItem by remember { mutableStateOf<CalendarItem?>(null) }
+    var showDetails by remember { mutableStateOf(false) }
+
+    SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
+        CompositionLocalProvider(
+            LocalSharedTransitionScope provides this
         ) {
-            TopBar(
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp),
-                showFilterButton = state.isFilterButtonVisible,
-                onBackButtonPressed = onBackPressed,
-                onFilterButtonPressed = component::onFilterButtonPressed
-            )
-
-            val pagerState = rememberPagerState { 2 }
-            val coroutineScope = rememberCoroutineScope()
-
-            Tabs(
-                selectedTabIndex = pagerState.currentPage,
-                tabs = listOf("Work Experience", "Projects")
-            ) { pageIndex ->
-                coroutineScope.launch {
-                    component.onPageChanged(pageIndex)
-                    pagerState.animateScrollToPage(pageIndex)
-                }
-            }
-
-            AnimatedVisibility(
-                state.isCalendarScaleComponentVisible,
-                modifier = Modifier.align(Alignment.End),
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(bgColor),
             ) {
-                TimeScaleSelector(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    scale = Scale.entries.first { it.baseGap == state.baseGap },
-                    onScaleSelected = component::onScaleChange
+                AnimatedContent(
+                    targetState = showDetails,
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(500)) togetherWith
+                                fadeOut(animationSpec = tween(500))
+                    }
+                ) { targetState ->
+                    CompositionLocalProvider(
+                        LocalNavAnimatedVisibilityScope provides this
+                    ) {
+                        if (targetState) {
+                            if (selectedCalendarItem != null) {
+                                CalendarItemDetails(
+                                    calendarItem = selectedCalendarItem!!,
+                                    onCalendarItemDismissed = { showDetails = false },
+                                )
+                            }
+                        } else {
+                            PortfolioContentInternal(
+                                state = state,
+                                onBackPressed = onBackPressed,
+                                onFilterButtonPressed = component::onFilterButtonPressed,
+                                onPageChanged = component::onPageChanged,
+                                onScaleChanged = component::onScaleChanged,
+                                onCalendarItemClicked = {
+                                    selectedCalendarItem = it
+                                    showDetails = true
+                                },
+                            )
+                        }
+                    }
+                }
+                SystemUiGradientOverlay(
+                    endColor = bgColor,
+                    modifier = Modifier.renderInSharedTransitionScopeOverlay()
                 )
             }
+        }
+    }
+}
 
-            HorizontalPager(
-                state = pagerState,
-                userScrollEnabled = false,
-                modifier = Modifier.fillMaxSize(),
-            ) { page ->
-                when (page) {
-                    0 -> {
-                        WorkExperiencePage(
-                            baseGap = state.baseGap,
-                            timeLabels = state.timeLabels,
-                            calendarItems = state.calendarItems,
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
+@Composable
+private fun PortfolioContentInternal(
+    state: PortfolioUiState,
+    onBackPressed: () -> Unit,
+    onFilterButtonPressed: () -> Unit,
+    onPageChanged: (Int) -> Unit,
+    onScaleChanged: (Scale) -> Unit,
+    onCalendarItemClicked: (CalendarItem) -> Unit
+) {
 
-                    1 -> {
-                        ProjectsPage()
-                    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = GlobalInsetsToConsume.calculateTopPadding(),
+                bottom = 0.dp,
+                start = 36.dp,
+                end = 36.dp,
+            )
+    ) {
+        TopBar(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 16.dp, bottom = 8.dp),
+            showFilterButton = state.isFilterButtonVisible,
+            onBackButtonPressed = onBackPressed,
+            onFilterButtonPressed = onFilterButtonPressed
+        )
+
+        val pagerState = rememberPagerState { 2 }
+        val coroutineScope = rememberCoroutineScope()
+
+        Tabs(
+            selectedTabIndex = pagerState.currentPage,
+            tabs = listOf("Work Experience", "Projects")
+        ) { pageIndex ->
+            coroutineScope.launch {
+                onPageChanged(pageIndex)
+                pagerState.animateScrollToPage(pageIndex)
+            }
+        }
+
+        AnimatedVisibility(
+            state.isCalendarScaleComponentVisible,
+            modifier = Modifier.align(Alignment.End),
+        ) {
+            TimeScaleSelector(
+                modifier = Modifier.padding(bottom = 16.dp),
+                scale = Scale.entries.first { it.baseGap == state.baseGap },
+                onScaleSelected = onScaleChanged
+            )
+        }
+
+        HorizontalPager(
+            state = pagerState,
+            userScrollEnabled = false,
+            modifier = Modifier.fillMaxSize(),
+        ) { page ->
+            when (page) {
+                0 -> {
+                    WorkExperiencePage(
+                        baseGap = state.baseGap,
+                        timeLabels = state.timeLabels,
+                        calendarItems = state.calendarItems,
+                        modifier = Modifier.fillMaxSize(),
+                        onCalendarItemClicked = onCalendarItemClicked,
+                    )
+                }
+
+                1 -> {
+                    ProjectsPage()
                 }
             }
         }
-        SystemUiGradientOverlay(endColor = bgColor)
     }
 }
 
@@ -163,8 +241,6 @@ private fun Tabs(
                     modifier = Modifier
                         .padding(
                             bottom = 8.dp,
-//                            start = 16.dp,
-//                            end = 16.dp,
                             top = 8.dp,
                         )
                 )

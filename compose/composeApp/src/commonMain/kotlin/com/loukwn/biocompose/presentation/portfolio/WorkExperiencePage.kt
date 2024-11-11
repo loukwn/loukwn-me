@@ -1,7 +1,11 @@
 package com.loukwn.biocompose.presentation.portfolio
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -32,18 +36,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun WorkExperiencePage(
+internal fun WorkExperiencePage(
     baseGap: Dp,
     timeLabels: List<String>,
     calendarItems: List<CalendarItem>,
     modifier: Modifier = Modifier,
+    onCalendarItemClicked: (CalendarItem) -> Unit,
 ) {
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedElementScope found")
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibility found")
+
     val cellGapAnimated = animateDpAsState(baseGap, tween(600))
     val stateRowX = rememberLazyListState() // State for the first Row, X
     val stateRowY = rememberLazyListState() // State for the second Row, Y
@@ -101,39 +113,79 @@ fun WorkExperiencePage(
                     }
 
                     is CalendarItem.Job -> {
-                        Row(
-                            modifier = Modifier
-                                .padding(1.dp)
-                                .background(bgColor)
-                                .background(
-                                    item.accentColor.copy(alpha = .15f),
-                                    RoundedCornerShape(16.dp)
-                                )
-                                .height(item.size * cellGapAnimated.value)
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(16.dp))
-                                .clickable(onClick = { }),
-                        ) {
-                            Box(
+                        with(sharedTransitionScope) {
+                            Row(
                                 modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(12.dp)
-                                    .background(item.accentColor),
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .padding(
-                                        horizontal = 16.dp,
-                                        vertical = 8.dp,
-                                    ),
-                                verticalArrangement = spacedBy(2.dp),
+                                    .padding(1.dp)
+                                    .clickable(onClick = { onCalendarItemClicked(item) })
+                                    .sharedBounds(
+                                        sharedContentState = rememberSharedContentState(
+                                            key = "${item.title}-bounds",
+                                        ),
+                                        enter = slideIn(initialOffset = { IntOffset.Zero }),
+                                        exit = slideOut(targetOffset = { IntOffset.Zero }),
+                                        animatedVisibilityScope = animatedVisibilityScope,
+                                        resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
+                                    )
+                                    .background(bgColor)
+                                    .background(
+                                        item.accentColor.copy(alpha = .15f),
+                                        RoundedCornerShape(16.dp)
+                                    )
+                                    .height(item.size * cellGapAnimated.value)
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(16.dp)),
                             ) {
-                                Text(text = item.title, color = Color.White)
-                                Text(
-                                    text = item.durationText,
-                                    color = Color.White.copy(.7f),
-                                    fontSize = 12.sp,
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(12.dp)
+                                        .background(item.accentColor)
+                                        .sharedElement(
+                                            state = rememberSharedContentState(
+                                                key = "${item.title}-box",
+                                            ),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                        ),
                                 )
+                                Column(
+                                    modifier = Modifier
+                                        .padding(
+                                            horizontal = 16.dp,
+                                            vertical = 8.dp,
+                                        )
+                                        .sharedElement(
+                                            state = rememberSharedContentState(
+                                                key = "${item.title}-box-internal",
+                                            ),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                        ),
+                                    verticalArrangement = spacedBy(2.dp),
+                                ) {
+                                    Text(
+                                        text = item.title,
+                                        color = Color.White,
+                                        modifier = Modifier
+                                            .sharedElement(
+                                                state = rememberSharedContentState(
+                                                    key = "${item.title}-title",
+                                                ),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                            ),
+                                    )
+                                    Text(
+                                        text = item.durationText,
+                                        color = Color.White.copy(.7f),
+                                        fontSize = 12.sp,
+                                        modifier = Modifier
+                                            .sharedElement(
+                                                state = rememberSharedContentState(
+                                                    key = "${item.title}-duration",
+                                                ),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                            )
+                                    )
+                                }
                             }
                         }
                     }

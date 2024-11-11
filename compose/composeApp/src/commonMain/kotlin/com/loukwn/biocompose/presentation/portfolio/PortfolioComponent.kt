@@ -12,7 +12,7 @@ import kotlin.math.abs
 interface PortfolioComponent {
     val state: State<PortfolioUiState>
 
-    fun onScaleChange(scale: Scale)
+    fun onScaleChanged(scale: Scale)
     fun onFilterButtonPressed()
     fun onPageChanged(pageIndex: Int)
 }
@@ -116,7 +116,11 @@ class DefaultPortfolioComponent(
                 )
             )
             if (index != myJobs.lastIndex) {
-                jobs.add(CalendarItem.Gap(job.ended.diffIn6MonthsWith(jobsSortedByStartDate[index + 1].started)))
+                jobs.add(
+                    CalendarItem.Gap(
+                        job.ended.diffIn6MonthsWith(jobsSortedByStartDate[index + 1].started)
+                    )
+                )
             }
         }
         jobs.add(CalendarItem.Gap(gapFromEnd))
@@ -124,7 +128,7 @@ class DefaultPortfolioComponent(
         return jobs.reversed()
     }
 
-    override fun onScaleChange(scale: Scale) {
+    override fun onScaleChanged(scale: Scale) {
         _state.update {
             it.copy(
                 baseGap = scale.baseGap,
