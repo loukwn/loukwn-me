@@ -20,7 +20,10 @@ sealed class CalendarItem {
     abstract val size: Float
 
     data class Job(
+        val company: String,
         val title: String,
+        val location: String,
+        val description: String,
         val accentColor: Color,
         val durationText: String,
         override val size: Float,

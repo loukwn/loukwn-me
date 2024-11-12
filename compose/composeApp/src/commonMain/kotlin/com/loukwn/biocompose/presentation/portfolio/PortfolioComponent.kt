@@ -2,9 +2,12 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.ComponentContext
-import com.loukwn.biocompose.getCurrentMonth
+import com.loukwn.biocompose.data.Date
+import com.loukwn.biocompose.data.diffIn6MonthsWith
+import com.loukwn.biocompose.data.durationIn6Months
+import com.loukwn.biocompose.data.durationString
+import com.loukwn.biocompose.data.myJobs
 import com.loukwn.biocompose.getCurrentYear
 import com.loukwn.biocompose.presentation.util.update
 import kotlin.math.abs
@@ -24,7 +27,7 @@ class DefaultPortfolioComponent(
     override val state: State<PortfolioUiState> = _state
 
     private fun getInitialState(): PortfolioUiState {
-        val initialScale = Scale.MONTH_6
+        val initialScale = Scale.YEAR
 
         return PortfolioUiState(
             baseGap = initialScale.baseGap,
@@ -110,7 +113,10 @@ class DefaultPortfolioComponent(
             jobs.add(
                 CalendarItem.Job(
                     title = job.title,
+                    company = job.company,
+                    location = job.location,
                     accentColor = job.accentColor,
+                    description = job.description,
                     durationText = job.durationString(),
                     size = job.durationIn6Months(),
                 )
@@ -156,72 +162,5 @@ class DefaultPortfolioComponent(
 
     companion object {
         private const val STARTING_YEAR = 2019
-    }
-}
-
-
-data class Job(
-    val title: String,
-    val started: Date,
-    val ended: Date,
-    val accentColor: Color,
-)
-
-data class Date(
-    val month: Int,
-    val year: Int,
-)
-
-fun Date.diffIn6MonthsWith(other: Date): Float {
-    val startMonth = year * 12 + month
-    val endMonth = other.year * 12 + other.month
-    return (endMonth - startMonth) / 6f
-}
-
-val myJobs by lazy {
-    listOf(
-        Job(
-            title = "Nutmeg",
-            started = Date(month = 3, year = 2023),
-            ended = Date(month = getCurrentMonth(), year = getCurrentYear()),
-            accentColor = Color(0xff0060f0)
-        ),
-        Job(
-            title = "Muzz",
-            started = Date(month = 10, year = 2019),
-            ended = Date(month = 3, year = 2023),
-            accentColor = Color(0xfffb406c)
-        ),
-    )
-}
-
-fun Job.durationIn6Months(): Float {
-    return started.diffIn6MonthsWith(ended)
-}
-
-fun Job.durationString(): String {
-    val startPart = "${getMonthNameForNumber(started.month)} ${started.year}"
-    val endPart = if (ended.year == getCurrentYear() && ended.month == getCurrentMonth()) {
-        "Present"
-    } else {
-        "${getMonthNameForNumber(ended.month)} ${ended.year}"
-    }
-    return "$startPart - $endPart"
-}
-
-fun getMonthNameForNumber(month: Int): String {
-    return when (month) {
-        1 -> "Jan"
-        2 -> "Feb"
-        3 -> "Mar"
-        4 -> "Apr"
-        5 -> "May"
-        6 -> "Jun"
-        7 -> "Jul"
-        8 -> "Aug"
-        9 -> "Sep"
-        10 -> "Oct"
-        11 -> "Nov"
-        else -> "Dec"
     }
 }

@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -25,7 +25,7 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     sourceSets {
         
         commonMain.dependencies {
@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(libs.composeIcons.lineAwesome)
             implementation(libs.composeIcons.simpleIcons)
+            implementation(libs.composeIcons.evaIcons)
         }
     }
 }

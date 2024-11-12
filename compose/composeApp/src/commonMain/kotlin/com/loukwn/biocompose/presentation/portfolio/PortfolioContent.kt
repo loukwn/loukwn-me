@@ -13,7 +13,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,13 +28,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -60,13 +56,13 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
+import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
-import compose.icons.LineAwesomeIcons
-import compose.icons.lineawesomeicons.ListSolid
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.ArrowIosBack
+import compose.icons.evaicons.outline.Options
 import kotlinx.coroutines.launch
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
-import org.jetbrains.compose.resources.painterResource
 
 internal val bgColor = Color(0xff1b1a20)
 private val accentColor = Color(0xff9164fa)
@@ -260,13 +256,10 @@ private fun TopBar(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = onBackButtonPressed) {
-            Image(
-                painterResource(Res.drawable.back_toolbar),
-                modifier = Modifier.size(24.dp),
-                contentDescription = null,
-            )
-        }
+        VectorIconButton(
+            imageVector = EvaIcons.Outline.ArrowIosBack,
+            onClick = onBackButtonPressed,
+        )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = "Portfolio",
@@ -275,13 +268,10 @@ private fun TopBar(
             modifier = Modifier.weight(1f),
         )
         if (showFilterButton) {
-            IconButton(onClick = onFilterButtonPressed) {
-                Icon(
-                    imageVector = LineAwesomeIcons.ListSolid,
-                    contentDescription = null,
-                    tint = Color.White,
-                )
-            }
+            VectorIconButton(
+                imageVector = EvaIcons.Outline.Options,
+                onClick = onFilterButtonPressed,
+            )
         }
     }
 

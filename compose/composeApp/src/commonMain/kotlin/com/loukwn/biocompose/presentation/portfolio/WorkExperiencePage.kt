@@ -35,6 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -117,10 +119,11 @@ internal fun WorkExperiencePage(
                             Row(
                                 modifier = Modifier
                                     .padding(1.dp)
+                                    .pointerHoverIcon(PointerIcon.Hand)
                                     .clickable(onClick = { onCalendarItemClicked(item) })
                                     .sharedBounds(
                                         sharedContentState = rememberSharedContentState(
-                                            key = "${item.title}-bounds",
+                                            key = "${item.company}-bounds",
                                         ),
                                         enter = slideIn(initialOffset = { IntOffset.Zero }),
                                         exit = slideOut(targetOffset = { IntOffset.Zero }),
@@ -140,13 +143,7 @@ internal fun WorkExperiencePage(
                                     modifier = Modifier
                                         .fillMaxHeight()
                                         .width(12.dp)
-                                        .background(item.accentColor)
-                                        .sharedElement(
-                                            state = rememberSharedContentState(
-                                                key = "${item.title}-box",
-                                            ),
-                                            animatedVisibilityScope = animatedVisibilityScope,
-                                        ),
+                                        .background(item.accentColor),
                                 )
                                 Column(
                                     modifier = Modifier
@@ -156,19 +153,19 @@ internal fun WorkExperiencePage(
                                         )
                                         .sharedElement(
                                             state = rememberSharedContentState(
-                                                key = "${item.title}-box-internal",
+                                                key = "${item.company}-box-internal",
                                             ),
                                             animatedVisibilityScope = animatedVisibilityScope,
                                         ),
                                     verticalArrangement = spacedBy(2.dp),
                                 ) {
                                     Text(
-                                        text = item.title,
+                                        text = item.company,
                                         color = Color.White,
                                         modifier = Modifier
                                             .sharedElement(
                                                 state = rememberSharedContentState(
-                                                    key = "${item.title}-title",
+                                                    key = "${item.company}-title",
                                                 ),
                                                 animatedVisibilityScope = animatedVisibilityScope,
                                             ),
@@ -180,7 +177,7 @@ internal fun WorkExperiencePage(
                                         modifier = Modifier
                                             .sharedElement(
                                                 state = rememberSharedContentState(
-                                                    key = "${item.title}-duration",
+                                                    key = "${item.company}-duration",
                                                 ),
                                                 animatedVisibilityScope = animatedVisibilityScope,
                                             )
