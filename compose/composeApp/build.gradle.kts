@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.composeIcons.lineAwesome)
             implementation(libs.composeIcons.simpleIcons)
             implementation(libs.composeIcons.evaIcons)
+            implementation(libs.essenty.lifecycle.coroutines)
         }
     }
 }

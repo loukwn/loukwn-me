@@ -2,7 +2,9 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
@@ -58,7 +60,7 @@ internal fun WorkExperiencePage(
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
         ?: throw IllegalStateException("No AnimatedVisibility found")
 
-    val cellGapAnimated = animateDpAsState(baseGap, tween(600))
+    val cellGapAnimated = animateDpAsState(baseGap, spring(Spring.DampingRatioMediumBouncy))
     val stateRowX = rememberLazyListState() // State for the first Row, X
     val stateRowY = rememberLazyListState() // State for the second Row, Y
     val scope = rememberCoroutineScope()

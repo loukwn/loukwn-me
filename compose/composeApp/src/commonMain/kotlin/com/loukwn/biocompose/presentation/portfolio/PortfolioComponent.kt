@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.portfolio
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ComponentContext
 import com.loukwn.biocompose.data.Date
 import com.loukwn.biocompose.data.diffIn6MonthsWith
@@ -10,6 +11,11 @@ import com.loukwn.biocompose.data.durationString
 import com.loukwn.biocompose.data.myJobs
 import com.loukwn.biocompose.getCurrentYear
 import com.loukwn.biocompose.presentation.util.update
+import kotlinx.coroutines.SupervisorJob
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 interface PortfolioComponent {
@@ -21,19 +27,34 @@ interface PortfolioComponent {
 }
 
 class DefaultPortfolioComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
 ) : PortfolioComponent, ComponentContext by componentContext {
     private val _state = mutableStateOf(getInitialState())
     override val state: State<PortfolioUiState> = _state
 
-    private fun getInitialState(): PortfolioUiState {
-        val initialScale = Scale.YEAR
+    private val scope = coroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
+    init {
+        scope.launch {
+            delay(400)
+            val initialScale = Scale.YEAR
+
+            _state.update {
+                it.copy(
+                    baseGap = initialScale.baseGap,
+                    timeLabels = getTimeLabelsForScale(initialScale),
+                    isFilterButtonVisible = true,
+                )
+            }
+        }
+    }
+
+    private fun getInitialState(): PortfolioUiState {
         return PortfolioUiState(
-            baseGap = initialScale.baseGap,
-            isFilterButtonVisible = true,
+            baseGap = 0.dp,
+            isFilterButtonVisible = false,
             isCalendarScaleComponentVisible = false,
-            timeLabels = getTimeLabelsForScale(initialScale),
+            timeLabels = emptyList(),
             calendarItems = getCalendarItems(),
         )
     }
@@ -118,6 +139,7 @@ class DefaultPortfolioComponent(
                     accentColor = job.accentColor,
                     description = job.description,
                     durationText = job.durationString(),
+                    links = job.links,
                     size = job.durationIn6Months(),
                 )
             )

@@ -3,6 +3,7 @@ package com.loukwn.biocompose.presentation.portfolio
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.loukwn.biocompose.data.JobLink
 
 enum class Scale(val baseGap: Dp) {
     YEAR_2(25.dp), YEAR(50.dp), MONTH_6(100.dp)
@@ -26,6 +27,7 @@ sealed class CalendarItem {
         val description: String,
         val accentColor: Color,
         val durationText: String,
+        val links: List<JobLink>,
         override val size: Float,
     ): CalendarItem()
 

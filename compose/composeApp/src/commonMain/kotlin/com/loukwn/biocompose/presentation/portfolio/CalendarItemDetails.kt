@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -36,6 +41,7 @@ import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
 import compose.icons.evaicons.outline.Close
+import compose.icons.evaicons.outline.Link
 import compose.icons.evaicons.outline.MessageSquare
 import compose.icons.evaicons.outline.Person
 import compose.icons.evaicons.outline.Pin
@@ -76,7 +82,8 @@ internal fun CalendarItemDetails(
                             calendarItem.accentColor.copy(alpha = .15f),
                             RoundedCornerShape(16.dp)
                         )
-                        .fillMaxSize()
+                        .height(IntrinsicSize.Min)
+                        .align(Alignment.Center)
                         .clip(RoundedCornerShape(16.dp)),
                 ) {
                     Box(
@@ -151,7 +158,7 @@ internal fun CalendarItemDetails(
                         Column(
                             modifier = Modifier
                                 .alpha(alphaAnimated)
-                                .fillMaxSize()
+                                .fillMaxWidth()
                                 .skipToLookaheadSize(),
                             verticalArrangement = spacedBy(16.dp)
                         ) {
@@ -165,10 +172,9 @@ internal fun CalendarItemDetails(
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CalendarJobContent(model: CalendarItem.Job) {
-    Divider(color = Color.White.copy(alpha = .4f), thickness = 1.dp)
-
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = spacedBy(60.dp),
@@ -181,7 +187,7 @@ private fun CalendarJobContent(model: CalendarItem.Job) {
         Text(model.title, fontSize = 14.sp, color = Color.White)
     }
 
-    Divider(color = Color.White.copy(alpha = .4f), thickness = 1.dp)
+    Separator()
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -195,7 +201,7 @@ private fun CalendarJobContent(model: CalendarItem.Job) {
         Text(model.location, fontSize = 14.sp, color = Color.White)
     }
 
-    Divider(color = Color.White.copy(alpha = .4f), thickness = 1.dp)
+    Separator()
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -209,5 +215,31 @@ private fun CalendarJobContent(model: CalendarItem.Job) {
         Text(model.description, fontSize = 14.sp, color = Color.White)
     }
 
-    Divider(color = Color.White.copy(alpha = .4f), thickness = 1.dp)
+    Separator()
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = spacedBy(60.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = EvaIcons.Outline.Link,
+            contentDescription = null,
+            tint = Color.White,
+        )
+        FlowRow {
+            model.links.forEach {
+                VectorIconButton(it.imageVector) {}
+            }
+        }
+    }
+}
+
+@Composable
+private fun Separator() {
+    Divider(
+        color = Color.White.copy(alpha = .3f),
+        thickness = 1.dp,
+        modifier = Modifier.padding(start = 84.dp),
+    )
 }

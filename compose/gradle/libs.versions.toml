@@ -7,6 +7,7 @@ decompose = "3.1.0"
 kotlin-serialization = "1.6.3"
 composeIcons = "1.1.1"
 compose-emoji = "2.0.0"
+essenty = "2.2.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -16,6 +17,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose"}
 decompose-extensions = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose"}
+essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty"}
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization"}
 
 composeIcons-cssGg = { module = "br.com.devsrsouza.compose.icons:css-gg", version.ref = "composeIcons" }

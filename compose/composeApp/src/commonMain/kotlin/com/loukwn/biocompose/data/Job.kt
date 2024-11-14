@@ -1,8 +1,14 @@
 package com.loukwn.biocompose.data
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.loukwn.biocompose.getCurrentMonth
 import com.loukwn.biocompose.getCurrentYear
+import compose.icons.EvaIcons
+import compose.icons.SimpleIcons
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.Link2
+import compose.icons.simpleicons.Googleplay
 
 data class Job(
     val title: String,
@@ -12,6 +18,12 @@ data class Job(
     val company: String,
     val description: String,
     val accentColor: Color,
+    val links: List<JobLink>,
+)
+
+data class JobLink(
+    val imageVector: ImageVector,
+    val link: String,
 )
 
 data class Date(
@@ -62,10 +74,14 @@ val myJobs by lazy {
             title = "Android Engineer",
             company = "JPMorgan Chase",
             location = "London, UK",
-            description = "I work at asd asdg asdhasd ahsd asdasd sdag \n\nasdg asdfha sdhasdhasd hasdasd ahsdhaeas asdh asdh g\n\n asdgasdg asdga sdasdhasdhasdh",
+            description = "Helping people invest their money and secure their future.",
             started = Date(month = 3, year = 2023),
             ended = Date(month = getCurrentMonth(), year = getCurrentYear()),
-            accentColor = Color(0xff0060f0)
+            accentColor = Color(0xff0060f0),
+            links = listOf(
+                JobLink(SimpleIcons.Googleplay, ""),
+                JobLink(EvaIcons.Outline.Link2, "")
+            )
         ),
         Job(
             title = "Android Engineer",
@@ -74,7 +90,8 @@ val myJobs by lazy {
             description = "",
             started = Date(month = 10, year = 2019),
             ended = Date(month = 3, year = 2023),
-            accentColor = Color(0xfffb406c)
+            accentColor = Color(0xfffb406c),
+            links = emptyList()
         ),
     )
 }
