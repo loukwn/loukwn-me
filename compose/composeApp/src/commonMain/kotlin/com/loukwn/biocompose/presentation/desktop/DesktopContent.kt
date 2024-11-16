@@ -95,7 +95,7 @@ fun DesktopContent(
 enum class DesktopApp(val title: String, val iconResource: DrawableResource) {
     AboutMe("About me", Res.drawable.avatar),
     Portfolio("Portfolio", Res.drawable.avatar),
-    ContactMe("Contact Me", Res.drawable.avatar),
+    Links("Links", Res.drawable.avatar),
     AboutThis("About This", Res.drawable.avatar)
 }
 

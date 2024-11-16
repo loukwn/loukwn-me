@@ -17,6 +17,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.loukwn.biocompose.presentation.aboutme.AboutMeContent
 import com.loukwn.biocompose.presentation.design_system.theme.BioTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopContent
+import com.loukwn.biocompose.presentation.links.LinksContent
 import com.loukwn.biocompose.presentation.portfolio.PortfolioContent
 
 @Composable
@@ -59,6 +60,11 @@ private fun Graph(component: RootComponent) {
                 onBackPressed = component::onBack,
             )
             is RootComponent.Child.Portfolio -> PortfolioContent(
+                component = child.component,
+                onSystemUiModeChanged = component::onSystemUiModeChanged,
+                onBackPressed = component::onBack,
+            )
+            is RootComponent.Child.Links -> LinksContent(
                 component = child.component,
                 onSystemUiModeChanged = component::onSystemUiModeChanged,
                 onBackPressed = component::onBack,

@@ -16,6 +16,8 @@ import com.loukwn.biocompose.presentation.aboutme.DefaultAboutMeComponent
 import com.loukwn.biocompose.presentation.desktop.DefaultDesktopComponent
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopComponent
+import com.loukwn.biocompose.presentation.links.DefaultLinksComponent
+import com.loukwn.biocompose.presentation.links.LinksComponent
 import com.loukwn.biocompose.presentation.portfolio.DefaultPortfolioComponent
 import com.loukwn.biocompose.presentation.portfolio.PortfolioComponent
 import com.loukwn.biocompose.presentation.util.update
@@ -43,6 +45,7 @@ interface RootComponent {
         data class Desktop(val component: DesktopComponent) : Child()
         data class AboutMe(val component: AboutMeComponent) : Child()
         data class Portfolio(val component: PortfolioComponent) : Child()
+        data class Links(val component: LinksComponent) : Child()
     }
 }
 
@@ -92,6 +95,7 @@ class DefaultRootComponent(
             is Configuration.Desktop -> RootComponent.Child.Desktop(desktopComponent(componentContext))
             is Configuration.AboutMe -> RootComponent.Child.AboutMe(aboutMeComponent(componentContext))
             is Configuration.Portfolio -> RootComponent.Child.Portfolio(portfolioComponent(componentContext))
+            is Configuration.Links -> RootComponent.Child.Links(linksComponent(componentContext))
         }
 
     private fun desktopComponent(componentContext: ComponentContext): DesktopComponent =
@@ -103,6 +107,8 @@ class DefaultRootComponent(
     private fun portfolioComponent(componentContext: ComponentContext): PortfolioComponent =
         DefaultPortfolioComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
 
+    private fun linksComponent(componentContext: ComponentContext): LinksComponent =
+        DefaultLinksComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
 
     override fun onBack() {
         if (canGoBackStateFlow.value) {
@@ -123,7 +129,7 @@ class DefaultRootComponent(
         val configuration = when (desktopApp) {
             DesktopApp.AboutMe -> Configuration.AboutMe
             DesktopApp.Portfolio -> Configuration.Portfolio
-            DesktopApp.ContactMe -> TODO()
+            DesktopApp.Links -> Configuration.Links
             DesktopApp.AboutThis -> TODO()
         }
         navigation.push(configuration)
@@ -143,9 +149,9 @@ class DefaultRootComponent(
         
         @Serializable
         data object Portfolio : Configuration
-//
-//        @Serializable
-//        data object ContactMe : Configuration
+
+        @Serializable
+        data object Links : Configuration
 //
 //        @Serializable
 //        data object AboutThis : Configuration
