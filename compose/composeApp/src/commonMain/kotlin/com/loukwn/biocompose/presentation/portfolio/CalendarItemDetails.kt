@@ -5,6 +5,7 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -34,8 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.loukwn.biocompose.data.JobLink
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
@@ -61,7 +64,16 @@ internal fun CalendarItemDetails(
 
     with(sharedTransitionScope) {
         if (calendarItem is CalendarItem.Job) {
-            Box(modifier = modifier.fillMaxSize().background(bgColor)) {
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(bgColor)
+                    .clickable(
+                        onClick = onCalendarItemDismissed,
+                        interactionSource = null,
+                        indication = null,
+                    ),
+            ) {
                 Row(
                     modifier = Modifier
                         .padding(
@@ -84,7 +96,12 @@ internal fun CalendarItemDetails(
                         )
                         .height(IntrinsicSize.Min)
                         .align(Alignment.Center)
-                        .clip(RoundedCornerShape(16.dp)),
+                        .clip(RoundedCornerShape(16.dp))
+                        .clickable(
+                            onClick = {},
+                            interactionSource = null,
+                            indication = null,
+                        ),
                 ) {
                     Box(
                         modifier = Modifier
@@ -174,7 +191,9 @@ internal fun CalendarItemDetails(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CalendarJobContent(model: CalendarItem.Job) {
+private fun CalendarJobContent(
+    model: CalendarItem.Job,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = spacedBy(60.dp),
@@ -219,7 +238,7 @@ private fun CalendarJobContent(model: CalendarItem.Job) {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = spacedBy(60.dp),
+        horizontalArrangement = spacedBy(52.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -227,9 +246,12 @@ private fun CalendarJobContent(model: CalendarItem.Job) {
             contentDescription = null,
             tint = Color.White,
         )
+        val uriHandler = LocalUriHandler.current
         FlowRow {
             model.links.forEach {
-                VectorIconButton(it.imageVector) {}
+                VectorIconButton(it.imageVector) {
+                    uriHandler.openUri(it.link)
+                }
             }
         }
     }

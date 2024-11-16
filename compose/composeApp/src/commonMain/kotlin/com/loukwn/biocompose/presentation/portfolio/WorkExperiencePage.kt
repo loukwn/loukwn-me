@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.gestures.scrollable
@@ -27,6 +28,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -49,6 +51,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun WorkExperiencePage(
+    containerScrollableState: ScrollableState,
+    timeLabelLazyListState: LazyListState,
+    calendarItemLazyListState: LazyListState,
     baseGap: Dp,
     timeLabels: List<String>,
     calendarItems: List<CalendarItem>,
@@ -61,28 +66,18 @@ internal fun WorkExperiencePage(
         ?: throw IllegalStateException("No AnimatedVisibility found")
 
     val cellGapAnimated = animateDpAsState(baseGap, spring(Spring.DampingRatioMediumBouncy))
-    val stateRowX = rememberLazyListState() // State for the first Row, X
-    val stateRowY = rememberLazyListState() // State for the second Row, Y
-    val scope = rememberCoroutineScope()
-    val scrollState = rememberScrollableState { delta ->
-        scope.launch {
-            stateRowX.scrollBy(-delta)
-            stateRowY.scrollBy(-delta)
-        }
-        delta
-    }
 
     Box(
         modifier = modifier
             .scrollable(
-                state = scrollState,
+                state = containerScrollableState,
                 orientation = Orientation.Vertical,
                 flingBehavior = ScrollableDefaults.flingBehavior(),
             )
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            state = stateRowX,
+            state = timeLabelLazyListState,
             userScrollEnabled = false
         ) {
             items(timeLabels.size) {
@@ -103,7 +98,7 @@ internal fun WorkExperiencePage(
         LazyColumn(
             modifier = Modifier.fillMaxHeight().fillMaxWidth(.66f)
                 .align(Alignment.CenterEnd),
-            state = stateRowY,
+            state = calendarItemLazyListState,
             userScrollEnabled = false,
         ) {
             items(calendarItems.size) {

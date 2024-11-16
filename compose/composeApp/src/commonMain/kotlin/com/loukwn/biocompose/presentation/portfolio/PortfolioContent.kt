@@ -16,6 +16,9 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -29,6 +32,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,6 +57,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -90,6 +96,17 @@ fun PortfolioContent(
                     .fillMaxSize()
                     .background(bgColor),
             ) {
+                val timeLabelLazyListState = rememberLazyListState() // State for the first Row, X
+                val calendarItemLazyListState = rememberLazyListState() // State for the second Row, Y
+                val scope = rememberCoroutineScope()
+                val containerScrollableState = rememberScrollableState { delta ->
+                    scope.launch {
+                        timeLabelLazyListState.scrollBy(-delta)
+                        calendarItemLazyListState.scrollBy(-delta)
+                    }
+                    delta
+                }
+
                 AnimatedContent(
                     targetState = showDetails,
                     transitionSpec = {
@@ -110,6 +127,9 @@ fun PortfolioContent(
                         } else {
                             PortfolioContentInternal(
                                 state = state,
+                                containerScrollableState = containerScrollableState,
+                                timeLabelLazyListState = timeLabelLazyListState,
+                                calendarItemLazyListState = calendarItemLazyListState,
                                 onBackPressed = onBackPressed,
                                 onFilterButtonPressed = component::onFilterButtonPressed,
                                 onPageChanged = component::onPageChanged,
@@ -134,6 +154,9 @@ fun PortfolioContent(
 @Composable
 private fun PortfolioContentInternal(
     state: PortfolioUiState,
+    containerScrollableState: ScrollableState,
+    timeLabelLazyListState: LazyListState,
+    calendarItemLazyListState: LazyListState,
     onBackPressed: () -> Unit,
     onFilterButtonPressed: () -> Unit,
     onPageChanged: (Int) -> Unit,
@@ -191,6 +214,9 @@ private fun PortfolioContentInternal(
             when (page) {
                 0 -> {
                     WorkExperiencePage(
+                        containerScrollableState = containerScrollableState,
+                        timeLabelLazyListState = timeLabelLazyListState,
+                        calendarItemLazyListState = calendarItemLazyListState,
                         baseGap = state.baseGap,
                         timeLabels = state.timeLabels,
                         calendarItems = state.calendarItems,

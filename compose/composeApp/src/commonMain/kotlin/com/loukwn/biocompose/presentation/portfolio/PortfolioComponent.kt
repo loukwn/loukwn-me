@@ -13,6 +13,7 @@ import com.loukwn.biocompose.getCurrentYear
 import com.loukwn.biocompose.presentation.util.update
 import kotlinx.coroutines.SupervisorJob
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.loukwn.biocompose.data.JobLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -183,6 +184,6 @@ class DefaultPortfolioComponent(
     }
 
     companion object {
-        private const val STARTING_YEAR = 2019
+        private const val STARTING_YEAR = 2017
     }
 }
