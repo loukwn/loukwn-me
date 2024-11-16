@@ -21,6 +21,9 @@ import com.loukwn.biocompose.presentation.portfolio.PortfolioComponent
 import com.loukwn.biocompose.presentation.util.update
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -32,6 +35,7 @@ interface RootComponent {
     val state: State<RootUiState>
 
     fun onBack()
+    fun onHome()
     fun onDesktopAppClicked(desktopApp: DesktopApp)
     fun onSystemUiModeChanged(isLight: Boolean)
 
@@ -57,6 +61,9 @@ class DefaultRootComponent(
 
     private val _state = mutableStateOf(RootUiState(getFormattedTime(), false))
     override val state: State<RootUiState> = _state
+
+    private val canGoBackStateFlow = MutableStateFlow(true)
+    private val deepBackEventDispatchFlow = MutableSharedFlow<Unit>()
 
     init {
         updateTimeInIntervals()
@@ -94,11 +101,22 @@ class DefaultRootComponent(
         DefaultAboutMeComponent(componentContext)
     
     private fun portfolioComponent(componentContext: ComponentContext): PortfolioComponent =
-        DefaultPortfolioComponent(componentContext)
+        DefaultPortfolioComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
 
 
     override fun onBack() {
+        if (canGoBackStateFlow.value) {
+            navigation.pop()
+        } else {
+            coroutineScope.launch {
+                deepBackEventDispatchFlow.emit(Unit)
+            }
+        }
+    }
+
+    override fun onHome() {
         navigation.pop()
+        canGoBackStateFlow.update { true }
     }
 
     override fun onDesktopAppClicked(desktopApp: DesktopApp) {

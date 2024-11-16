@@ -57,7 +57,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,7 +84,6 @@ fun PortfolioContent(
     val state by remember { component.state }
 
     var selectedCalendarItem by remember { mutableStateOf<CalendarItem?>(null) }
-    var showDetails by remember { mutableStateOf(false) }
 
     SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
         CompositionLocalProvider(
@@ -96,8 +94,8 @@ fun PortfolioContent(
                     .fillMaxSize()
                     .background(bgColor),
             ) {
-                val timeLabelLazyListState = rememberLazyListState() // State for the first Row, X
-                val calendarItemLazyListState = rememberLazyListState() // State for the second Row, Y
+                val timeLabelLazyListState = rememberLazyListState()
+                val calendarItemLazyListState = rememberLazyListState()
                 val scope = rememberCoroutineScope()
                 val containerScrollableState = rememberScrollableState { delta ->
                     scope.launch {
@@ -108,7 +106,7 @@ fun PortfolioContent(
                 }
 
                 AnimatedContent(
-                    targetState = showDetails,
+                    targetState = state.showCalendarItemDetails,
                     transitionSpec = {
                         fadeIn(animationSpec = tween(500)) togetherWith
                                 fadeOut(animationSpec = tween(500))
@@ -121,7 +119,9 @@ fun PortfolioContent(
                             if (selectedCalendarItem != null) {
                                 CalendarItemDetails(
                                     calendarItem = selectedCalendarItem!!,
-                                    onCalendarItemDismissed = { showDetails = false },
+                                    onCalendarItemDismissed = {
+                                        component.onCalendarItemSelected(null)
+                                    },
                                 )
                             }
                         } else {
@@ -135,8 +135,8 @@ fun PortfolioContent(
                                 onPageChanged = component::onPageChanged,
                                 onScaleChanged = component::onScaleChanged,
                                 onCalendarItemClicked = {
+                                    component.onCalendarItemSelected(it)
                                     selectedCalendarItem = it
-                                    showDetails = true
                                 },
                             )
                         }

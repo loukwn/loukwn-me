@@ -13,6 +13,7 @@ data class PortfolioUiState(
     val baseGap: Dp,
     val isFilterButtonVisible: Boolean,
     val isCalendarScaleComponentVisible: Boolean,
+    val showCalendarItemDetails: Boolean,
     val timeLabels: List<String>,
     val calendarItems: List<CalendarItem>,
 )

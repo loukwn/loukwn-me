@@ -35,7 +35,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
                 modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
                 inLightMode = state.systemUiInLightMode,
                 onBackPressed = component::onBack,
-                onHomePressed = component::onBack,
+                onHomePressed = component::onHome,
             )
         }
     }

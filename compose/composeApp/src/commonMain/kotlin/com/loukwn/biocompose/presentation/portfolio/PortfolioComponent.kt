@@ -13,9 +13,12 @@ import com.loukwn.biocompose.getCurrentYear
 import com.loukwn.biocompose.presentation.util.update
 import kotlinx.coroutines.SupervisorJob
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.loukwn.biocompose.data.JobLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -25,10 +28,13 @@ interface PortfolioComponent {
     fun onScaleChanged(scale: Scale)
     fun onFilterButtonPressed()
     fun onPageChanged(pageIndex: Int)
+    fun onCalendarItemSelected(item: CalendarItem?)
 }
 
 class DefaultPortfolioComponent(
     componentContext: ComponentContext,
+    private val canGoBackStateFlow: MutableStateFlow<Boolean>,
+    deepBackEventDispatchFlow: SharedFlow<Unit>,
 ) : PortfolioComponent, ComponentContext by componentContext {
     private val _state = mutableStateOf(getInitialState())
     override val state: State<PortfolioUiState> = _state
@@ -48,6 +54,11 @@ class DefaultPortfolioComponent(
                 )
             }
         }
+        scope.launch {
+            deepBackEventDispatchFlow.collectLatest {
+                onCalendarItemSelected(null)
+            }
+        }
     }
 
     private fun getInitialState(): PortfolioUiState {
@@ -56,6 +67,7 @@ class DefaultPortfolioComponent(
             isFilterButtonVisible = false,
             isCalendarScaleComponentVisible = false,
             timeLabels = emptyList(),
+            showCalendarItemDetails = false,
             calendarItems = getCalendarItems(),
         )
     }
@@ -181,6 +193,15 @@ class DefaultPortfolioComponent(
                 isFilterButtonVisible = pageIndex == 0
             )
         }
+    }
+
+    override fun onCalendarItemSelected(item: CalendarItem?) {
+        _state.update {
+            it.copy(
+                showCalendarItemDetails = item != null
+            )
+        }
+        canGoBackStateFlow.update { item == null }
     }
 
     companion object {
