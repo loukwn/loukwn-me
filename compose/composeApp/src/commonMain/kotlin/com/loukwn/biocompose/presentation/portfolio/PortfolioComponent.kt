@@ -4,16 +4,17 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.loukwn.biocompose.data.Date
 import com.loukwn.biocompose.data.diffIn6MonthsWith
 import com.loukwn.biocompose.data.durationIn6Months
 import com.loukwn.biocompose.data.durationString
 import com.loukwn.biocompose.data.myJobs
+import com.loukwn.biocompose.data.myProjects
 import com.loukwn.biocompose.getCurrentYear
 import com.loukwn.biocompose.presentation.util.update
-import kotlinx.coroutines.SupervisorJob
-import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -69,6 +70,7 @@ class DefaultPortfolioComponent(
             timeLabels = emptyList(),
             showCalendarItemDetails = false,
             calendarItems = getCalendarItems(),
+            projects = myProjects,
         )
     }
 

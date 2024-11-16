@@ -70,7 +70,7 @@ import compose.icons.evaicons.outline.Options
 import kotlinx.coroutines.launch
 
 internal val bgColor = Color(0xff1b1a20)
-private val accentColor = Color(0xff9164fa)
+internal val portfolioAccentColor = Color(0xffd99750)
 
 internal val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
@@ -226,7 +226,10 @@ private fun PortfolioContentInternal(
                 }
 
                 1 -> {
-                    ProjectsPage()
+                    ProjectsPage(
+                        projects = state.projects,
+                        modifier = Modifier.fillMaxSize(),
+                    )
                 }
             }
         }
@@ -247,14 +250,14 @@ private fun Tabs(
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                color = accentColor
+                color = portfolioAccentColor
             )
         }
     ) {
         tabs.forEachIndexed { index, tabTitle ->
             Tab(
                 selected = selectedTabIndex == index,
-                selectedContentColor = accentColor,
+                selectedContentColor = portfolioAccentColor,
                 unselectedContentColor = Color.White,
                 onClick = { onTabSelected(index) }
             ) {
@@ -341,7 +344,7 @@ private fun TimeScaleSelector(
                     .width(50.dp)
                     .fillMaxHeight()
                     .offset(x = xOffsetAnimated)
-                    .background(Color(0xff9164fa), RoundedCornerShape(24.dp))
+                    .background(portfolioAccentColor, RoundedCornerShape(24.dp))
             )
 
             Row(

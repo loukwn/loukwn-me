@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.loukwn.biocompose.data.JobLink
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
@@ -249,8 +248,8 @@ private fun CalendarJobContent(
         val uriHandler = LocalUriHandler.current
         FlowRow {
             model.links.forEach {
-                VectorIconButton(it.imageVector) {
-                    uriHandler.openUri(it.link)
+                VectorIconButton(it.icon) {
+                    uriHandler.openUri(it.url)
                 }
             }
         }

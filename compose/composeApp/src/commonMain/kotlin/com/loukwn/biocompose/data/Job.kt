@@ -19,12 +19,7 @@ data class Job(
     val company: String,
     val description: String,
     val accentColor: Color,
-    val links: List<JobLink>,
-)
-
-data class JobLink(
-    val imageVector: ImageVector,
-    val link: String,
+    val links: List<IconLink>,
 )
 
 data class Date(
@@ -80,8 +75,8 @@ val myJobs by lazy {
             ended = Date(month = getCurrentMonth(), year = getCurrentYear()),
             accentColor = Color(0xff005eb8),
             links = listOf(
-                JobLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.nutmeg.app&hl=en_GB"),
-                JobLink(EvaIcons.Outline.Link2, "https://www.nutmeg.com/")
+                IconLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.nutmeg.app&hl=en_GB"),
+                IconLink(EvaIcons.Outline.Link2, "https://www.nutmeg.com/")
             )
         ),
         Job(
@@ -93,8 +88,8 @@ val myJobs by lazy {
             ended = Date(month = 3, year = 2023),
             accentColor = Color(0xfffb406c),
             links = listOf(
-                JobLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.muzmatch.muzmatchapp&hl=en_GB"),
-                JobLink(EvaIcons.Outline.Link2, "https://muzz.com/en-GB/")
+                IconLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.muzmatch.muzmatchapp&hl=en_GB"),
+                IconLink(EvaIcons.Outline.Link2, "https://muzz.com/en-GB/")
             )
         ),
         Job(
@@ -106,8 +101,8 @@ val myJobs by lazy {
             ended = Date(month = 1, year = 2019),
             accentColor = Color(0xff1ff9f8),
             links = listOf(
-                JobLink(SimpleIcons.Linkedin, "https://www.linkedin.com/company/unipad/"),
-                JobLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.nup.nupdroid&hl=en")
+                IconLink(SimpleIcons.Linkedin, "https://www.linkedin.com/company/unipad/"),
+                IconLink(SimpleIcons.Googleplay, "https://play.google.com/store/apps/details?id=com.nup.nupdroid&hl=en")
             )
         ),
     )
