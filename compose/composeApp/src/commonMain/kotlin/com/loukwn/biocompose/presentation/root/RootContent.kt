@@ -72,6 +72,7 @@ private fun Graph(component: RootComponent) {
             )
             is RootComponent.Child.AboutThis -> AboutThisContent(
                 component = child.component,
+                onBackPressed = component::onBack,
             )
         }
     }
