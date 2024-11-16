@@ -13,6 +13,8 @@ import com.arkivanov.decompose.value.Value
 import com.loukwn.biocompose.getFormattedTime
 import com.loukwn.biocompose.presentation.aboutme.AboutMeComponent
 import com.loukwn.biocompose.presentation.aboutme.DefaultAboutMeComponent
+import com.loukwn.biocompose.presentation.aboutthis.AboutThisComponent
+import com.loukwn.biocompose.presentation.aboutthis.DefaultAboutThisComponent
 import com.loukwn.biocompose.presentation.desktop.DefaultDesktopComponent
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopComponent
@@ -46,6 +48,7 @@ interface RootComponent {
         data class AboutMe(val component: AboutMeComponent) : Child()
         data class Portfolio(val component: PortfolioComponent) : Child()
         data class Links(val component: LinksComponent) : Child()
+        data class AboutThis(val component: AboutThisComponent) : Child()
     }
 }
 
@@ -96,6 +99,7 @@ class DefaultRootComponent(
             is Configuration.AboutMe -> RootComponent.Child.AboutMe(aboutMeComponent(componentContext))
             is Configuration.Portfolio -> RootComponent.Child.Portfolio(portfolioComponent(componentContext))
             is Configuration.Links -> RootComponent.Child.Links(linksComponent(componentContext))
+            is Configuration.AboutThis -> RootComponent.Child.AboutThis(aboutThisComponent(componentContext))
         }
 
     private fun desktopComponent(componentContext: ComponentContext): DesktopComponent =
@@ -109,6 +113,9 @@ class DefaultRootComponent(
 
     private fun linksComponent(componentContext: ComponentContext): LinksComponent =
         DefaultLinksComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
+
+    private fun aboutThisComponent(componentContext: ComponentContext): AboutThisComponent =
+        DefaultAboutThisComponent(componentContext)
 
     override fun onBack() {
         if (canGoBackStateFlow.value) {
@@ -130,7 +137,7 @@ class DefaultRootComponent(
             DesktopApp.AboutMe -> Configuration.AboutMe
             DesktopApp.Portfolio -> Configuration.Portfolio
             DesktopApp.Links -> Configuration.Links
-            DesktopApp.AboutThis -> TODO()
+            DesktopApp.AboutThis -> Configuration.AboutThis
         }
         navigation.push(configuration)
     }
@@ -152,9 +159,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object Links : Configuration
-//
-//        @Serializable
-//        data object AboutThis : Configuration
+
+        @Serializable
+        data object AboutThis : Configuration
     }
 
     companion object {
