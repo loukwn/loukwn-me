@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -23,6 +24,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,11 +34,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.input.pointer.pointerInput
@@ -45,11 +45,15 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.presentation.design_system.components.HoverableText
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Fill
+import compose.icons.evaicons.fill.Calendar
+import compose.icons.evaicons.fill.Info
+import compose.icons.evaicons.fill.Person
+import compose.icons.evaicons.fill.Phone
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.avatar
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg2
-import org.jetbrains.compose.resources.DrawableResource
+import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg
 import org.jetbrains.compose.resources.painterResource
 
 private const val InitialAnimationDelayMs = 500L
@@ -66,7 +70,7 @@ fun DesktopContent(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painterResource(Res.drawable.phone_bg2),
+            painterResource(Res.drawable.phone_bg),
             "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -83,7 +87,7 @@ fun DesktopContent(
                 val index = DesktopApp.entries.indexOf(it)
                 DesktopItem(
                     title = it.title,
-                    drawableResource = it.iconResource,
+                    imageVector = it.imageVector,
                     animationStartDelay = index * 200L + InitialAnimationDelayMs,
                     onClick = { onAppClicked(it) }
                 )
@@ -92,16 +96,16 @@ fun DesktopContent(
     }
 }
 
-enum class DesktopApp(val title: String, val iconResource: DrawableResource) {
-    AboutMe("About me", Res.drawable.avatar),
-    Portfolio("Portfolio", Res.drawable.avatar),
-    Links("Links", Res.drawable.avatar),
-    AboutThis("About This", Res.drawable.avatar)
+enum class DesktopApp(val title: String, val imageVector: ImageVector) {
+    AboutMe("About me", EvaIcons.Fill.Person),
+    Portfolio("Portfolio", EvaIcons.Fill.Calendar),
+    Links("Links", EvaIcons.Fill.Phone),
+    AboutThis("About This", EvaIcons.Fill.Info)
 }
 
 @Composable
 private fun DesktopItem(
-    drawableResource: DrawableResource,
+    imageVector: ImageVector,
     title: String,
     animationStartDelay: Long,
     modifier: Modifier = Modifier,
@@ -110,7 +114,6 @@ private fun DesktopItem(
     var shown by remember { mutableStateOf(false) }
     val hoverInteractionSource = remember { MutableInteractionSource() }
     val isHovered by hoverInteractionSource.collectIsHoveredAsState()
-    val tint = if (isHovered) Color.Black.copy(alpha = .5f) else null
 
     LaunchedEffect(Unit) {
         delay(animationStartDelay)
@@ -125,7 +128,7 @@ private fun DesktopItem(
         ),
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .hoverable(hoverInteractionSource)
                 .pointerHoverIcon(PointerIcon.Hand)
@@ -134,12 +137,26 @@ private fun DesktopItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = spacedBy(16.dp),
         ) {
-            Image(
-                painter = painterResource(drawableResource),
-                contentDescription = title,
-                modifier = modifier.size(56.dp).clip(CircleShape),
-                colorFilter = tint?.let { ColorFilter.tint(it, BlendMode.Multiply) }
-            )
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .background(Color.White, CircleShape),
+            ) {
+                Icon(
+                    imageVector = imageVector,
+                    contentDescription = title,
+                    modifier = Modifier.align(Alignment.Center).size(40.dp),
+                    tint = Color(0xff4f5d73)
+                )
+
+                if (isHovered) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = .5f), CircleShape)
+                    )
+                }
+            }
 
             HoverableText(
                 text = title,
