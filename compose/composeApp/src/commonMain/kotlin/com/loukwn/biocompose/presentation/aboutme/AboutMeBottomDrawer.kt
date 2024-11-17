@@ -145,7 +145,7 @@ private fun ColumnScope.BottomDrawerContent(
             SpanStyle(
                 fontFamily = FontFamily(
                     Font(Res.font.ostrich_regular),
-                ), fontSize = 48.sp
+                ), fontSize = 40.sp
             )
         ) {
             append("Konstantinos, ${getAgeInYears()}")

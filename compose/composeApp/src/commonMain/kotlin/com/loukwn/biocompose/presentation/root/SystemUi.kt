@@ -24,21 +24,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.back
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.battery_5_bar_24
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.home
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.network_cell
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.network_wifi
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.recents
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.painterResource
+import com.loukwn.biocompose.presentation.design_system.icons.Back
+import com.loukwn.biocompose.presentation.design_system.icons.BatteryTwoThirds
+import com.loukwn.biocompose.presentation.design_system.icons.Home
+import com.loukwn.biocompose.presentation.design_system.icons.MyIcons
+import com.loukwn.biocompose.presentation.design_system.icons.NetworkCell
+import com.loukwn.biocompose.presentation.design_system.icons.NetworkWifi
+import com.loukwn.biocompose.presentation.design_system.icons.Recents
 
 private const val StatusBarHeightDp = 32
 private const val StatusBarVerticalPaddingDp = 4
@@ -77,21 +76,21 @@ fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
             val iconSizeDp = (StatusBarHeightDp - 2 * StatusBarVerticalPaddingDp).dp
 
             Image(
-                painterResource(Res.drawable.network_wifi),
+                imageVector = MyIcons.NetworkWifi,
                 modifier = Modifier.size(iconSizeDp),
-                contentDescription = "",
+                contentDescription = null,
                 colorFilter = ColorFilter.tint(foregroundTintColor)
             )
             Image(
-                painterResource(Res.drawable.network_cell),
+                imageVector = MyIcons.NetworkCell,
                 modifier = Modifier.size(iconSizeDp),
-                contentDescription = "",
+                contentDescription = null,
                 colorFilter = ColorFilter.tint(foregroundTintColor)
             )
             Image(
-                painterResource(Res.drawable.battery_5_bar_24),
+                imageVector = MyIcons.BatteryTwoThirds,
                 modifier = Modifier.size(iconSizeDp),
-                contentDescription = "",
+                contentDescription = null,
                 colorFilter = ColorFilter.tint(foregroundTintColor)
             )
         }
@@ -117,15 +116,15 @@ fun NavigationBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        NavigationBarButton(Res.drawable.back, foregroundTintColor, onBackPressed)
-        NavigationBarButton(Res.drawable.home, foregroundTintColor, onHomePressed)
-        NavigationBarButton(Res.drawable.recents, foregroundTintColor) { }
+        NavigationBarButton(MyIcons.Back, foregroundTintColor, onBackPressed)
+        NavigationBarButton(MyIcons.Home, foregroundTintColor, onHomePressed)
+        NavigationBarButton(MyIcons.Recents, foregroundTintColor) { }
     }
 }
 
 @Composable
 private fun NavigationBarButton(
-    drawableResource: DrawableResource,
+    imageVector: ImageVector,
     tintColor: Color,
     onClick: () -> Unit,
 ) {
@@ -151,7 +150,7 @@ private fun NavigationBarButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painterResource(drawableResource),
+            imageVector = imageVector,
             contentDescription = null,
             colorFilter = ColorFilter.tint(tint)
         )

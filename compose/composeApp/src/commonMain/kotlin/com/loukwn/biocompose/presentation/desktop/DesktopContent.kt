@@ -71,7 +71,7 @@ fun DesktopContent(
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painterResource(Res.drawable.phone_bg),
-            "",
+            contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )

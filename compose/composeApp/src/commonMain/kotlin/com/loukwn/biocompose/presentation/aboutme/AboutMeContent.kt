@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Divider
@@ -36,9 +35,11 @@ import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.toPx
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.ArrowIosBack
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
-import loukwn_me_kotlin_wasm.composeapp.generated.resources.back_toolbar
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.me
 import org.jetbrains.compose.resources.painterResource
 
@@ -130,9 +131,8 @@ fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
         ) {
             IconButton(onClick = onBackPressed) {
                 Image(
-                    painterResource(Res.drawable.back_toolbar),
-                    modifier = Modifier.size(24.dp),
-                    contentDescription = "",
+                    imageVector = EvaIcons.Outline.ArrowIosBack,
+                    contentDescription = "Back button",
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))

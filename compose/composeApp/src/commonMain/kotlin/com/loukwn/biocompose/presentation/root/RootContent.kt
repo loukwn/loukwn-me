@@ -51,29 +51,39 @@ private fun Graph(component: RootComponent) {
         animation = stackAnimation(fade(tween(500))),
     ) {
         when (val child = it.instance) {
-            is RootComponent.Child.Desktop -> DesktopContent(
-                onSystemUiModeChanged = component::onSystemUiModeChanged,
-                onAppClicked = component::onDesktopAppClicked,
-            )
-            is RootComponent.Child.AboutMe -> AboutMeContent(
-                component = child.component,
-                onSystemUiModeChanged = component::onSystemUiModeChanged,
-                onBackPressed = component::onBack,
-            )
-            is RootComponent.Child.Portfolio -> PortfolioContent(
-                component = child.component,
-                onSystemUiModeChanged = component::onSystemUiModeChanged,
-                onBackPressed = component::onBack,
-            )
-            is RootComponent.Child.Links -> LinksContent(
-                component = child.component,
-                onSystemUiModeChanged = component::onSystemUiModeChanged,
-                onBackPressed = component::onBack,
-            )
-            is RootComponent.Child.AboutThis -> AboutThisContent(
-                component = child.component,
-                onBackPressed = component::onBack,
-            )
+            is RootComponent.Child.Desktop -> {
+                DesktopContent(
+                    onSystemUiModeChanged = component::onSystemUiModeChanged,
+                    onAppClicked = component::onDesktopAppClicked,
+                )
+            }
+            is RootComponent.Child.AboutMe -> {
+                AboutMeContent(
+                    component = child.component,
+                    onSystemUiModeChanged = component::onSystemUiModeChanged,
+                    onBackPressed = component::onBack,
+                )
+            }
+            is RootComponent.Child.Portfolio -> {
+                PortfolioContent(
+                    component = child.component,
+                    onSystemUiModeChanged = component::onSystemUiModeChanged,
+                    onBackPressed = component::onBack,
+                )
+            }
+            is RootComponent.Child.Links -> {
+                LinksContent(
+                    component = child.component,
+                    onSystemUiModeChanged = component::onSystemUiModeChanged,
+                    onBackPressed = component::onBack,
+                )
+            }
+            is RootComponent.Child.AboutThis -> {
+                AboutThisContent(
+                    component = child.component,
+                    onBackPressed = component::onBack,
+                )
+            }
         }
     }
 }
