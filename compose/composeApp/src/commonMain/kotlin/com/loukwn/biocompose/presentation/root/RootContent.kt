@@ -16,7 +16,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.loukwn.biocompose.presentation.aboutme.AboutMeContent
 import com.loukwn.biocompose.presentation.aboutthis.AboutThisContent
-import com.loukwn.biocompose.presentation.design_system.theme.BioTheme
+import com.loukwn.biocompose.presentation.design_system.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopContent
 import com.loukwn.biocompose.presentation.links.LinksContent
 import com.loukwn.biocompose.presentation.portfolio.PortfolioContent
@@ -25,7 +25,7 @@ import com.loukwn.biocompose.presentation.portfolio.PortfolioContent
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val state by remember { component.state }
 
-    BioTheme {
+    LoukwnMeTheme {
         Box(modifier.background(Color.Black)) {
             Graph(component)
             StatusBar(

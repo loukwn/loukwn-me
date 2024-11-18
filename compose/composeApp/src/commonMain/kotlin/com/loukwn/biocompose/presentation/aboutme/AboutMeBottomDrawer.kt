@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,7 +57,6 @@ import org.jetbrains.compose.resources.painterResource
 
 private const val BottomDrawerAnimationDelayMs = 1000L
 private val MoreContentBottomScrimSize = GlobalInsetsToConsume.calculateBottomPadding() + 50.dp
-val AboutMeBottomSheetBgColor = Color(0xff1b1a20)
 
 @Composable
 fun FakeBottomDrawer(windowHeightDp: Dp) {
@@ -118,7 +118,7 @@ fun BottomDrawerList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
-                    .background(AboutMeBottomSheetBgColor)
+                    .background(MaterialTheme.colors.background)
                     .padding(
                         top = 32.dp,
                         start = 32.dp,
@@ -131,56 +131,61 @@ fun BottomDrawerList(
         }
 
         if (finishedFirstAnimation) {
-            SystemUiGradientOverlay(endColor = AboutMeBottomSheetBgColor)
+            SystemUiGradientOverlay(endColor = MaterialTheme.colors.background)
         }
     }
 }
 
 @Composable
-private fun ColumnScope.BottomDrawerContent(
-    state: AboutMeUiState,
-) {
-    val title = buildAnnotatedString {
-        withStyle(
-            SpanStyle(
-                fontFamily = FontFamily(
-                    Font(Res.font.ostrich_regular),
-                ), fontSize = 40.sp
-            )
-        ) {
-            append("Konstantinos, ${getAgeInYears()}")
-        }
-    }
-    Text(title, fontSize = 32.sp, color = Color.White)
+private fun ColumnScope.BottomDrawerContent(state: AboutMeUiState) {
+    Text(
+        text = "Konstantinos, ${getAgeInYears()}",
+        style = MaterialTheme.typography.h2,
+        color = MaterialTheme.colors.onBackground,
+    )
 
     Spacer(modifier = Modifier.height(40.dp))
 
-    TagSection(state.tags)
+    TagSection(
+        tags = state.tags,
+        modifier = Modifier.fillMaxSize().align(Alignment.CenterHorizontally),
+    )
 
     Separator(withDivider = true)
 
-    PhraseSection(state.phrase)
+    PhraseSection(
+        phrase = state.phrase,
+        modifier = Modifier.fillMaxSize().align(Alignment.CenterHorizontally),
+    )
 
     Separator(withDivider = false)
 
     ImageSection(
         drawable = Res.drawable.equipment,
-        text = "My setup"
+        text = "My setup",
+        modifier = Modifier.align(Alignment.CenterHorizontally),
     )
 
     Separator(withDivider = false)
 
-    TechnologiesSection(state.technologyEntries)
+    TechnologiesSection(
+        entries = state.technologyEntries,
+        modifier = Modifier.fillMaxSize().align(Alignment.CenterHorizontally),
+    )
 
     Separator(withDivider = true)
 
-    Hobbies(state.hobbies)
+    Hobbies(
+        hobbies = state.hobbies,
+        modifier = Modifier.fillMaxSize().align(Alignment.CenterHorizontally),
+    )
 
     Separator(withDivider = false)
 
     ImageSection(
         drawable = Res.drawable.dafni,
-        text = "My village"
+        text = "My village",
+        modifier = Modifier.align(Alignment.CenterHorizontally),
     )
 
     Separator(withDivider = false)
@@ -188,16 +193,16 @@ private fun ColumnScope.BottomDrawerContent(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TagSection(tagList: List<Tag>) {
+private fun TagSection(tags: List<Tag>, modifier: Modifier = Modifier) {
     FlowRow(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = spacedBy(8.dp),
         horizontalArrangement = spacedBy(8.dp),
     ) {
-        for (tag in tagList) {
+        for (tag in tags) {
             Row(
                 modifier = Modifier
-                    .background(Color.Gray.copy(alpha = .1f), RoundedCornerShape(20.dp))
+                    .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = spacedBy(8.dp)
@@ -206,9 +211,13 @@ private fun TagSection(tagList: List<Tag>) {
                     modifier = Modifier.size(24.dp),
                     imageVector = tag.image,
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = MaterialTheme.colors.onSurface,
                 )
-                Text(tag.text, color = Color.White, fontSize = 14.sp)
+                Text(
+                    text = tag.text,
+                    color = MaterialTheme.colors.onSurface,
+                    style = MaterialTheme.typography.body2,
+                )
             }
         }
     }
@@ -220,7 +229,8 @@ private fun ColumnScope.Separator(withDivider: Boolean) {
     if (withDivider) {
         Divider(
             modifier = Modifier.align(Alignment.CenterHorizontally)
-                .fillMaxWidth(.5f), color = Color.White.copy(alpha = .3f)
+                .fillMaxWidth(.5f),
+            color = MaterialTheme.colors.onBackground.copy(alpha = .3f),
         )
         Spacer(modifier = Modifier.height(52.dp))
     }
@@ -228,23 +238,30 @@ private fun ColumnScope.Separator(withDivider: Boolean) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TechnologiesSection(technologyEntries: List<TechonologyEntry>) {
+private fun TechnologiesSection(
+    entries: List<TechonologyEntry>,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
+        verticalArrangement = spacedBy(20.dp),
     ) {
-        Text("Favourite technologies", fontSize = 14.sp, color = Color.White)
-        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Favourite technologies",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.body2,
+        )
         FlowRow(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = spacedBy(8.dp),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            technologyEntries.forEach {
+            entries.forEach {
                 Icon(
                     modifier = Modifier.size(40.dp),
                     imageVector = it.image,
                     contentDescription = it.contentDescription,
-                    tint = Color.White,
+                    tint = MaterialTheme.colors.onBackground,
                 )
             }
         }
@@ -256,8 +273,13 @@ private fun TechnologiesSection(technologyEntries: List<TechonologyEntry>) {
 private fun ImageSection(
     drawable: DrawableResource,
     text: String,
+    modifier: Modifier = Modifier,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = spacedBy(4.dp),
+    ) {
         Image(
             painter = painterResource(drawable),
             contentDescription = null,
@@ -265,8 +287,8 @@ private fun ImageSection(
         )
         Text(
             text = text,
-            fontSize = 11.sp,
-            color = Color.White,
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onBackground,
         )
     }
 }
@@ -274,12 +296,19 @@ private fun ImageSection(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Hobbies(hobbies: List<String>) {
+private fun Hobbies(
+    hobbies: List<String>,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
+        verticalArrangement = spacedBy(20.dp)
     ) {
-        Text("Hobbies", fontSize = 14.sp, color = Color.White)
-        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Hobbies",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.body2,
+        )
         FlowRow(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = spacedBy(8.dp),
@@ -288,11 +317,11 @@ private fun Hobbies(hobbies: List<String>) {
             for (hobby in hobbies) {
                 Text(
                     modifier = Modifier
-                        .background(Color.Gray.copy(alpha = .1f), RoundedCornerShape(20.dp))
+                        .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
                         .padding(vertical = 8.dp, horizontal = 16.dp),
                     text = hobby,
-                    color = Color.White,
-                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    style = MaterialTheme.typography.body2,
                 )
             }
         }
@@ -300,12 +329,20 @@ private fun Hobbies(hobbies: List<String>) {
 }
 
 @Composable
-private fun PhraseSection(phrase: String) {
+private fun PhraseSection(phrase: String, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
+        verticalArrangement = spacedBy(20.dp)
     ) {
-        Text("A phrase that I often use", fontSize = 14.sp, color = Color.White)
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(phrase, fontSize = 24.sp, color = Color.White)
+        Text(
+            text = "A phrase that I often use",
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.onBackground,
+        )
+        Text(
+            text = phrase,
+            style = MaterialTheme.typography.h3,
+            color = MaterialTheme.colors.onBackground,
+        )
     }
 }

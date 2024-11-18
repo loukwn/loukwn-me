@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
+import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.toPx
 import compose.icons.EvaIcons
@@ -61,10 +63,10 @@ fun AboutMeContent(
 
     val scrollState = rememberScrollState()
     val scrollProgress = scrollState.value / (windowSize.height.toFloat() - 250)
-    val topBarBg = if (scrollProgress >= .7f) AboutMeBottomSheetBgColor else Color.Transparent
+    val topBarBg = if (scrollProgress >= .65f) MaterialTheme.colors.background else Color.Transparent
 
-    Box(Modifier.fillMaxSize(1f).background(Color(0xff39343f))) {
-        AboutMeBg(modifier = Modifier.fillMaxSize())
+    Box(Modifier.fillMaxSize(1f).background(MaterialTheme.colors.primary)) {
+        AboutMeBgDrawings(modifier = Modifier.fillMaxSize())
 
         TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackPressed)
 
@@ -94,10 +96,10 @@ private fun Avatar(modifier: Modifier = Modifier) {
     }
 
     Image(
-        painterResource(Res.drawable.me),
-        "",
+        painter = painterResource(Res.drawable.me),
+        contentDescription = null,
         modifier = modifier.blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.Crop,
     )
 }
 
@@ -109,38 +111,46 @@ private fun DarkScrim(darknessProgress: Float) {
         darknessProgress
     }
     Box(
-        modifier = Modifier.fillMaxSize()
-            .background(AboutMeBottomSheetBgColor.copy(alpha = (tweakedProgress).coerceAtMost(1f)))
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                MaterialTheme.colors.background.copy(alpha = tweakedProgress.coerceAtMost(1f)),
+            )
     )
 }
 
 @Composable
 fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
     Column(
-        modifier = modifier.padding(top = GlobalInsetsToConsume.calculateTopPadding())
+        modifier = modifier
+            .padding(top = GlobalInsetsToConsume.calculateTopPadding())
             .fillMaxWidth()
     ) {
         Spacer(Modifier.height(24.dp))
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            color = Color.White.copy(alpha = .5f)
+            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f)
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = spacedBy(16.dp),
         ) {
-            IconButton(onClick = onBackPressed) {
-                Image(
-                    imageVector = EvaIcons.Outline.ArrowIosBack,
-                    contentDescription = "Back button",
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(text = "About me", style = MaterialTheme.typography.h1, color = Color.White)
+            VectorIconButton(
+                imageVector = EvaIcons.Outline.ArrowIosBack,
+                contentDescription = "Back button",
+                tintColor = MaterialTheme.colors.onPrimary,
+                onClick = onBackPressed,
+            )
+            Text(
+                text = "About me",
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.onPrimary,
+            )
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            color = Color.White.copy(alpha = .5f)
+            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f)
         )
     }
 }

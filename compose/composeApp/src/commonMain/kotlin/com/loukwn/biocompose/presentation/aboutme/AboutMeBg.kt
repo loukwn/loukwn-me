@@ -18,7 +18,7 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 @Composable
-fun AboutMeBg(modifier: Modifier = Modifier) {
+fun AboutMeBgDrawings(modifier: Modifier = Modifier) {
     val stepSize = 80
     var maxRadius by remember { mutableStateOf(0) }
     var randomCenterOffsets by remember { mutableStateOf(emptyList<Offset>()) }
