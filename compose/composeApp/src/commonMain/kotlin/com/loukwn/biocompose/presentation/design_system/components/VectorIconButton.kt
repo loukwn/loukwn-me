@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.design_system.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,7 +15,7 @@ fun VectorIconButton(
     imageVector: ImageVector,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
-    tintColor: Color = Color.White,
+    tintColor: Color = MaterialTheme.colors.onBackground,
     onClick: () -> Unit,
 ) {
     IconButton(onClick = onClick, modifier = modifier.pointerHoverIcon(PointerIcon.Hand)) {

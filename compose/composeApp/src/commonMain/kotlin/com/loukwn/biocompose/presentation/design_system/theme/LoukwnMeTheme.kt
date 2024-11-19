@@ -1,9 +1,7 @@
 package com.loukwn.biocompose.presentation.design_system.theme
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Shapes
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -60,11 +58,16 @@ private fun LoukwnMeTypography(): Typography {
             lineHeight = 30.sp,
             fontSize = 24.sp,
         ),
+        subtitle1 = MaterialTheme.typography.subtitle1.copy(
+            fontSize = 20.sp
+        ),
         body2 = MaterialTheme.typography.body2.copy(
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            lineHeight = 22.sp,
         ),
         caption = MaterialTheme.typography.caption.copy(
-            fontSize = 11.sp,
+            fontSize = 12.sp,
+            lineHeight = 22.sp
         )
     )
 }

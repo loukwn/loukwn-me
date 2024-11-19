@@ -67,7 +67,6 @@ private fun Graph(component: RootComponent) {
             is RootComponent.Child.Portfolio -> {
                 PortfolioContent(
                     component = child.component,
-                    onSystemUiModeChanged = component::onSystemUiModeChanged,
                     onBackPressed = component::onBack,
                 )
             }

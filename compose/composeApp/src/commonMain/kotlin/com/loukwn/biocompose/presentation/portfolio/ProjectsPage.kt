@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,13 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.loukwn.biocompose.data.Project
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 
 @Composable
 fun ProjectsPage(projects: List<Project>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier, verticalArrangement = spacedBy(20.dp)) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = spacedBy(20.dp),
+        contentPadding = PaddingValues(bottom = 120.dp),
+    ) {
         items(projects.size) {
             ProjectCard(projects[it])
         }
@@ -42,7 +47,11 @@ private fun ProjectCard(model: Project) {
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = model.title, color = Color.White, fontSize = 18.sp)
+            Text(
+                text = model.title,
+                color = MaterialTheme.colors.onBackground,
+                style = MaterialTheme.typography.subtitle1,
+            )
 
             Row(horizontalArrangement = spacedBy(16.dp)) {
                 model.technologies.forEach {
@@ -60,8 +69,8 @@ private fun ProjectCard(model: Project) {
         Text(
             text = model.description,
             modifier = Modifier.padding(16.dp),
-            color = Color.White,
-            fontSize = 14.sp
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.body2,
         )
 
         val uriHandler = LocalUriHandler.current

@@ -59,7 +59,6 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
@@ -70,7 +69,7 @@ import compose.icons.evaicons.outline.Options
 import kotlinx.coroutines.launch
 
 internal val bgColor = Color(0xff1b1a20)
-internal val portfolioAccentColor = Color(0xffd99750)
+internal val portfolioAccentColor = Color(0xff81758f)
 
 internal val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
@@ -78,7 +77,6 @@ internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionSco
 @Composable
 fun PortfolioContent(
     component: PortfolioComponent,
-    onSystemUiModeChanged: (isLight: Boolean) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val state by remember { component.state }
@@ -143,7 +141,7 @@ fun PortfolioContent(
                     }
                 }
                 SystemUiGradientOverlay(
-                    endColor = bgColor,
+                    endColor = MaterialTheme.colors.background,
                     modifier = Modifier.renderInSharedTransitionScopeOverlay()
                 )
             }
@@ -243,7 +241,7 @@ private fun Tabs(
     onTabSelected: (Int) -> Unit,
 ) {
     ScrollableTabRow(
-        modifier = Modifier.padding(bottom = 32.dp),
+        modifier = Modifier.padding(bottom = 16.dp),
         selectedTabIndex = selectedTabIndex,
         backgroundColor = Color.Transparent,
         edgePadding = 0.dp,
@@ -258,7 +256,7 @@ private fun Tabs(
             Tab(
                 selected = selectedTabIndex == index,
                 selectedContentColor = portfolioAccentColor,
-                unselectedContentColor = Color.White,
+                unselectedContentColor = MaterialTheme.colors.onBackground,
                 onClick = { onTabSelected(index) }
             ) {
                 Text(
@@ -293,7 +291,7 @@ private fun TopBar(
         Text(
             text = "Portfolio",
             style = MaterialTheme.typography.h1,
-            color = Color.White,
+            color = MaterialTheme.colors.onBackground,
             modifier = Modifier.weight(1f),
         )
         if (showFilterButton) {
@@ -319,8 +317,8 @@ private fun TimeScaleSelector(
     ) {
         Text(
             text = "Time scale:",
-            fontSize = 12.sp,
-            color = Color.White,
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.onBackground,
             modifier = Modifier.padding(bottom = 2.dp)
         )
 
@@ -363,10 +361,14 @@ private fun TimeScaleSelector(
                             indication = ripple(true, color = Color.White, radius = 19.dp),
                             role = Role.Button,
                         )
-                        .padding(start = 8.dp, bottom = 4.dp),
+                        .padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("2Y", fontSize = 11.sp, color = Color.White)
+                    Text(
+                        text = "2Y",
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.onBackground,
+                    )
                 }
                 Box(
                     modifier = Modifier
@@ -379,10 +381,14 @@ private fun TimeScaleSelector(
                             indication = ripple(true, color = Color.White, radius = 21.dp),
                             role = Role.Button,
                         )
-                        .padding(bottom = 4.dp),
+                        .padding(vertical = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("1Y", fontSize = 11.sp, color = Color.White)
+                    Text(
+                        text = "1Y",
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.onBackground,
+                    )
                 }
                 Box(
                     modifier = Modifier
@@ -395,10 +401,14 @@ private fun TimeScaleSelector(
                             indication = ripple(true, color = Color.White, radius = 19.dp),
                             role = Role.Button,
                         )
-                        .padding(end = 8.dp, bottom = 4.dp),
+                        .padding(end = 8.dp, top = 4.dp, bottom = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("6M", fontSize = 11.sp, color = Color.White)
+                    Text(
+                        text = "6M",
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.onBackground,
+                    )
                 }
             }
         }
