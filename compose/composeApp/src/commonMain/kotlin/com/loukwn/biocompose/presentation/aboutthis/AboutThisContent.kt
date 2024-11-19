@@ -2,18 +2,13 @@ package com.loukwn.biocompose.presentation.aboutthis
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.platform.LocalUriHandler
@@ -51,23 +44,17 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.loukwn.biocompose.data.ArtAttribution
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
-import com.loukwn.biocompose.presentation.portfolio.bgColor
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.SimpleIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.Outline
 import compose.icons.evaicons.fill.ArrowDown
-import compose.icons.evaicons.fill.Bulb
 import compose.icons.evaicons.fill.Info
-import compose.icons.evaicons.outline.ArrowDown
 import compose.icons.evaicons.outline.ArrowIosBack
-import compose.icons.evaicons.outline.Award
 import compose.icons.simpleicons.Github
-import kotlin.math.exp
 
 @Composable
 fun AboutThisContent(
@@ -79,7 +66,7 @@ fun AboutThisContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(bgColor)
+            .background(MaterialTheme.colors.background)
             .padding(
                 top = GlobalInsetsToConsume.calculateTopPadding(),
                 bottom = 0.dp,
@@ -102,14 +89,14 @@ fun AboutThisContent(
                 .size(72.dp)
                 .clip(CircleShape)
                 .background(Color(0xff39343f))
-                .border(1.dp, Color.White, CircleShape),
+                .border(1.dp, MaterialTheme.colors.onBackground, CircleShape),
 
             ) {
             Icon(
                 modifier = Modifier.align(Alignment.Center),
                 imageVector = EvaIcons.Fill.Info,
                 contentDescription = null,
-                tint = Color.White,
+                tint = MaterialTheme.colors.onBackground,
             )
         }
 
@@ -117,7 +104,7 @@ fun AboutThisContent(
 
         Text(
             text = "About This",
-            color = Color.White,
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h1,
         )
 
@@ -139,9 +126,9 @@ fun AboutThisContent(
             Icon(
                 imageVector = SimpleIcons.Github,
                 contentDescription = null,
-                tint = Color.White,
+                tint = MaterialTheme.colors.onBackground,
             )
-            Text("View source", color = Color.White)
+            Text("View source", color = MaterialTheme.colors.onBackground)
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -149,7 +136,7 @@ fun AboutThisContent(
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
                 "This is a Compose Multiplatform (WASM) app that runs inside an iframe of a simple HTML/JS static page. There is some basic communication between the two (using messages) so that backgrounds change when a \"mobile app\" is opened. For more info check out the GitHub repo above.",
-                color = Color.White
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(modifier = Modifier.height(32.dp))
             Attributions(state.artAttributions)
@@ -183,7 +170,7 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.clickable { expanded = !expanded }
     ) {
-        Text("Attributions", color = Color.White.copy(.5f))
+        Text("Attributions", color = MaterialTheme.colors.onBackground)
 
         val targetRotation = if (expanded) 180f else 0f
         val iconRotation by animateFloatAsState(targetRotation)
@@ -191,7 +178,7 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
         Icon(
             imageVector = EvaIcons.Fill.ArrowDown,
             contentDescription = null,
-            tint = Color.White.copy(alpha = .5f),
+            tint = MaterialTheme.colors.onBackground,
             modifier = Modifier.rotate(iconRotation)
         )
     }
@@ -204,7 +191,7 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp),
         ) {
-            Text("Photos", style = MaterialTheme.typography.h1, color = Color.White)
+            Text("Photos", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
             Spacer(modifier = Modifier.height(20.dp))
 
             artAttribution.forEach { artAttribution ->
@@ -244,10 +231,10 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
                         end = artLinkEnd,
                     )
                 }
-                Text(annotatedText, color = Color.White)
+                Text(annotatedText, color = MaterialTheme.colors.onBackground)
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text("Icons", style = MaterialTheme.typography.h1, color = Color.White)
+            Text("Icons", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
             Spacer(modifier = Modifier.height(20.dp))
 
             val iconText = buildAnnotatedString {
@@ -278,15 +265,15 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
                 }
             }
 
-            Text(iconText, color = Color.White)
+            Text(iconText, color = MaterialTheme.colors.onBackground)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Text("Logos", style = MaterialTheme.typography.h1, color = Color.White)
+            Text("Logos", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
                 "Logos of GitHub, Medium, LinkedIn, Google Play, Android, Godot and any other copyrighted ones I have used in the app are licensed trademarks of their respective owners. I do not own any of these.",
-                color = Color.White,
+                color = MaterialTheme.colors.onBackground,
             )
         }
     }

@@ -28,12 +28,13 @@ fun LoukwnMeTheme(
 private fun LoukwnMeColors(): Colors {
     return MaterialTheme.colors.copy(
         primary = Color(0xff39343f),
+        secondary = Color(0xff81758f),
         background = Color(0xff1b1a20),
         surface = Color.Gray.copy(alpha = .1f),
         onPrimary = Color.White,
         onBackground = Color.White,
         onSurface = Color.White,
-        )
+    )
 }
 
 @Composable
@@ -46,7 +47,7 @@ private fun LoukwnMeTypography(): Typography {
         h1 = TextStyle(
             fontFamily = Ostrich,
             fontSize = 38.sp,
-            fontWeight = FontWeight.Normal
+            fontWeight = FontWeight.Normal,
         ),
         h2 = TextStyle(
             fontFamily = Ostrich,
@@ -59,7 +60,7 @@ private fun LoukwnMeTypography(): Typography {
             fontSize = 24.sp,
         ),
         subtitle1 = MaterialTheme.typography.subtitle1.copy(
-            fontSize = 20.sp
+            fontSize = 20.sp,
         ),
         body2 = MaterialTheme.typography.body2.copy(
             fontSize = 14.sp,
@@ -67,7 +68,7 @@ private fun LoukwnMeTypography(): Typography {
         ),
         caption = MaterialTheme.typography.caption.copy(
             fontSize = 12.sp,
-            lineHeight = 22.sp
+            lineHeight = 22.sp,
         )
     )
 }

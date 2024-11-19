@@ -67,7 +67,7 @@ internal fun CalendarItemDetails(
             Box(
                 modifier = modifier
                     .fillMaxSize()
-                    .background(bgColor)
+                    .background(MaterialTheme.colors.background)
                     .clickable(
                         onClick = onCalendarItemDismissed,
                         interactionSource = null,
@@ -89,7 +89,7 @@ internal fun CalendarItemDetails(
                             animatedVisibilityScope = animatedVisibilityScope,
                             resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
                         )
-                        .background(bgColor)
+                        .background(MaterialTheme.colors.background)
                         .background(
                             calendarItem.accentColor.copy(alpha = .15f),
                             RoundedCornerShape(16.dp)

@@ -11,11 +11,6 @@ import compose.icons.simpleicons.Github
 import compose.icons.simpleicons.Linkedin
 import compose.icons.simpleicons.Medium
 
-data class TextLink(
-    val displayText: String,
-    val url: String,
-)
-
 data class IconLink(
     val icon: ImageVector,
     val url: String,

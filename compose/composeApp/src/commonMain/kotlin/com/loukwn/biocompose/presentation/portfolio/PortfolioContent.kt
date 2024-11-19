@@ -68,9 +68,6 @@ import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.evaicons.outline.Options
 import kotlinx.coroutines.launch
 
-internal val bgColor = Color(0xff1b1a20)
-internal val portfolioAccentColor = Color(0xff81758f)
-
 internal val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
 
@@ -90,7 +87,7 @@ fun PortfolioContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(bgColor),
+                    .background(MaterialTheme.colors.background),
             ) {
                 val timeLabelLazyListState = rememberLazyListState()
                 val calendarItemLazyListState = rememberLazyListState()
@@ -248,14 +245,14 @@ private fun Tabs(
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                color = portfolioAccentColor
+                color = MaterialTheme.colors.secondary
             )
         }
     ) {
         tabs.forEachIndexed { index, tabTitle ->
             Tab(
                 selected = selectedTabIndex == index,
-                selectedContentColor = portfolioAccentColor,
+                selectedContentColor = MaterialTheme.colors.secondary,
                 unselectedContentColor = MaterialTheme.colors.onBackground,
                 onClick = { onTabSelected(index) }
             ) {
@@ -326,7 +323,7 @@ private fun TimeScaleSelector(
             Modifier
                 .height(36.dp)
                 .width(150.dp)
-                .background(bgColor, shape = RoundedCornerShape(24.dp))
+                .background(MaterialTheme.colors.background, shape = RoundedCornerShape(24.dp))
                 .border(1.dp, Color.White.copy(.2f), RoundedCornerShape(24.dp)),
         ) {
             val targetOffset = when (scale) {
@@ -342,7 +339,7 @@ private fun TimeScaleSelector(
                     .width(50.dp)
                     .fillMaxHeight()
                     .offset(x = xOffsetAnimated)
-                    .background(portfolioAccentColor, RoundedCornerShape(24.dp))
+                    .background(MaterialTheme.colors.secondary, RoundedCornerShape(24.dp))
             )
 
             Row(

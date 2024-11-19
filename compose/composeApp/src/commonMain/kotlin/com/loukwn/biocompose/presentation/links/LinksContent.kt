@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.data.FullLink
 import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
-import com.loukwn.biocompose.presentation.portfolio.bgColor
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.modifyIf
 import compose.icons.EvaIcons
@@ -59,7 +58,7 @@ fun LinksContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(bgColor)
+                .background(MaterialTheme.colors.background)
                 .padding(
                     top = GlobalInsetsToConsume.calculateTopPadding(),
                     bottom = 0.dp,

@@ -41,7 +41,7 @@ private fun ProjectCard(model: Project) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(portfolioAccentColor.copy(alpha = .05f), shape = RoundedCornerShape(24.dp)),
+            .background(MaterialTheme.colors.secondary.copy(alpha = .05f), shape = RoundedCornerShape(24.dp)),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
