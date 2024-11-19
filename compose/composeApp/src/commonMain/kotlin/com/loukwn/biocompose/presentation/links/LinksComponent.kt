@@ -5,11 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
 import com.loukwn.biocompose.data.FullLink
 import com.loukwn.biocompose.data.myLinks
-import com.loukwn.biocompose.presentation.portfolio.PortfolioUiState
 import com.loukwn.biocompose.presentation.util.update
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 
 interface LinksComponent {
     val state: State<LinksUiState>
@@ -19,8 +15,6 @@ interface LinksComponent {
 
 class DefaultLinksComponent(
     componentContext: ComponentContext,
-    private val canGoBackStateFlow: MutableStateFlow<Boolean>,
-    deepBackEventDispatchFlow: SharedFlow<Unit>,
 ): LinksComponent, ComponentContext by componentContext {
 
     private val _state = mutableStateOf(getInitialState())

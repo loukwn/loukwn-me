@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +16,7 @@ import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 
 @Composable
 fun BoxScope.SystemUiGradientOverlay(
-    endColor: Color,
+    endColor: Color = MaterialTheme.colors.background,
     modifier: Modifier = Modifier,
 ) {
     Box(

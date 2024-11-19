@@ -112,7 +112,7 @@ class DefaultRootComponent(
         DefaultPortfolioComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
 
     private fun linksComponent(componentContext: ComponentContext): LinksComponent =
-        DefaultLinksComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
+        DefaultLinksComponent(componentContext)
 
     private fun aboutThisComponent(componentContext: ComponentContext): AboutThisComponent =
         DefaultAboutThisComponent(componentContext)

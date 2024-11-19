@@ -73,7 +73,6 @@ private fun Graph(component: RootComponent) {
             is RootComponent.Child.Links -> {
                 LinksContent(
                     component = child.component,
-                    onSystemUiModeChanged = component::onSystemUiModeChanged,
                     onBackPressed = component::onBack,
                 )
             }
