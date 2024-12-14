@@ -68,7 +68,7 @@ body {
     font: 500 25px/1.2 "Oswald", sans-serif;
 }
 
-#row-social {
+.row-social {
     background-color: white;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -78,14 +78,19 @@ body {
     width: max-content;
 }
 
-#row-social img {
+.row-social img {
     width: 30px;
     height: 30px;
     margin: 5px;
 }
 
-#row-social img:hover {
+.row-social img:hover {
     filter: invert(.5);
+}
+
+
+#row-social-secondary {
+    display: none;
 }
 
 #phone-frame {
@@ -136,6 +141,8 @@ body {
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
+
+
 
 @-webkit-keyframes spin {
     0% {
@@ -267,5 +274,9 @@ body {
         flex-direction: row;
         padding: 15px 36px;
         background-color: white;
+    }
+
+    #row-social-secondary {
+        display: block;
     }
 }
