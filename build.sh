@@ -1,4 +1,6 @@
 # Delete unneeded files
+echo "Files deleted:"
+find . -maxdepth 1 -type f
 find . -maxdepth 1 -type f -delete
 
 # Create CNAME
