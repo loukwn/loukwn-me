@@ -78,8 +78,8 @@ internal fun CalendarItemDetails(
                     modifier = Modifier
                         .padding(
                             top = GlobalInsetsToConsume.calculateTopPadding() + 20.dp,
-                            start = 48.dp,
-                            end = 48.dp,
+                            start = 32.dp,
+                            end = 32.dp,
                             bottom = GlobalInsetsToConsume.calculateBottomPadding() + 36.dp,
                         )
                         .sharedBounds(
