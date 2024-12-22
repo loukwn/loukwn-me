@@ -9,6 +9,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.data.ArtAttribution
+import com.loukwn.biocompose.data.Constants
+import com.loukwn.biocompose.presentation.aboutme.TopBar
+import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
@@ -63,85 +67,36 @@ fun AboutThisContent(
 ) {
     val state by remember { component.state }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(
-                top = GlobalInsetsToConsume.calculateTopPadding(),
-                bottom = 0.dp,
-                start = 36.dp,
-                end = 36.dp,
-            )
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        TopBar(
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 16.dp, bottom = 32.dp),
-            onBackButtonPressed = onBackPressed,
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(CircleShape)
-                .background(Color(0xff39343f))
-                .border(1.dp, MaterialTheme.colors.onBackground, CircleShape),
-
-            ) {
-            Icon(
-                modifier = Modifier.align(Alignment.Center),
-                imageVector = EvaIcons.Fill.Info,
-                contentDescription = null,
-                tint = MaterialTheme.colors.onBackground,
-            )
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "About This",
-            color = MaterialTheme.colors.onBackground,
-            style = MaterialTheme.typography.h1,
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        val uriHandler = LocalUriHandler.current
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .pointerHoverIcon(PointerIcon.Hand)
-                .clip(RoundedCornerShape(24.dp))
-                .background(Color.Black)
-                .clickable {
-                    uriHandler.openUri("https://github.com/loukwn/loukwn-me")
-                }
-                .padding(20.dp),
-            verticalArrangement = spacedBy(8.dp),
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .padding(
+                    top = GlobalInsetsToConsume.calculateTopPadding(),
+                    bottom = 0.dp,
+                    start = 36.dp,
+                    end = 36.dp,
+                )
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = spacedBy(32.dp)
         ) {
-            Icon(
-                imageVector = SimpleIcons.Github,
-                contentDescription = null,
-                tint = MaterialTheme.colors.onBackground,
+            TopBar(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 16.dp),
+                onBackButtonPressed = onBackPressed,
             )
-            Text("View source", color = MaterialTheme.colors.onBackground)
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                "This is a Compose Multiplatform (WASM) app that runs inside an iframe of a simple HTML/JS static page. There is some basic communication between the two (using messages) so that backgrounds change when a \"mobile app\" is opened. For more info check out the GitHub repo above.",
-                color = MaterialTheme.colors.onBackground
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            Title()
+            ViewSource()
+            Description()
             Attributions(state.artAttributions)
-            Spacer(modifier = Modifier.height(48.dp))
+            WebsiteVersion()
+
+            Spacer(modifier = Modifier.height(60.dp))
         }
+
+        SystemUiGradientOverlay()
     }
 }
 
@@ -159,6 +114,68 @@ private fun TopBar(
             onClick = onBackButtonPressed,
         )
     }
+}
+
+@Composable
+private fun Title() {
+    Column(
+        verticalArrangement = spacedBy(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(72.dp)
+                .clip(CircleShape)
+                .background(Color(0xff39343f))
+                .border(1.dp, MaterialTheme.colors.onBackground, CircleShape),
+
+            ) {
+            Icon(
+                modifier = Modifier.align(Alignment.Center),
+                imageVector = EvaIcons.Fill.Info,
+                contentDescription = null,
+                tint = MaterialTheme.colors.onBackground,
+            )
+        }
+
+        Text(
+            text = "About This",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.h1,
+        )
+    }
+}
+
+@Composable
+private fun ViewSource() {
+    val uriHandler = LocalUriHandler.current
+    Column(
+        modifier = Modifier
+            .pointerHoverIcon(PointerIcon.Hand)
+            .clip(RoundedCornerShape(24.dp))
+            .background(Color.Black)
+            .clickable {
+                uriHandler.openUri("https://github.com/loukwn/loukwn-me")
+            }
+            .padding(20.dp),
+        verticalArrangement = spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            imageVector = SimpleIcons.Github,
+            contentDescription = null,
+            tint = MaterialTheme.colors.onBackground,
+        )
+        Text("View source", color = MaterialTheme.colors.onBackground)
+    }
+}
+
+@Composable
+private fun Description() {
+    Text(
+        "This is a Compose Multiplatform (WASM) app that runs inside an iframe of a simple HTML/JS static page. There is some basic communication between the two (using messages) so that backgrounds change when a \"mobile app\" is opened. For more info check out the GitHub repo above.",
+        color = MaterialTheme.colors.onBackground
+    )
 }
 
 @Composable
@@ -191,7 +208,11 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp),
         ) {
-            Text("Photos", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
+            Text(
+                "Photos",
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.onBackground
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             artAttribution.forEach { artAttribution ->
@@ -234,7 +255,11 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
                 Text(annotatedText, color = MaterialTheme.colors.onBackground)
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text("Icons", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
+            Text(
+                "Icons",
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.onBackground
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             val iconText = buildAnnotatedString {
@@ -268,7 +293,11 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
             Text(iconText, color = MaterialTheme.colors.onBackground)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Text("Logos", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.onBackground)
+            Text(
+                "Logos",
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.onBackground
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
@@ -276,5 +305,12 @@ private fun Attributions(artAttribution: List<ArtAttribution>) {
                 color = MaterialTheme.colors.onBackground,
             )
         }
+    }
+}
+
+@Composable
+private fun WebsiteVersion() {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        Text("v${Constants.APP_VERSION}", color = Color.White)
     }
 }
