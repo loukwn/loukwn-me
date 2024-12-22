@@ -28,7 +28,7 @@ fun ProjectsPage(projects: List<Project>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
         verticalArrangement = spacedBy(20.dp),
-        contentPadding = PaddingValues(bottom = 120.dp),
+        contentPadding = PaddingValues(top = 20.dp, bottom = 120.dp),
     ) {
         items(projects.size) {
             ProjectCard(projects[it])
@@ -41,7 +41,7 @@ private fun ProjectCard(model: Project) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.secondary.copy(alpha = .05f), shape = RoundedCornerShape(24.dp)),
+            .background(MaterialTheme.colors.secondary.copy(alpha = .2f), shape = RoundedCornerShape(24.dp)),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),

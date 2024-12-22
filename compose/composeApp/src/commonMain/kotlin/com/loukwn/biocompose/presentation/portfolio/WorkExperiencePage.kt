@@ -72,7 +72,7 @@ internal fun WorkExperiencePage(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = timeLabelLazyListState,
-            contentPadding = PaddingValues(bottom = 40.dp),
+            contentPadding = PaddingValues(top = 20.dp, bottom = 40.dp),
             userScrollEnabled = false
         ) {
             items(timeLabels.size) {
@@ -94,7 +94,7 @@ internal fun WorkExperiencePage(
             modifier = Modifier.fillMaxHeight().fillMaxWidth(.66f)
                 .align(Alignment.CenterEnd),
             state = calendarItemLazyListState,
-            contentPadding = PaddingValues(bottom = 40.dp),
+            contentPadding = PaddingValues(top = 20.dp, bottom = 40.dp),
             userScrollEnabled = false,
         ) {
             items(calendarItems.size) {
