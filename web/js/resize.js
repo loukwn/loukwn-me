@@ -8,7 +8,6 @@ const INITIAL_APP_CONTENT_TOP = 56;
 const INITIAL_APP_CONTENT_LEFT = 21;
 const INITIAL_PHONE_HEIGHT = 800;
 const INITIAL_PHONE_WIDTH = 400;
-const WINDOW_MIN_HEIGHT_ZOOM_CHANGE = 740;
 
 var windowSizeBeforeTransitionToSmall = -1;
 
@@ -50,12 +49,6 @@ function handleResize(event) {
   } else {
     resizePhone(phoneContainer);
     console.log("3");
-  }
-
-  if (window.innerHeight < WINDOW_SMALL_WIDTH_INITIAL_LOAD) {
-    document.body.style.zoom = 0.9;
-  } else {
-    document.body.style.zoom = 1.0;
   }
 }
 
