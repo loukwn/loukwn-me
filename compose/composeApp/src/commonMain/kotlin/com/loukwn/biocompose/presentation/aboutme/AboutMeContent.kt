@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,15 +62,20 @@ fun AboutMeContent(
 
     val scrollState = rememberScrollState()
     val scrollProgress = scrollState.value / (windowSize.height.toFloat() - 250)
-    val topBarBg = if (scrollProgress >= .65f) MaterialTheme.colors.background else Color.Transparent
+    val topBarBg =
+        if (scrollProgress >= .65f) MaterialTheme.colors.background else Color.Transparent
 
     Box(Modifier.fillMaxSize(1f).background(MaterialTheme.colors.primary)) {
         AboutMeBgDrawings(modifier = Modifier.fillMaxSize())
 
         TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackPressed)
 
-        Column {
-            Avatar(modifier = Modifier.fillMaxWidth().weight(1f))
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.height(130.dp))
+            Avatar(modifier = Modifier.weight(1f))
             FakeBottomDrawer(windowHeightDp = windowSizeDp.height)
         }
 
@@ -96,8 +102,9 @@ private fun Avatar(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(Res.drawable.me),
         contentDescription = null,
-        modifier = modifier.blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
-        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
+        contentScale = ContentScale.FillHeight,
     )
 }
 
