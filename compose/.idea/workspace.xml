@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3a872848-0dff-496f-8eb7-c2a77a4fe914" name="Changes" comment="feat: Changed prof pic in About me">
+      <change beforePath="$PROJECT_DIR$/../.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.run/Browser Run.run.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/composeResources/drawable/dafni.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/composeResources/drawable/equipment.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/composeResources/drawable/me.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/composeResources/drawable/phone_bg.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/composeResources/font/ostrich_regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/Expects.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/App.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/Attribution.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/Job.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/Link.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/Project.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/data/ScreenLogger.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutme/AboutMeBg.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutme/AboutMeBottomDrawer.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutme/AboutMeComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutme/AboutMeContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutthis/AboutThisComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutthis/AboutThisContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/aboutthis/AboutThisUiState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/components/HoverableText.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/components/SystemUiGradientOverlay.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/components/VectorIconButton.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/Back.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/BatteryTwoThirds.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/Home.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/MyIcons.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/NetworkCell.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/NetworkWifi.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/icons/Recents.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/design_system/theme/LoukwnMeTheme.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/desktop/DesktopComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/desktop/DesktopContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/links/LinksComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/links/LinksContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/links/LinksUiState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/CalendarItemDetails.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/PortfolioComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/PortfolioContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/PortfolioUiState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/ProjectsPage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/portfolio/WorkExperiencePage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/root/RootComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/root/RootContent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/root/SystemUi.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/util/ModifierUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/util/Serialization.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/util/SizeUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/commonMain/kotlin/com/loukwn/biocompose/presentation/util/StateUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/wasmJsMain/kotlin/com/loukwn/biocompose/Actuals.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/wasmJsMain/kotlin/com/loukwn/biocompose/main.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composeApp/src/wasmJsMain/resources/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin-js-store/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/bio_app.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/about_me_bg_main.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/about_this_bg_main.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/contact_me_bg_main.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/desktop_bg.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/experience_bg_main.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/github.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/linkedin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/mail.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/medium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/images/phone_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/js/compat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/js/resize.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/js/theme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/jsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/style.css" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
+    <option name="RECENT_COMMON_BRANCH" value="gh-pages" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2s81Ni1RnSFQ6usLgZ8xcUy41v7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Browser Run.executor": "Run",
+    "Gradle.compose [composeApp:wasmJsBrowserTest].executor": "Run",
+    "Gradle.compose [tasks].executor": "Run",
+    "Gradle.compose [wasmJsBrowserRun].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "gh-pages",
+    "last_opened_file_path": "/run/media/loukwn/Storage/Dev/MixedProjects/loukwn-me/compose"
+  }
+}]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle composeApp:wasmJsBrowserTest" />
+      <command value="gradle tasks" />
+      <command value="gradle wasmJsBrowserRun -t" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="compose [composeApp:wasmJsBrowserTest]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="composeApp:wasmJsBrowserTest" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="compose [tasks]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="tasks" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.Browser Run" />
+      <item itemvalue="Gradle.compose [composeApp:wasmJsBrowserTest]" />
+      <item itemvalue="Gradle.compose [tasks]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Browser Run" />
+        <item itemvalue="Gradle.compose [tasks]" />
+        <item itemvalue="Gradle.compose [composeApp:wasmJsBrowserTest]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a872848-0dff-496f-8eb7-c2a77a4fe914" name="Changes" comment="" />
+      <created>1737822354019</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737822354019</updated>
+    </task>
+    <task id="LOCAL-00001" summary="feat: Changed prof pic in About me">
+      <option name="closed" value="true" />
+      <created>1742427579786</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1742427579786</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: Changed prof pic in About me">
+      <option name="closed" value="true" />
+      <created>1742429414114</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742429414114</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: Changed prof pic in About me" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Changed prof pic in About me" />
+  </component>
+</project>
