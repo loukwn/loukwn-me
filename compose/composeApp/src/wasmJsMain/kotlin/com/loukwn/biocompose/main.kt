@@ -5,6 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.resume
@@ -42,8 +43,8 @@ fun main() {
             null
         }
 
-    // TODO: Take the title from resources after https://youtrack.jetbrains.com/issue/KT-49981
-    CanvasBasedWindow(title = "Compose Bio", canvasElementId = "ComposeTarget") {
+    val body = document.body ?: return
+    ComposeViewport(body) {
         DisposableEffect(Unit) {
             onDispose {
                 coroutineScope.cancel()
@@ -51,8 +52,6 @@ fun main() {
         }
         RootContent(root, modifier = Modifier.fillMaxSize())
     }
-
-//        window.parent.postMessage("haha".toJsString(), "*")
 }
 
 private const val KEY_SAVED_STATE = "saved_state"

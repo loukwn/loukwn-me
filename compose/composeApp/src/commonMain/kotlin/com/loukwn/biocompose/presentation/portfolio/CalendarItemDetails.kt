@@ -116,7 +116,7 @@ internal fun CalendarItemDetails(
                                 vertical = 20.dp,
                             )
                             .sharedElement(
-                                state = rememberSharedContentState(
+                                sharedContentState = rememberSharedContentState(
                                     key = "${calendarItem.company}-box-internal",
                                 ),
                                 animatedVisibilityScope = animatedVisibilityScope,
@@ -135,7 +135,7 @@ internal fun CalendarItemDetails(
                                     color = MaterialTheme.colors.onBackground,
                                     modifier = Modifier
                                         .sharedElement(
-                                            state = rememberSharedContentState(
+                                            sharedContentState = rememberSharedContentState(
                                                 key = "${calendarItem.company}-title",
                                             ),
                                             animatedVisibilityScope = animatedVisibilityScope,
@@ -148,7 +148,7 @@ internal fun CalendarItemDetails(
                                     style = MaterialTheme.typography.caption,
                                     modifier = Modifier
                                         .sharedElement(
-                                            state = rememberSharedContentState(
+                                            sharedContentState = rememberSharedContentState(
                                                 key = "${calendarItem.company}-duration",
                                             ),
                                             animatedVisibilityScope = animatedVisibilityScope,

@@ -145,7 +145,7 @@ internal fun WorkExperiencePage(
                                             vertical = 8.dp,
                                         )
                                         .sharedElement(
-                                            state = rememberSharedContentState(
+                                            sharedContentState = rememberSharedContentState(
                                                 key = "${item.company}-box-internal",
                                             ),
                                             animatedVisibilityScope = animatedVisibilityScope,
@@ -157,7 +157,7 @@ internal fun WorkExperiencePage(
                                         color = MaterialTheme.colors.onBackground,
                                         modifier = Modifier
                                             .sharedElement(
-                                                state = rememberSharedContentState(
+                                                sharedContentState = rememberSharedContentState(
                                                     key = "${item.company}-title",
                                                 ),
                                                 animatedVisibilityScope = animatedVisibilityScope,
@@ -169,7 +169,7 @@ internal fun WorkExperiencePage(
                                         style = MaterialTheme.typography.caption,
                                         modifier = Modifier
                                             .sharedElement(
-                                                state = rememberSharedContentState(
+                                                sharedContentState = rememberSharedContentState(
                                                     key = "${item.company}-duration",
                                                 ),
                                                 animatedVisibilityScope = animatedVisibilityScope,

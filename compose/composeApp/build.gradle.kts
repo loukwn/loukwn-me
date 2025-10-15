@@ -1,28 +1,16 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.kmp)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(project.projectDir.path)
-                    }
-                }
-            }
-        }
+        browser()
         binaries.executable()
     }
 
@@ -35,6 +23,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.viewmodel)
+            implementation(libs.compose.navigation)
             implementation(libs.bundles.decompose)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.composeIcons.lineAwesome)
@@ -43,10 +33,4 @@ kotlin {
             implementation(libs.essenty.lifecycle.coroutines)
         }
     }
-}
-
-
-
-compose.experimental {
-    web.application {}
 }

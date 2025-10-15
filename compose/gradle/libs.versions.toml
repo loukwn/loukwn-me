@@ -1,20 +1,16 @@
 [versions]
-compose = "1.7.0"
-compose-plugin = "1.7.0"
-junit = "4.13.2"
-kotlin = "2.0.20"
+compose = "1.9.1"
+compose-viewmodel = "2.9.5"
+compose-navigation = "2.9.1"
+kotlin = "2.2.20"
 decompose = "3.1.0"
-kotlin-serialization = "1.6.3"
+kotlin-serialization = "1.9.0"
 composeIcons = "1.1.1"
-compose-emoji = "2.0.0"
 essenty = "2.2.1"
 
 [libraries]
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel"}
+compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose"}
 decompose-extensions = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose"}
 essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty"}
@@ -31,12 +27,11 @@ composeIcons-octicons = { module = "br.com.devsrsouza.compose.icons:octicons", v
 composeIcons-simpleIcons = { module = "br.com.devsrsouza.compose.icons:simple-icons", version.ref = "composeIcons" }
 composeIcons-tablerIcons = { module = "br.com.devsrsouza.compose.icons:tabler-icons", version.ref = "composeIcons" }
 
-compose-emoji = { module = "org.kodein.emoji:emoji-compose-m2", version.ref = "compose-emoji" }
 [bundles]
 decompose = [ "decompose", "decompose-extensions" ]
 
 [plugins]
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
