@@ -46,6 +46,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,6 +60,7 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.loukwn.biocompose.di.viewModel
 import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
@@ -72,12 +74,23 @@ internal val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibi
 internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
 
 @Composable
-fun PortfolioContent(
-    component: PortfolioComponent,
-    onBackPressed: () -> Unit,
-) {
-    val state by remember { component.state }
+fun PortfolioScreen(onBackButtonPressed: () -> Unit) {
+    val viewModel: PortfolioViewModel = viewModel()
+    val state by viewModel.state.collectAsState()
 
+    PortfolioContent(
+        state = state,
+        onAction = viewModel::onAction,
+        onBackButtonPressed = onBackButtonPressed,
+    )
+}
+
+@Composable
+private fun PortfolioContent(
+    state: PortfolioUiState,
+    onAction: (PortfolioAction) -> Unit,
+    onBackButtonPressed: () -> Unit,
+) {
     var selectedCalendarItem by remember { mutableStateOf<CalendarItem?>(null) }
 
     SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
@@ -117,7 +130,7 @@ fun PortfolioContent(
                                 CalendarItemDetails(
                                     calendarItem = selectedCalendarItem!!,
                                     onCalendarItemDismissed = {
-                                        component.onCalendarItemSelected(null)
+                                        onAction(PortfolioAction.CalendarItemSelect(null))
                                     },
                                 )
                             }
@@ -127,12 +140,12 @@ fun PortfolioContent(
                                 containerScrollableState = containerScrollableState,
                                 timeLabelLazyListState = timeLabelLazyListState,
                                 calendarItemLazyListState = calendarItemLazyListState,
-                                onBackPressed = onBackPressed,
-                                onFilterButtonPressed = component::onFilterButtonPressed,
-                                onPageChanged = component::onPageChanged,
-                                onScaleChanged = component::onScaleChanged,
+                                onBackPressed = onBackButtonPressed,
+                                onFilterButtonPressed = { onAction(PortfolioAction.FilterButtonPress) },
+                                onPageChanged = { onAction(PortfolioAction.PageChange(pageIndex = it)) },
+                                onScaleChanged = { onAction(PortfolioAction.ScaleChange(scale = it)) },
                                 onCalendarItemClicked = {
-                                    component.onCalendarItemSelected(it)
+                                    onAction(PortfolioAction.CalendarItemSelect(it))
                                     selectedCalendarItem = it
                                 },
                             )

@@ -14,15 +14,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class RootViewModel : ViewModel() {
+class PhoneViewModel(
+    private val canGoBackStateFlow: MutableStateFlow<Boolean>,
+    private val deepBackEventDispatchFlow: MutableSharedFlow<Unit>,
+) : ViewModel() {
     private val _state = MutableStateFlow(PhoneUiState(getFormattedTime(), false))
     val state: StateFlow<PhoneUiState> = _state.asStateFlow()
 
     private val _commands = MutableSharedFlow<PhoneCommand>()
     val commands: SharedFlow<PhoneCommand> = _commands
-
-    private val canGoBackStateFlow = MutableStateFlow(true)
-    private val deepBackEventDispatchFlow = MutableSharedFlow<Unit>()
 
     init {
         updateTimeInIntervals()

@@ -1,10 +1,8 @@
 package com.loukwn.biocompose.presentation.portfolio
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.loukwn.biocompose.data.Date
 import com.loukwn.biocompose.data.diffIn6MonthsWith
 import com.loukwn.biocompose.data.durationIn6Months
@@ -12,42 +10,25 @@ import com.loukwn.biocompose.data.durationString
 import com.loukwn.biocompose.data.myJobs
 import com.loukwn.biocompose.data.myProjects
 import com.loukwn.biocompose.getCurrentYear
-import com.loukwn.biocompose.presentation.util.update
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
-interface PortfolioComponent {
-    val state: State<PortfolioUiState>
-
-    fun onScaleChanged(scale: Scale)
-
-    fun onFilterButtonPressed()
-
-    fun onPageChanged(pageIndex: Int)
-
-    fun onCalendarItemSelected(item: CalendarItem?)
-}
-
-class DefaultPortfolioComponent(
-    componentContext: ComponentContext,
+class PortfolioViewModel(
     private val canGoBackStateFlow: MutableStateFlow<Boolean>,
     deepBackEventDispatchFlow: SharedFlow<Unit>,
-) : PortfolioComponent,
-    ComponentContext by componentContext {
-    private val _state = mutableStateOf(getInitialState())
-    override val state: State<PortfolioUiState> = _state
-
-    private val scope = coroutineScope(Dispatchers.Main.immediate + SupervisorJob())
+) : ViewModel() {
+    private val _state = MutableStateFlow(getInitialState())
+    val state: StateFlow<PortfolioUiState> = _state.asStateFlow()
 
     init {
-        scope.launch {
+        viewModelScope.launch {
             delay(400)
             val initialScale = Scale.YEAR
 
@@ -59,7 +40,7 @@ class DefaultPortfolioComponent(
                 )
             }
         }
-        scope.launch {
+        viewModelScope.launch {
             deepBackEventDispatchFlow.collectLatest {
                 onCalendarItemSelected(null)
             }
@@ -173,7 +154,16 @@ class DefaultPortfolioComponent(
         return jobs.reversed()
     }
 
-    override fun onScaleChanged(scale: Scale) {
+    fun onAction(action: PortfolioAction) {
+        when (action) {
+            is PortfolioAction.CalendarItemSelect -> onCalendarItemSelected(action.item)
+            is PortfolioAction.FilterButtonPress -> onFilterButtonPressed()
+            is PortfolioAction.PageChange -> onPageChanged(action.pageIndex)
+            is PortfolioAction.ScaleChange -> onScaleChanged(action.scale)
+        }
+    }
+
+    private fun onScaleChanged(scale: Scale) {
         _state.update {
             it.copy(
                 baseGap = scale.baseGap,
@@ -182,7 +172,7 @@ class DefaultPortfolioComponent(
         }
     }
 
-    override fun onFilterButtonPressed() {
+    private fun onFilterButtonPressed() {
         _state.update {
             it.copy(
                 isCalendarScaleComponentVisible = !state.value.isCalendarScaleComponentVisible,
@@ -190,7 +180,7 @@ class DefaultPortfolioComponent(
         }
     }
 
-    override fun onPageChanged(pageIndex: Int) {
+    private fun onPageChanged(pageIndex: Int) {
         _state.update {
             it.copy(
                 isCalendarScaleComponentVisible = false,
@@ -199,7 +189,7 @@ class DefaultPortfolioComponent(
         }
     }
 
-    override fun onCalendarItemSelected(item: CalendarItem?) {
+    private fun onCalendarItemSelected(item: CalendarItem?) {
         _state.update {
             it.copy(
                 showCalendarItemDetails = item != null,

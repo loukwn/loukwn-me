@@ -24,12 +24,10 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.compose.viewmodel)
             implementation(libs.compose.navigation)
-            implementation(libs.bundles.decompose)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.composeIcons.lineAwesome)
             implementation(libs.composeIcons.simpleIcons)
             implementation(libs.composeIcons.evaIcons)
-            implementation(libs.essenty.lifecycle.coroutines)
         }
     }
 }

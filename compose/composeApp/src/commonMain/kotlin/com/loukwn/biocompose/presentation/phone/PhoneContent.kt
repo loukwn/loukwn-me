@@ -2,9 +2,7 @@ package com.loukwn.biocompose.presentation.phone
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,32 +10,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loukwn.biocompose.data.ScreenLogger
+import com.loukwn.biocompose.di.viewModel
 import com.loukwn.biocompose.presentation.aboutme.AboutMeScreen
 import com.loukwn.biocompose.presentation.aboutthis.AboutThisScreen
 import com.loukwn.biocompose.presentation.designsystem.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopScreen
 import com.loukwn.biocompose.presentation.links.LinksScreen
+import com.loukwn.biocompose.presentation.portfolio.PortfolioScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.serialization.Serializable
 
 @Composable
 fun PhoneContent() {
     val navController = rememberNavController()
-    val rootViewModel = viewModel { RootViewModel() }
-    val state by rootViewModel.state.collectAsState()
+    val phoneViewModel: PhoneViewModel = viewModel()
+    val state by phoneViewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        rootViewModel.commands.collectLatest { command ->
+        phoneViewModel.commands.collectLatest { command ->
             when (command) {
                 is PhoneCommand.GoBack -> {
-                    navController.popBackStack()
+                    navController.popBackStack(route = Destination.Desktop, inclusive = false)
                 }
                 is PhoneCommand.NavigateTo -> {
                     navController.navigate(command.destination)
@@ -49,10 +48,10 @@ fun PhoneContent() {
     PhoneContentInternal(
         navController = navController,
         state = state,
-        onSystemUiModeChanged = rootViewModel::onSystemUiModeChanged,
-        onDesktopAppPressed = rootViewModel::onDesktopAppPressed,
-        onBackButtonPressed = rootViewModel::onBackButtonPressed,
-        onHomeButtonPressed = rootViewModel::onHomeButtonPressed,
+        onSystemUiModeChanged = phoneViewModel::onSystemUiModeChanged,
+        onDesktopAppPressed = phoneViewModel::onDesktopAppPressed,
+        onBackButtonPressed = phoneViewModel::onBackButtonPressed,
+        onHomeButtonPressed = phoneViewModel::onHomeButtonPressed,
     )
 }
 
@@ -139,7 +138,11 @@ private fun NavGraph(
         }
 
         composable<Destination.Portfolio> {
-            Text(modifier = Modifier.fillMaxSize().background(Color.White), text = "Portfolio")
+            LaunchedEffect(Unit) {
+                ScreenLogger.logScreen("portfolio")
+            }
+
+            PortfolioScreen(onBackButtonPressed)
         }
 
         composable<Destination.Links> {
