@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loukwn.biocompose.data.Date
+import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.data.diffIn6MonthsWith
 import com.loukwn.biocompose.data.durationIn6Months
 import com.loukwn.biocompose.data.durationString
@@ -28,6 +29,8 @@ class PortfolioViewModel(
     val state: StateFlow<PortfolioUiState> = _state.asStateFlow()
 
     init {
+        ScreenLogger.logScreen("portfolio")
+
         viewModelScope.launch {
             delay(400)
             val initialScale = Scale.YEAR

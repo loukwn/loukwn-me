@@ -14,7 +14,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.di.viewModel
 import com.loukwn.biocompose.presentation.aboutme.AboutMeScreen
 import com.loukwn.biocompose.presentation.aboutthis.AboutThisScreen
@@ -116,10 +115,6 @@ private fun NavGraph(
         startDestination = Destination.Desktop,
     ) {
         composable<Destination.Desktop> {
-            LaunchedEffect(Unit) {
-                ScreenLogger.logScreen("desktop")
-            }
-
             DesktopScreen(
                 onSystemUiModeChanged = onSystemUiModeChanged,
                 onAppPressed = onDesktopAppPressed,
@@ -127,10 +122,6 @@ private fun NavGraph(
         }
 
         composable<Destination.AboutMe> {
-            LaunchedEffect(Unit) {
-                ScreenLogger.logScreen("about_me")
-            }
-
             AboutMeScreen(
                 onSystemUiModeChanged = onSystemUiModeChanged,
                 onBackButtonPressed = onBackButtonPressed,
@@ -138,26 +129,14 @@ private fun NavGraph(
         }
 
         composable<Destination.Portfolio> {
-            LaunchedEffect(Unit) {
-                ScreenLogger.logScreen("portfolio")
-            }
-
             PortfolioScreen(onBackButtonPressed)
         }
 
         composable<Destination.Links> {
-            LaunchedEffect(Unit) {
-                ScreenLogger.logScreen("links")
-            }
-
             LinksScreen(onBackButtonPressed)
         }
 
         composable<Destination.AboutThis> {
-            LaunchedEffect(Unit) {
-                ScreenLogger.logScreen("about_this")
-            }
-
             AboutThisScreen(onBackButtonPressed)
         }
     }

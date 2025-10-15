@@ -44,6 +44,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.presentation.designsystem.components.HoverableText
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
@@ -64,6 +65,7 @@ fun DesktopScreen(
     onAppPressed: (DesktopApp) -> Unit,
 ) {
     LaunchedEffect(Unit) {
+        ScreenLogger.logScreen("desktop")
         onSystemUiModeChanged(false)
     }
 
