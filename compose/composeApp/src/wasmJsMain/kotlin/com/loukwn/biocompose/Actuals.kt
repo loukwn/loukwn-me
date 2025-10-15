@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 package com.loukwn.biocompose
 
 import androidx.compose.runtime.Composable

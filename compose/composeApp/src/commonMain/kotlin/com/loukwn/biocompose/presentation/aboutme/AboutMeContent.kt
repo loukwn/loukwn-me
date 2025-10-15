@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.toPx
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline

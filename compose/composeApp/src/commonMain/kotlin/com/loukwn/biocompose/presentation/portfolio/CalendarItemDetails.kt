@@ -40,7 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
 import compose.icons.evaicons.outline.Close

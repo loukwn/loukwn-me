@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.getAgeInYears
 import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.dafni

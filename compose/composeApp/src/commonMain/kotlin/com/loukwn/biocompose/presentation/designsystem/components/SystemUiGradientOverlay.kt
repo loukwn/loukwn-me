@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
 
 @Composable
 fun BoxScope.SystemUiGradientOverlay(

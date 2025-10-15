@@ -49,7 +49,7 @@ import com.loukwn.biocompose.data.ArtAttribution
 import com.loukwn.biocompose.data.Constants
 import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
-import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
+import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.SimpleIcons
 import compose.icons.evaicons.Fill

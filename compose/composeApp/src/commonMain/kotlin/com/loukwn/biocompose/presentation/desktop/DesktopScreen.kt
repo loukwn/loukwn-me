@@ -59,7 +59,7 @@ import org.jetbrains.compose.resources.painterResource
 private const val INITIAL_ANIMATION_DELAY_MS = 500L
 
 @Composable
-fun DesktopContent(
+fun DesktopScreen(
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
     onAppClicked: (DesktopApp) -> Unit,
 ) {

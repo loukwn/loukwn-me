@@ -1,4 +1,4 @@
-package com.loukwn.biocompose.presentation.root
+package com.loukwn.biocompose.presentation.phone
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
