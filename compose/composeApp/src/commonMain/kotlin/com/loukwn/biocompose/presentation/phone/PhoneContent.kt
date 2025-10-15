@@ -22,6 +22,7 @@ import com.loukwn.biocompose.presentation.aboutme.AboutMeScreen
 import com.loukwn.biocompose.presentation.designsystem.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopScreen
+import com.loukwn.biocompose.presentation.links.LinksScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.serialization.Serializable
 
@@ -141,7 +142,11 @@ private fun NavGraph(
         }
 
         composable<Destination.Links> {
-            Text(modifier = Modifier.fillMaxSize().background(Color.White), text = "Links")
+            LaunchedEffect(Unit) {
+                ScreenLogger.logScreen("links")
+            }
+
+            LinksScreen(onBackButtonPressed)
         }
 
         composable<Destination.AboutThis> {

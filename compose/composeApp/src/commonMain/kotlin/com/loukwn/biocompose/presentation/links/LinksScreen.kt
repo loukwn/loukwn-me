@@ -26,6 +26,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,6 +38,7 @@ import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.loukwn.biocompose.data.FullLink
 import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
@@ -48,12 +50,23 @@ import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.evaicons.outline.Navigation2
 
 @Composable
-fun LinksContent(
-    component: LinksComponent,
-    onBackPressed: () -> Unit,
-) {
-    val state by remember { component.state }
+fun LinksScreen(onBackButtonPressed: () -> Unit) {
+    val viewModel = viewModel { LinksViewModel() }
+    val state by viewModel.state.collectAsState()
 
+    LinksContent(
+        state = state,
+        onLinkSelected = viewModel::onLinkSelected,
+        onBackButtonPressed = onBackButtonPressed,
+    )
+}
+
+@Composable
+private fun LinksContent(
+    state: LinksUiState,
+    onLinkSelected: (FullLink) -> Unit,
+    onBackButtonPressed: () -> Unit,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier =
@@ -72,11 +85,11 @@ fun LinksContent(
                     Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, bottom = 16.dp),
-                onBackButtonPressed = onBackPressed,
+                onBackButtonPressed = onBackButtonPressed,
             )
             LinksList(
                 state = state,
-                onLinkSelected = component::onLinkSelected,
+                onLinkSelected = onLinkSelected,
             )
         }
         SystemUiGradientOverlay()
