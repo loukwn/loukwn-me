@@ -28,6 +28,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.loukwn.biocompose.data.ArtAttribution
 import com.loukwn.biocompose.data.Constants
 import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
@@ -60,12 +62,21 @@ import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.simpleicons.Github
 
 @Composable
-fun AboutThisContent(
-    component: AboutThisComponent,
-    onBackPressed: () -> Unit,
-) {
-    val state by remember { component.state }
+fun AboutThisScreen(onBackButtonPressed: () -> Unit) {
+    val viewModel = viewModel { AboutThisViewModel() }
+    val state by viewModel.state.collectAsState()
 
+    AboutThisContent(
+        state = state,
+        onBackButtonPressed = onBackButtonPressed,
+    )
+}
+
+@Composable
+private fun AboutThisContent(
+    state: AboutThisUiState,
+    onBackButtonPressed: () -> Unit,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier =
@@ -86,7 +97,7 @@ fun AboutThisContent(
                     Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, bottom = 16.dp),
-                onBackButtonPressed = onBackPressed,
+                onBackButtonPressed = onBackButtonPressed,
             )
             Title()
             ViewSource()

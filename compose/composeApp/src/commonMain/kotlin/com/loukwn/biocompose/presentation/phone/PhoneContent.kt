@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.presentation.aboutme.AboutMeScreen
+import com.loukwn.biocompose.presentation.aboutthis.AboutThisScreen
 import com.loukwn.biocompose.presentation.designsystem.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopScreen
@@ -150,7 +151,11 @@ private fun NavGraph(
         }
 
         composable<Destination.AboutThis> {
-            Text(modifier = Modifier.fillMaxSize().background(Color.White), text = "About This")
+            LaunchedEffect(Unit) {
+                ScreenLogger.logScreen("about_this")
+            }
+
+            AboutThisScreen(onBackButtonPressed)
         }
     }
 }
