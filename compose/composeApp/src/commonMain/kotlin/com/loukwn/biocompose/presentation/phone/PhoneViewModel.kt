@@ -53,7 +53,7 @@ class RootViewModel : ViewModel() {
             canGoBackStateFlow.update { true }
         }
 
-    fun onDesktopAppClicked(desktopApp: DesktopApp) =
+    fun onDesktopAppPressed(desktopApp: DesktopApp) =
         viewModelScope.launch {
             val destination =
                 when (desktopApp) {

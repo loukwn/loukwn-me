@@ -1,9 +1,7 @@
 package com.loukwn.biocompose.presentation.aboutme
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.arkivanov.decompose.ComponentContext
+import androidx.lifecycle.ViewModel
 import compose.icons.LineAwesomeIcons
 import compose.icons.SimpleIcons
 import compose.icons.lineawesomeicons.AddressCard
@@ -19,15 +17,11 @@ import compose.icons.simpleicons.Kotlin
 import compose.icons.simpleicons.Latex
 import compose.icons.simpleicons.Linux
 import compose.icons.simpleicons.Python
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-interface AboutMeComponent {
-    val state: State<AboutMeUiState>
-}
-
-class DefaultAboutMeComponent(
-    componentContext: ComponentContext,
-) : AboutMeComponent,
-    ComponentContext by componentContext {
+class AboutMeViewModel : ViewModel() {
     private val phrases =
         listOf(
             "LGTM",
@@ -39,8 +33,8 @@ class DefaultAboutMeComponent(
             "Did you try restarting?",
         )
 
-    private val _state = mutableStateOf(getInitialState())
-    override val state: State<AboutMeUiState> = _state
+    private val _state = MutableStateFlow(getInitialState())
+    val state: StateFlow<AboutMeUiState> = _state.asStateFlow()
 
     private fun getInitialState(): AboutMeUiState {
         val tags =

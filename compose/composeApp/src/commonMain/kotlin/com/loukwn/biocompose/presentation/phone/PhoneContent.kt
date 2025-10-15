@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loukwn.biocompose.data.ScreenLogger
+import com.loukwn.biocompose.presentation.aboutme.AboutMeScreen
 import com.loukwn.biocompose.presentation.designsystem.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopApp
 import com.loukwn.biocompose.presentation.desktop.DesktopScreen
@@ -47,7 +48,7 @@ fun PhoneContent() {
         navController = navController,
         state = state,
         onSystemUiModeChanged = rootViewModel::onSystemUiModeChanged,
-        onDesktopAppPressed = rootViewModel::onDesktopAppClicked,
+        onDesktopAppPressed = rootViewModel::onDesktopAppPressed,
         onBackButtonPressed = rootViewModel::onBackButtonPressed,
         onHomeButtonPressed = rootViewModel::onHomeButtonPressed,
     )
@@ -67,8 +68,8 @@ private fun PhoneContentInternal(
             NavGraph(
                 navController = navController,
                 onSystemUiModeChanged = onSystemUiModeChanged,
-                onDesktopAppClicked = onDesktopAppPressed,
-                onBackButtonClicked = onBackButtonPressed,
+                onDesktopAppPressed = onDesktopAppPressed,
+                onBackButtonPressed = onBackButtonPressed,
             )
             StatusBar(
                 modifier = Modifier.fillMaxWidth(),
@@ -106,8 +107,8 @@ sealed interface Destination {
 private fun NavGraph(
     navController: NavHostController,
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
-    onDesktopAppClicked: (DesktopApp) -> Unit,
-    onBackButtonClicked: () -> Unit,
+    onDesktopAppPressed: (DesktopApp) -> Unit,
+    onBackButtonPressed: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -120,12 +121,19 @@ private fun NavGraph(
 
             DesktopScreen(
                 onSystemUiModeChanged = onSystemUiModeChanged,
-                onAppClicked = onDesktopAppClicked,
+                onAppPressed = onDesktopAppPressed,
             )
         }
 
         composable<Destination.AboutMe> {
-            Text(modifier = Modifier.fillMaxSize().background(Color.White), text = "About me")
+            LaunchedEffect(Unit) {
+                ScreenLogger.logScreen("about_me")
+            }
+
+            AboutMeScreen(
+                onSystemUiModeChanged = onSystemUiModeChanged,
+                onBackButtonPressed = onBackButtonPressed,
+            )
         }
 
         composable<Destination.Portfolio> {

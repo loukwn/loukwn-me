@@ -61,7 +61,7 @@ private const val INITIAL_ANIMATION_DELAY_MS = 500L
 @Composable
 fun DesktopScreen(
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
-    onAppClicked: (DesktopApp) -> Unit,
+    onAppPressed: (DesktopApp) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         onSystemUiModeChanged(false)
@@ -88,7 +88,7 @@ fun DesktopScreen(
                     title = it.title,
                     imageVector = it.imageVector,
                     animationStartDelay = index * 200L + INITIAL_ANIMATION_DELAY_MS,
-                    onClick = { onAppClicked(it) },
+                    onClick = { onAppPressed(it) },
                 )
             }
         }

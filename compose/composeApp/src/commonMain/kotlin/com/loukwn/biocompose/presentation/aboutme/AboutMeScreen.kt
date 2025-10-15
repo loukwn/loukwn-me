@@ -20,6 +20,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.loukwn.biocompose.getWindowSize
 import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.phone.GlobalInsetsToConsume
@@ -45,12 +47,26 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.me
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun AboutMeContent(
-    component: AboutMeComponent,
+fun AboutMeScreen(
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
-    onBackPressed: () -> Unit,
+    onBackButtonPressed: () -> Unit,
 ) {
-    val state by remember { component.state }
+    val viewModel = viewModel { AboutMeViewModel() }
+    val state by viewModel.state.collectAsState()
+
+    AboutMeContent(
+        state = state,
+        onSystemUiModeChanged = onSystemUiModeChanged,
+        onBackButtonPressed = onBackButtonPressed,
+    )
+}
+
+@Composable
+private fun AboutMeContent(
+    state: AboutMeUiState,
+    onSystemUiModeChanged: (Boolean) -> Unit,
+    onBackButtonPressed: () -> Unit,
+) {
     val windowSize = getWindowSize()
     val windowSizeDp = windowSize.toPx(LocalDensity.current)
 
@@ -68,7 +84,7 @@ fun AboutMeContent(
     Box(Modifier.fillMaxSize(1f).background(MaterialTheme.colors.primary)) {
         AboutMeBgDrawings(modifier = Modifier.fillMaxSize())
 
-        TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackPressed)
+        TopBar(modifier = Modifier.zIndex(1f).background(topBarBg), onBackButtonPressed)
 
         Column(
             verticalArrangement = Arrangement.Bottom,
