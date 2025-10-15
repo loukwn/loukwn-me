@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.links
 
 import androidx.lifecycle.ViewModel
 import com.loukwn.biocompose.data.FullLink
+import com.loukwn.biocompose.data.ScreenLog
 import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.data.myLinks
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ class LinksViewModel : ViewModel() {
     val state: StateFlow<LinksUiState> = _state.asStateFlow()
 
     init {
-        ScreenLogger.logScreen("contact_me")
+        ScreenLogger.logScreen(ScreenLog.Links)
     }
 
     private fun getInitialState(): LinksUiState =

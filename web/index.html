@@ -20,11 +20,7 @@
 
 <body>
   <div id="background-container" style="width: 100%; height: 100%; position: fixed; z-index: -1;">
-    <img class="opaque" src="images/desktop_bg.webp" />
-    <img src="images/about_me_bg_main.webp" />
-    <img src="images/experience_bg_main.webp" />
-    <img src="images/contact_me_bg_main.webp" />
-    <img src="images/about_this_bg_main.webp" />
+    <img src="images/bg.webp" />
   </div>
   <div id="content-container">
     <div id="details-container">
@@ -47,13 +43,12 @@
           <div id="loader"></div>
           <p style="color: white; margin: 20px;">Loading...</p>
         </div>
-        <iframe id="app-content" src="compose/index.html" height="693" width="357" onload=""></iframe>
+        <iframe id="app-content" src="" height="693" width="357" onload=""></iframe>
       </div>
     </div>
   </div>
-
+  <script src="js/deeplink.js"></script>
   <script src="js/resize.js"></script>
-  <script src="js/theme.js"></script>
   <script src="js/compat.js"></script>
 </body>
 

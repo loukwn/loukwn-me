@@ -1,6 +1,7 @@
 package com.loukwn.biocompose.presentation.aboutthis
 
 import androidx.lifecycle.ViewModel
+import com.loukwn.biocompose.data.ScreenLog
 import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.data.myArtAttributions
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,7 @@ class AboutThisViewModel : ViewModel() {
     val state: StateFlow<AboutThisUiState> = _state.asStateFlow()
 
     init {
-        ScreenLogger.logScreen("about_this")
+        ScreenLogger.logScreen(ScreenLog.AboutThis)
     }
 
     private fun getInitialState(): AboutThisUiState =

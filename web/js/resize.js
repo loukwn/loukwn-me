@@ -39,16 +39,13 @@ function handleResize(event) {
     windowSizeBeforeTransitionToSmall = -1;
     handleLargeWindowWidth();
     resizePhone(phoneContainer);
-    console.log("1");
   } else if (windowWidth <= phoneContainerWidth + detailsContainerRight) {
     if (windowSizeBeforeTransitionToSmall === -1) {
       windowSizeBeforeTransitionToSmall = windowWidth;
     }
     handleSmallWindowWidth();
-    console.log("2");
   } else {
     resizePhone(phoneContainer);
-    console.log("3");
   }
 }
 
