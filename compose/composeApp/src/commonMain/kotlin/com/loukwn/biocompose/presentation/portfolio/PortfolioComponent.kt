@@ -27,8 +27,11 @@ interface PortfolioComponent {
     val state: State<PortfolioUiState>
 
     fun onScaleChanged(scale: Scale)
+
     fun onFilterButtonPressed()
+
     fun onPageChanged(pageIndex: Int)
+
     fun onCalendarItemSelected(item: CalendarItem?)
 }
 
@@ -36,7 +39,8 @@ class DefaultPortfolioComponent(
     componentContext: ComponentContext,
     private val canGoBackStateFlow: MutableStateFlow<Boolean>,
     deepBackEventDispatchFlow: SharedFlow<Unit>,
-) : PortfolioComponent, ComponentContext by componentContext {
+) : PortfolioComponent,
+    ComponentContext by componentContext {
     private val _state = mutableStateOf(getInitialState())
     override val state: State<PortfolioUiState> = _state
 
@@ -62,8 +66,8 @@ class DefaultPortfolioComponent(
         }
     }
 
-    private fun getInitialState(): PortfolioUiState {
-        return PortfolioUiState(
+    private fun getInitialState(): PortfolioUiState =
+        PortfolioUiState(
             baseGap = 0.dp,
             isFilterButtonVisible = false,
             isCalendarScaleComponentVisible = false,
@@ -72,7 +76,6 @@ class DefaultPortfolioComponent(
             calendarItems = getCalendarItems(),
             projects = myProjects,
         )
-    }
 
     private fun getTimeLabelsForScale(scale: Scale): List<String> {
         val currentYear = getCurrentYear()
@@ -92,8 +95,7 @@ class DefaultPortfolioComponent(
                     } else {
                         listOf("", "", "", it)
                     }
-                }
-                    .flatten()
+                }.flatten()
                     .reversed()
             }
 
@@ -103,8 +105,7 @@ class DefaultPortfolioComponent(
                         add("")
                         add((it + STARTING_YEAR).toString())
                     }
-                }
-                    .reversed()
+                }.reversed()
             }
 
             Scale.MONTH_6 -> {
@@ -117,8 +118,7 @@ class DefaultPortfolioComponent(
                             add("Jun $year")
                         }
                     }
-                }
-                    .reversed()
+                }.reversed()
             }
         }
     }
@@ -127,22 +127,24 @@ class DefaultPortfolioComponent(
         val jobs = mutableListOf<CalendarItem>()
 
         val jobsSortedByStartDate = myJobs.sortedBy { it.started.year * 12 + it.started.month }
-        val gapFromStart = abs(
-            jobsSortedByStartDate.first().started.diffIn6MonthsWith(
-                Date(
-                    month = 1,
-                    year = STARTING_YEAR
-                )
+        val gapFromStart =
+            abs(
+                jobsSortedByStartDate.first().started.diffIn6MonthsWith(
+                    Date(
+                        month = 1,
+                        year = STARTING_YEAR,
+                    ),
+                ),
             )
-        )
-        val gapFromEnd = abs(
-            jobsSortedByStartDate.last().ended.diffIn6MonthsWith(
-                Date(
-                    month = 12,
-                    year = getCurrentYear()
-                )
+        val gapFromEnd =
+            abs(
+                jobsSortedByStartDate.last().ended.diffIn6MonthsWith(
+                    Date(
+                        month = 12,
+                        year = getCurrentYear(),
+                    ),
+                ),
             )
-        )
 
         jobs.add(CalendarItem.Gap(gapFromStart))
         jobsSortedByStartDate.forEachIndexed { index, job ->
@@ -156,13 +158,13 @@ class DefaultPortfolioComponent(
                     durationText = job.durationString(),
                     links = job.links,
                     size = job.durationIn6Months(),
-                )
+                ),
             )
             if (index != myJobs.lastIndex) {
                 jobs.add(
                     CalendarItem.Gap(
-                        job.ended.diffIn6MonthsWith(jobsSortedByStartDate[index + 1].started)
-                    )
+                        job.ended.diffIn6MonthsWith(jobsSortedByStartDate[index + 1].started),
+                    ),
                 )
             }
         }
@@ -183,7 +185,7 @@ class DefaultPortfolioComponent(
     override fun onFilterButtonPressed() {
         _state.update {
             it.copy(
-                isCalendarScaleComponentVisible = !state.value.isCalendarScaleComponentVisible
+                isCalendarScaleComponentVisible = !state.value.isCalendarScaleComponentVisible,
             )
         }
     }
@@ -192,7 +194,7 @@ class DefaultPortfolioComponent(
         _state.update {
             it.copy(
                 isCalendarScaleComponentVisible = false,
-                isFilterButtonVisible = pageIndex == 0
+                isFilterButtonVisible = pageIndex == 0,
             )
         }
     }
@@ -200,7 +202,7 @@ class DefaultPortfolioComponent(
     override fun onCalendarItemSelected(item: CalendarItem?) {
         _state.update {
             it.copy(
-                showCalendarItemDetails = item != null
+                showCalendarItemDetails = item != null,
             )
         }
         canGoBackStateFlow.update { item == null }

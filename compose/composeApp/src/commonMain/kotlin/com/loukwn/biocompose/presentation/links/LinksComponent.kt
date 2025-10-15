@@ -15,17 +15,16 @@ interface LinksComponent {
 
 class DefaultLinksComponent(
     componentContext: ComponentContext,
-): LinksComponent, ComponentContext by componentContext {
-
+) : LinksComponent,
+    ComponentContext by componentContext {
     private val _state = mutableStateOf(getInitialState())
     override val state: State<LinksUiState> = _state
 
-    private fun getInitialState(): LinksUiState {
-        return LinksUiState(
+    private fun getInitialState(): LinksUiState =
+        LinksUiState(
             groupedLinks = myLinks.sortedBy { it.displayText }.groupBy { it.displayText[0] },
             selectedLink = null,
         )
-    }
 
     override fun onLinkSelected(link: FullLink) {
         _state.update {

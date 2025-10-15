@@ -25,52 +25,56 @@ interface AboutMeComponent {
 }
 
 class DefaultAboutMeComponent(
-    componentContext: ComponentContext
-): AboutMeComponent, ComponentContext by componentContext {
-
-    private val phrases = listOf(
-        "LGTM",
-        "Works fine on my machine",
-        "Should not take too long to implement",
-        "I do not see how this can break in the future",
-        "I am pretty sure this crash is impossible to hit",
-        "It was working before",
-        "Did you try restarting?"
-    )
+    componentContext: ComponentContext,
+) : AboutMeComponent,
+    ComponentContext by componentContext {
+    private val phrases =
+        listOf(
+            "LGTM",
+            "Works fine on my machine",
+            "Should not take too long to implement",
+            "I do not see how this can break in the future",
+            "I am pretty sure this crash is impossible to hit",
+            "It was working before",
+            "Did you try restarting?",
+        )
 
     private val _state = mutableStateOf(getInitialState())
     override val state: State<AboutMeUiState> = _state
 
     private fun getInitialState(): AboutMeUiState {
-        val tags = listOf(
-            Tag(LineAwesomeIcons.AddressCard, "Android / Mobile Engineer"),
-            Tag(LineAwesomeIcons.GlobeEuropeSolid, "Greek"),
-            Tag(LineAwesomeIcons.CitySolid, "London, UK"),
-            Tag(LineAwesomeIcons.MapPinSolid, "At most 12,764.221km away"),
-        )
+        val tags =
+            listOf(
+                Tag(LineAwesomeIcons.AddressCard, "Android / Mobile Engineer"),
+                Tag(LineAwesomeIcons.GlobeEuropeSolid, "Greek"),
+                Tag(LineAwesomeIcons.CitySolid, "London, UK"),
+                Tag(LineAwesomeIcons.MapPinSolid, "At most 12,764.221km away"),
+            )
 
         val phrase = phrases.random()
 
-        val technologyEntries = listOf(
-            TechonologyEntry(SimpleIcons.Android, "Android"),
-            TechonologyEntry(SimpleIcons.Kotlin, "Kotlin"),
-            TechonologyEntry(SimpleIcons.Gnubash, "Shell"),
-            TechonologyEntry(SimpleIcons.Python, "Python"),
-            TechonologyEntry(SimpleIcons.Latex, "Latex"),
-            TechonologyEntry(SimpleIcons.Godotengine, "Godot"),
-            TechonologyEntry(SimpleIcons.Git, "Git"),
-            TechonologyEntry(SimpleIcons.Firefoxbrowser, "Firefox"),
-            TechonologyEntry(SimpleIcons.Linux, "Linux"),
-        )
+        val technologyEntries =
+            listOf(
+                TechonologyEntry(SimpleIcons.Android, "Android"),
+                TechonologyEntry(SimpleIcons.Kotlin, "Kotlin"),
+                TechonologyEntry(SimpleIcons.Gnubash, "Shell"),
+                TechonologyEntry(SimpleIcons.Python, "Python"),
+                TechonologyEntry(SimpleIcons.Latex, "Latex"),
+                TechonologyEntry(SimpleIcons.Godotengine, "Godot"),
+                TechonologyEntry(SimpleIcons.Git, "Git"),
+                TechonologyEntry(SimpleIcons.Firefoxbrowser, "Firefox"),
+                TechonologyEntry(SimpleIcons.Linux, "Linux"),
+            )
 
-        val hobbies = listOf(
-            "Game dev",
-            "Cycling",
-            "Listening to music",
-            "Playing video games",
-            "Doomscrolling",
-            "Abandoning my projects"
-        )
+        val hobbies =
+            listOf(
+                "Game dev",
+                "Cycling",
+                "Listening to music",
+                "Playing video games",
+                "Doomscrolling",
+                "Abandoning my projects",
+            )
 
         return AboutMeUiState(
             tags = tags,

@@ -54,33 +54,36 @@ internal fun WorkExperiencePage(
     modifier: Modifier = Modifier,
     onCalendarItemClicked: (CalendarItem) -> Unit,
 ) {
-    val sharedTransitionScope = LocalSharedTransitionScope.current
-        ?: throw IllegalStateException("No SharedElementScope found")
-    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No AnimatedVisibility found")
+    val sharedTransitionScope =
+        LocalSharedTransitionScope.current
+            ?: throw IllegalStateException("No SharedElementScope found")
+    val animatedVisibilityScope =
+        LocalNavAnimatedVisibilityScope.current
+            ?: throw IllegalStateException("No AnimatedVisibility found")
 
     val cellGapAnimated = animateDpAsState(baseGap, spring(Spring.DampingRatioMediumBouncy))
 
     Box(
-        modifier = modifier
-            .scrollable(
-                state = containerScrollableState,
-                orientation = Orientation.Vertical,
-                flingBehavior = ScrollableDefaults.flingBehavior(),
-            )
+        modifier =
+            modifier
+                .scrollable(
+                    state = containerScrollableState,
+                    orientation = Orientation.Vertical,
+                    flingBehavior = ScrollableDefaults.flingBehavior(),
+                ),
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = timeLabelLazyListState,
             contentPadding = PaddingValues(top = 20.dp, bottom = 40.dp),
-            userScrollEnabled = false
+            userScrollEnabled = false,
         ) {
             items(timeLabels.size) {
                 Column(modifier = Modifier.height(cellGapAnimated.value)) {
                     if (timeLabels[it].isNotEmpty()) {
                         Divider(
                             color = MaterialTheme.colors.onBackground.copy(alpha = .7f),
-                            modifier = Modifier.height(0.5.dp)
+                            modifier = Modifier.height(0.5.dp),
                         )
                         Text(
                             text = timeLabels[it],
@@ -91,8 +94,11 @@ internal fun WorkExperiencePage(
             }
         }
         LazyColumn(
-            modifier = Modifier.fillMaxHeight().fillMaxWidth(.66f)
-                .align(Alignment.CenterEnd),
+            modifier =
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(.66f)
+                    .align(Alignment.CenterEnd),
             state = calendarItemLazyListState,
             contentPadding = PaddingValues(top = 20.dp, bottom = 40.dp),
             userScrollEnabled = false,
@@ -101,79 +107,86 @@ internal fun WorkExperiencePage(
                 when (val item = calendarItems[it]) {
                     is CalendarItem.Gap -> {
                         Spacer(
-                            modifier = Modifier
-                                .height(item.size * cellGapAnimated.value)
-                                .fillMaxWidth()
+                            modifier =
+                                Modifier
+                                    .height(item.size * cellGapAnimated.value)
+                                    .fillMaxWidth(),
                         )
                     }
 
                     is CalendarItem.Job -> {
                         with(sharedTransitionScope) {
                             Row(
-                                modifier = Modifier
-                                    .padding(1.dp)
-                                    .pointerHoverIcon(PointerIcon.Hand)
-                                    .clickable(onClick = { onCalendarItemClicked(item) })
-                                    .sharedBounds(
-                                        sharedContentState = rememberSharedContentState(
-                                            key = "${item.company}-bounds",
-                                        ),
-                                        enter = slideIn(initialOffset = { IntOffset.Zero }),
-                                        exit = slideOut(targetOffset = { IntOffset.Zero }),
-                                        animatedVisibilityScope = animatedVisibilityScope,
-                                        resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
-                                    )
-                                    .background(MaterialTheme.colors.background)
-                                    .background(
-                                        item.accentColor.copy(alpha = .15f),
-                                        RoundedCornerShape(16.dp)
-                                    )
-                                    .height(item.size * cellGapAnimated.value)
-                                    .fillMaxWidth()
-                                    .clip(RoundedCornerShape(16.dp)),
+                                modifier =
+                                    Modifier
+                                        .padding(1.dp)
+                                        .pointerHoverIcon(PointerIcon.Hand)
+                                        .clickable(onClick = { onCalendarItemClicked(item) })
+                                        .sharedBounds(
+                                            sharedContentState =
+                                                rememberSharedContentState(
+                                                    key = "${item.company}-bounds",
+                                                ),
+                                            enter = slideIn(initialOffset = { IntOffset.Zero }),
+                                            exit = slideOut(targetOffset = { IntOffset.Zero }),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                            resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
+                                        ).background(MaterialTheme.colors.background)
+                                        .background(
+                                            item.accentColor.copy(alpha = .15f),
+                                            RoundedCornerShape(16.dp),
+                                        ).height(item.size * cellGapAnimated.value)
+                                        .fillMaxWidth()
+                                        .clip(RoundedCornerShape(16.dp)),
                             ) {
                                 Box(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .width(12.dp)
-                                        .background(item.accentColor),
+                                    modifier =
+                                        Modifier
+                                            .fillMaxHeight()
+                                            .width(12.dp)
+                                            .background(item.accentColor),
                                 )
                                 Column(
-                                    modifier = Modifier
-                                        .padding(
-                                            horizontal = 16.dp,
-                                            vertical = 8.dp,
-                                        )
-                                        .sharedElement(
-                                            sharedContentState = rememberSharedContentState(
-                                                key = "${item.company}-box-internal",
+                                    modifier =
+                                        Modifier
+                                            .padding(
+                                                horizontal = 16.dp,
+                                                vertical = 8.dp,
+                                            ).sharedElement(
+                                                sharedContentState =
+                                                    rememberSharedContentState(
+                                                        key = "${item.company}-box-internal",
+                                                    ),
+                                                animatedVisibilityScope = animatedVisibilityScope,
                                             ),
-                                            animatedVisibilityScope = animatedVisibilityScope,
-                                        ),
                                     verticalArrangement = spacedBy(2.dp),
                                 ) {
                                     Text(
                                         text = item.company,
                                         color = MaterialTheme.colors.onBackground,
-                                        modifier = Modifier
-                                            .sharedElement(
-                                                sharedContentState = rememberSharedContentState(
-                                                    key = "${item.company}-title",
+                                        modifier =
+                                            Modifier
+                                                .sharedElement(
+                                                    sharedContentState =
+                                                        rememberSharedContentState(
+                                                            key = "${item.company}-title",
+                                                        ),
+                                                    animatedVisibilityScope = animatedVisibilityScope,
                                                 ),
-                                                animatedVisibilityScope = animatedVisibilityScope,
-                                            ),
                                     )
                                     Text(
                                         text = item.durationText,
                                         color = MaterialTheme.colors.onBackground.copy(.7f),
                                         style = MaterialTheme.typography.caption,
-                                        modifier = Modifier
-                                            .sharedElement(
-                                                sharedContentState = rememberSharedContentState(
-                                                    key = "${item.company}-duration",
+                                        modifier =
+                                            Modifier
+                                                .sharedElement(
+                                                    sharedContentState =
+                                                        rememberSharedContentState(
+                                                            key = "${item.company}-duration",
+                                                        ),
+                                                    animatedVisibilityScope = animatedVisibilityScope,
                                                 ),
-                                                animatedVisibilityScope = animatedVisibilityScope,
-                                            )
                                     )
                                 }
                             }
@@ -183,9 +196,10 @@ internal fun WorkExperiencePage(
             }
             item(calendarItems.size) {
                 Spacer(
-                    modifier = Modifier
-                        .height((Scale.MONTH_6.baseGap / baseGap) * cellGapAnimated.value)
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .height((Scale.MONTH_6.baseGap / baseGap) * cellGapAnimated.value)
+                            .fillMaxWidth(),
                 )
             }
         }

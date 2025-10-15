@@ -1,4 +1,4 @@
-package com.loukwn.biocompose.presentation.design_system.components
+package com.loukwn.biocompose.presentation.designsystem.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

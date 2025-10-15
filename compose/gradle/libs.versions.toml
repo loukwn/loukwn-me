@@ -7,6 +7,7 @@ decompose = "3.1.0"
 kotlin-serialization = "1.9.0"
 composeIcons = "1.1.1"
 essenty = "2.2.1"
+ktlint = "13.1.0"
 
 [libraries]
 compose-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel"}
@@ -35,3 +36,4 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

@@ -1,4 +1,4 @@
-package com.loukwn.biocompose.presentation.design_system.components
+package com.loukwn.biocompose.presentation.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,17 +20,18 @@ fun BoxScope.SystemUiGradientOverlay(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(GlobalInsetsToConsume.calculateBottomPadding() + 50.dp)
-            .align(Alignment.BottomCenter)
-            .background(
-                Brush.verticalGradient(
-                    listOf(
-                        Color.Transparent,
-                        endColor
-                    )
-                )
-            )
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(GlobalInsetsToConsume.calculateBottomPadding() + 50.dp)
+                .align(Alignment.BottomCenter)
+                .background(
+                    Brush.verticalGradient(
+                        listOf(
+                            Color.Transparent,
+                            endColor,
+                        ),
+                    ),
+                ),
     )
 }

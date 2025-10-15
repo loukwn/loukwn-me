@@ -10,15 +10,14 @@ interface AboutThisComponent {
 }
 
 class DefaultAboutThisComponent(
-    componentContext: ComponentContext
-): AboutThisComponent, ComponentContext by componentContext {
-
+    componentContext: ComponentContext,
+) : AboutThisComponent,
+    ComponentContext by componentContext {
     private val _state = mutableStateOf(getInitialState())
     override val state: State<AboutThisUiState> = _state
 
-    private fun getInitialState(): AboutThisUiState {
-        return AboutThisUiState(
-            artAttributions = myArtAttributions
+    private fun getInitialState(): AboutThisUiState =
+        AboutThisUiState(
+            artAttributions = myArtAttributions,
         )
-    }
 }

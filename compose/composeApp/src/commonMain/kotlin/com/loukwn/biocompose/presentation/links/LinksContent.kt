@@ -38,8 +38,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.data.FullLink
-import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
-import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
+import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
+import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.modifyIf
 import compose.icons.EvaIcons
@@ -50,25 +50,28 @@ import compose.icons.evaicons.outline.Navigation2
 @Composable
 fun LinksContent(
     component: LinksComponent,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     val state by remember { component.state }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-                .padding(
-                    top = GlobalInsetsToConsume.calculateTopPadding(),
-                    bottom = 0.dp,
-                    start = 36.dp,
-                    end = 36.dp,
-                )
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background)
+                    .padding(
+                        top = GlobalInsetsToConsume.calculateTopPadding(),
+                        bottom = 0.dp,
+                        start = 36.dp,
+                        end = 36.dp,
+                    ),
         ) {
             TopBar(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 16.dp),
                 onBackButtonPressed = onBackPressed,
             )
             LinksList(
@@ -87,7 +90,7 @@ private fun TopBar(
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         VectorIconButton(
             imageVector = EvaIcons.Outline.ArrowIosBack,
@@ -110,10 +113,11 @@ private fun LinksList(
     onLinkSelected: (FullLink) -> Unit,
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp),
     ) {
         state.groupedLinks.forEach { (initial, linksForInitial) ->
             stickyHeader {
@@ -143,45 +147,46 @@ private fun LinksListItem(
     val selectedBg = MaterialTheme.colors.primary
 
     Column(
-        modifier = Modifier
-            .padding(horizontal = paddingAnimated)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
-            .modifyIf(isSelected) {
-                background(selectedBg)
-            }
-            .pointerHoverIcon(PointerIcon.Hand)
-            .clickable { onLinkSelected(link) },
+        modifier =
+            Modifier
+                .padding(horizontal = paddingAnimated)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(24.dp))
+                .modifyIf(isSelected) {
+                    background(selectedBg)
+                }.pointerHoverIcon(PointerIcon.Hand)
+                .clickable { onLinkSelected(link) },
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
             horizontalArrangement = spacedBy(40.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = link.icon,
                 contentDescription = null,
                 tint = link.iconColor,
-                modifier = Modifier.background(link.bgColor, shape = CircleShape).padding(16.dp)
+                modifier = Modifier.background(link.bgColor, shape = CircleShape).padding(16.dp),
             )
             Text(link.displayText, color = Color.White)
         }
         AnimatedVisibility(isSelected) {
             val uriHandler = LocalUriHandler.current
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp, bottom = 12.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .clickable(
-                        onClick = { uriHandler.openUri(link.url) },
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(true, color = Color.White),
-                        role = Role.Button,
-                    )
-                    .padding(16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, bottom = 12.dp)
+                        .clip(RoundedCornerShape(24.dp))
+                        .clickable(
+                            onClick = { uriHandler.openUri(link.url) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = ripple(true, color = Color.White),
+                            role = Role.Button,
+                        ).padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {

@@ -18,13 +18,16 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.loukwn.biocompose.data.ScreenLogger
 import com.loukwn.biocompose.presentation.aboutme.AboutMeContent
 import com.loukwn.biocompose.presentation.aboutthis.AboutThisContent
-import com.loukwn.biocompose.presentation.design_system.theme.LoukwnMeTheme
+import com.loukwn.biocompose.presentation.designsystem.theme.LoukwnMeTheme
 import com.loukwn.biocompose.presentation.desktop.DesktopContent
 import com.loukwn.biocompose.presentation.links.LinksContent
 import com.loukwn.biocompose.presentation.portfolio.PortfolioContent
 
 @Composable
-fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
+fun RootContent(
+    component: RootComponent,
+    modifier: Modifier = Modifier,
+) {
     val state by remember { component.state }
 
     LoukwnMeTheme {
@@ -33,7 +36,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             StatusBar(
                 modifier = Modifier.fillMaxWidth(),
                 time = state.time,
-                inLightMode = state.systemUiInLightMode
+                inLightMode = state.systemUiInLightMode,
             )
             NavigationBar(
                 modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),

@@ -6,8 +6,12 @@ import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.data.IconLink
 import com.loukwn.biocompose.data.Project
 
-enum class Scale(val baseGap: Dp) {
-    YEAR_2(25.dp), YEAR(50.dp), MONTH_6(100.dp)
+enum class Scale(
+    val baseGap: Dp,
+) {
+    YEAR_2(25.dp),
+    YEAR(50.dp),
+    MONTH_6(100.dp),
 }
 
 data class PortfolioUiState(
@@ -32,9 +36,9 @@ sealed class CalendarItem {
         val durationText: String,
         val links: List<IconLink>,
         override val size: Float,
-    ): CalendarItem()
+    ) : CalendarItem()
 
     data class Gap(
         override val size: Float,
-    ): CalendarItem()
+    ) : CalendarItem()
 }

@@ -8,8 +8,7 @@ private val json =
         allowStructuredMapKeys = true
     }
 
-internal fun SerializableContainer.encodeToString(): String =
-    json.encodeToString(SerializableContainer.serializer(), this)
+internal fun SerializableContainer.encodeToString(): String = json.encodeToString(SerializableContainer.serializer(), this)
 
 internal fun String.decodeSerializableContainer(): SerializableContainer? =
     try {

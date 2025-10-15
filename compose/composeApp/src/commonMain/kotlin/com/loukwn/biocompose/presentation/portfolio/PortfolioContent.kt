@@ -59,8 +59,8 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
-import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
+import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
+import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
@@ -74,7 +74,7 @@ internal val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionSco
 @Composable
 fun PortfolioContent(
     component: PortfolioComponent,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     val state by remember { component.state }
 
@@ -82,33 +82,35 @@ fun PortfolioContent(
 
     SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
         CompositionLocalProvider(
-            LocalSharedTransitionScope provides this
+            LocalSharedTransitionScope provides this,
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background),
             ) {
                 val timeLabelLazyListState = rememberLazyListState()
                 val calendarItemLazyListState = rememberLazyListState()
                 val scope = rememberCoroutineScope()
-                val containerScrollableState = rememberScrollableState { delta ->
-                    scope.launch {
-                        timeLabelLazyListState.scrollBy(-delta)
-                        calendarItemLazyListState.scrollBy(-delta)
+                val containerScrollableState =
+                    rememberScrollableState { delta ->
+                        scope.launch {
+                            timeLabelLazyListState.scrollBy(-delta)
+                            calendarItemLazyListState.scrollBy(-delta)
+                        }
+                        delta
                     }
-                    delta
-                }
 
                 AnimatedContent(
                     targetState = state.showCalendarItemDetails,
                     transitionSpec = {
                         fadeIn(animationSpec = tween(500)) togetherWith
-                                fadeOut(animationSpec = tween(500))
-                    }
+                            fadeOut(animationSpec = tween(500))
+                    },
                 ) { targetState ->
                     CompositionLocalProvider(
-                        LocalNavAnimatedVisibilityScope provides this
+                        LocalNavAnimatedVisibilityScope provides this,
                     ) {
                         if (targetState) {
                             if (selectedCalendarItem != null) {
@@ -139,7 +141,7 @@ fun PortfolioContent(
                 }
                 SystemUiGradientOverlay(
                     endColor = MaterialTheme.colors.background,
-                    modifier = Modifier.renderInSharedTransitionScopeOverlay()
+                    modifier = Modifier.renderInSharedTransitionScopeOverlay(),
                 )
             }
         }
@@ -156,25 +158,27 @@ private fun PortfolioContentInternal(
     onFilterButtonPressed: () -> Unit,
     onPageChanged: (Int) -> Unit,
     onScaleChanged: (Scale) -> Unit,
-    onCalendarItemClicked: (CalendarItem) -> Unit
+    onCalendarItemClicked: (CalendarItem) -> Unit,
 ) {
-
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                top = GlobalInsetsToConsume.calculateTopPadding(),
-                bottom = 0.dp,
-                start = 36.dp,
-                end = 36.dp,
-            )
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(
+                    top = GlobalInsetsToConsume.calculateTopPadding(),
+                    bottom = 0.dp,
+                    start = 36.dp,
+                    end = 36.dp,
+                ),
     ) {
         TopBar(
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 16.dp, bottom = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 8.dp),
             showFilterButton = state.isFilterButtonVisible,
             onBackButtonPressed = onBackPressed,
-            onFilterButtonPressed = onFilterButtonPressed
+            onFilterButtonPressed = onFilterButtonPressed,
         )
 
         val pagerState = rememberPagerState { 2 }
@@ -182,7 +186,7 @@ private fun PortfolioContentInternal(
 
         Tabs(
             selectedTabIndex = pagerState.currentPage,
-            tabs = listOf("Work Experience", "Projects")
+            tabs = listOf("Work Experience", "Projects"),
         ) { pageIndex ->
             coroutineScope.launch {
                 onPageChanged(pageIndex)
@@ -197,7 +201,7 @@ private fun PortfolioContentInternal(
             TimeScaleSelector(
                 modifier = Modifier.padding(bottom = 16.dp),
                 scale = Scale.entries.first { it.baseGap == state.baseGap },
-                onScaleSelected = onScaleChanged
+                onScaleSelected = onScaleChanged,
             )
         }
 
@@ -245,24 +249,25 @@ private fun Tabs(
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                color = MaterialTheme.colors.secondary
+                color = MaterialTheme.colors.secondary,
             )
-        }
+        },
     ) {
         tabs.forEachIndexed { index, tabTitle ->
             Tab(
                 selected = selectedTabIndex == index,
                 selectedContentColor = MaterialTheme.colors.secondary,
                 unselectedContentColor = MaterialTheme.colors.onBackground,
-                onClick = { onTabSelected(index) }
+                onClick = { onTabSelected(index) },
             ) {
                 Text(
                     text = tabTitle,
-                    modifier = Modifier
-                        .padding(
-                            bottom = 8.dp,
-                            top = 8.dp,
-                        )
+                    modifier =
+                        Modifier
+                            .padding(
+                                bottom = 8.dp,
+                                top = 8.dp,
+                            ),
                 )
             }
         }
@@ -278,7 +283,7 @@ private fun TopBar(
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         VectorIconButton(
             imageVector = EvaIcons.Outline.ArrowIosBack,
@@ -298,7 +303,6 @@ private fun TopBar(
             )
         }
     }
-
 }
 
 @Composable
@@ -316,7 +320,7 @@ private fun TimeScaleSelector(
             text = "Time scale:",
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onBackground,
-            modifier = Modifier.padding(bottom = 2.dp)
+            modifier = Modifier.padding(bottom = 2.dp),
         )
 
         Box(
@@ -326,20 +330,22 @@ private fun TimeScaleSelector(
                 .background(MaterialTheme.colors.background, shape = RoundedCornerShape(24.dp))
                 .border(1.dp, Color.White.copy(.2f), RoundedCornerShape(24.dp)),
         ) {
-            val targetOffset = when (scale) {
-                Scale.YEAR_2 -> 0.dp
-                Scale.YEAR -> 50.dp
-                Scale.MONTH_6 -> 100.dp
-            }
+            val targetOffset =
+                when (scale) {
+                    Scale.YEAR_2 -> 0.dp
+                    Scale.YEAR -> 50.dp
+                    Scale.MONTH_6 -> 100.dp
+                }
 
             val xOffsetAnimated by animateDpAsState(targetOffset, tween(600))
 
             Box(
-                modifier = Modifier
-                    .width(50.dp)
-                    .fillMaxHeight()
-                    .offset(x = xOffsetAnimated)
-                    .background(MaterialTheme.colors.secondary, RoundedCornerShape(24.dp))
+                modifier =
+                    Modifier
+                        .width(50.dp)
+                        .fillMaxHeight()
+                        .offset(x = xOffsetAnimated)
+                        .background(MaterialTheme.colors.secondary, RoundedCornerShape(24.dp)),
             )
 
             Row(
@@ -348,17 +354,17 @@ private fun TimeScaleSelector(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    modifier = Modifier
-                        .pointerHoverIcon(PointerIcon.Hand)
-                        .weight(1f, fill = true)
-                        .fillMaxWidth()
-                        .clickable(
-                            onClick = { onScaleSelected(Scale.YEAR_2) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = ripple(true, color = Color.White, radius = 19.dp),
-                            role = Role.Button,
-                        )
-                        .padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
+                    modifier =
+                        Modifier
+                            .pointerHoverIcon(PointerIcon.Hand)
+                            .weight(1f, fill = true)
+                            .fillMaxWidth()
+                            .clickable(
+                                onClick = { onScaleSelected(Scale.YEAR_2) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = ripple(true, color = Color.White, radius = 19.dp),
+                                role = Role.Button,
+                            ).padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -368,17 +374,17 @@ private fun TimeScaleSelector(
                     )
                 }
                 Box(
-                    modifier = Modifier
-                        .pointerHoverIcon(PointerIcon.Hand)
-                        .weight(1f, fill = true)
-                        .fillMaxWidth()
-                        .clickable(
-                            onClick = { onScaleSelected(Scale.YEAR) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = ripple(true, color = Color.White, radius = 21.dp),
-                            role = Role.Button,
-                        )
-                        .padding(vertical = 4.dp),
+                    modifier =
+                        Modifier
+                            .pointerHoverIcon(PointerIcon.Hand)
+                            .weight(1f, fill = true)
+                            .fillMaxWidth()
+                            .clickable(
+                                onClick = { onScaleSelected(Scale.YEAR) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = ripple(true, color = Color.White, radius = 21.dp),
+                                role = Role.Button,
+                            ).padding(vertical = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -388,17 +394,17 @@ private fun TimeScaleSelector(
                     )
                 }
                 Box(
-                    modifier = Modifier
-                        .pointerHoverIcon(PointerIcon.Hand)
-                        .weight(1f, fill = true)
-                        .fillMaxWidth()
-                        .clickable(
-                            onClick = { onScaleSelected(Scale.MONTH_6) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = ripple(true, color = Color.White, radius = 19.dp),
-                            role = Role.Button,
-                        )
-                        .padding(end = 8.dp, top = 4.dp, bottom = 4.dp),
+                    modifier =
+                        Modifier
+                            .pointerHoverIcon(PointerIcon.Hand)
+                            .weight(1f, fill = true)
+                            .fillMaxWidth()
+                            .clickable(
+                                onClick = { onScaleSelected(Scale.MONTH_6) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = ripple(true, color = Color.White, radius = 19.dp),
+                                role = Role.Button,
+                            ).padding(end = 8.dp, top = 4.dp, bottom = 4.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(

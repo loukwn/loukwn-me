@@ -44,7 +44,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.loukwn.biocompose.presentation.design_system.components.HoverableText
+import com.loukwn.biocompose.presentation.designsystem.components.HoverableText
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Calendar
@@ -56,14 +56,13 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.phone_bg
 import org.jetbrains.compose.resources.painterResource
 
-private const val InitialAnimationDelayMs = 500L
+private const val INITIAL_ANIMATION_DELAY_MS = 500L
 
 @Composable
 fun DesktopContent(
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
-    onAppClicked: (DesktopApp) -> Unit
+    onAppClicked: (DesktopApp) -> Unit,
 ) {
-
     LaunchedEffect(Unit) {
         onSystemUiModeChanged(false)
     }
@@ -73,7 +72,7 @@ fun DesktopContent(
             painterResource(Res.drawable.phone_bg),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
 
         LazyVerticalStaggeredGrid(
@@ -81,26 +80,29 @@ fun DesktopContent(
             modifier = Modifier.fillMaxSize().padding(vertical = 32.dp),
             contentPadding = PaddingValues(24.dp),
             verticalItemSpacing = 40.dp,
-            horizontalArrangement = spacedBy(16.dp)
+            horizontalArrangement = spacedBy(16.dp),
         ) {
             items(items = DesktopApp.entries, key = { DesktopApp.entries.indexOf(it) }) {
                 val index = DesktopApp.entries.indexOf(it)
                 DesktopItem(
                     title = it.title,
                     imageVector = it.imageVector,
-                    animationStartDelay = index * 200L + InitialAnimationDelayMs,
-                    onClick = { onAppClicked(it) }
+                    animationStartDelay = index * 200L + INITIAL_ANIMATION_DELAY_MS,
+                    onClick = { onAppClicked(it) },
                 )
             }
         }
     }
 }
 
-enum class DesktopApp(val title: String, val imageVector: ImageVector) {
+enum class DesktopApp(
+    val title: String,
+    val imageVector: ImageVector,
+) {
     AboutMe("About me", EvaIcons.Fill.Person),
     Portfolio("Portfolio", EvaIcons.Fill.Calendar),
     Links("Links", EvaIcons.Fill.Phone),
-    AboutThis("About This", EvaIcons.Fill.Info)
+    AboutThis("About This", EvaIcons.Fill.Info),
 }
 
 @Composable
@@ -109,7 +111,7 @@ private fun DesktopItem(
     title: String,
     animationStartDelay: Long,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     var shown by remember { mutableStateOf(false) }
     val hoverInteractionSource = remember { MutableInteractionSource() }
@@ -122,38 +124,42 @@ private fun DesktopItem(
 
     AnimatedVisibility(
         visible = shown,
-        enter = slideInVertically(
-            spring(Spring.DampingRatioMediumBouncy),
-            initialOffsetY = { it / 2 }
-        ),
+        enter =
+            slideInVertically(
+                spring(Spring.DampingRatioMediumBouncy),
+                initialOffsetY = { it / 2 },
+            ),
     ) {
         Column(
-            modifier = modifier
-                .fillMaxSize()
-                .hoverable(hoverInteractionSource)
-                .pointerHoverIcon(PointerIcon.Hand)
-                .clickWithBounceEffect(onClick)
-                .padding(8.dp),
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .hoverable(hoverInteractionSource)
+                    .pointerHoverIcon(PointerIcon.Hand)
+                    .clickWithBounceEffect(onClick)
+                    .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = spacedBy(16.dp),
         ) {
             Box(
-                modifier = Modifier
-                    .size(56.dp)
-                    .background(Color.White, CircleShape),
+                modifier =
+                    Modifier
+                        .size(56.dp)
+                        .background(Color.White, CircleShape),
             ) {
                 Icon(
                     imageVector = imageVector,
                     contentDescription = title,
                     modifier = Modifier.align(Alignment.Center).size(40.dp),
-                    tint = Color(0xff4f5d73)
+                    tint = Color(0xff4f5d73),
                 )
 
                 if (isHovered) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = .5f), CircleShape)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(Color.Black.copy(alpha = .5f), CircleShape),
                     )
                 }
             }
@@ -167,32 +173,33 @@ private fun DesktopItem(
     }
 }
 
-private fun Modifier.clickWithBounceEffect(onClick: () -> Unit) = this then composed {
-    var buttonIsPressed by remember { mutableStateOf(false) }
-    val scale by animateFloatAsState(
-        targetValue = if (buttonIsPressed) 0.80f else 1f,
-        animationSpec = spring(Spring.DampingRatioMediumBouncy)
-    )
+private fun Modifier.clickWithBounceEffect(onClick: () -> Unit) =
+    this then
+        composed {
+            var buttonIsPressed by remember { mutableStateOf(false) }
+            val scale by animateFloatAsState(
+                targetValue = if (buttonIsPressed) 0.80f else 1f,
+                animationSpec = spring(Spring.DampingRatioMediumBouncy),
+            )
 
-    this
-        .graphicsLayer {
-            scaleX = scale
-            scaleY = scale
-        }.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null,
-            role = Role.Button,
-            onClick = onClick,
-        )
-        .pointerInput(buttonIsPressed) {
-            awaitPointerEventScope {
-                if (buttonIsPressed) {
-                    waitForUpOrCancellation()
-                } else {
-                    awaitFirstDown(false)
+            this
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                }.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    role = Role.Button,
+                    onClick = onClick,
+                ).pointerInput(buttonIsPressed) {
+                    awaitPointerEventScope {
+                        if (buttonIsPressed) {
+                            waitForUpOrCancellation()
+                        } else {
+                            awaitFirstDown(false)
+                        }
+
+                        buttonIsPressed = !buttonIsPressed
+                    }
                 }
-
-                buttonIsPressed = !buttonIsPressed
-            }
         }
-}

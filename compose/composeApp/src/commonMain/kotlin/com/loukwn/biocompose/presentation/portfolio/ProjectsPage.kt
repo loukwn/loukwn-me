@@ -21,10 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.loukwn.biocompose.data.Project
-import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
+import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 
 @Composable
-fun ProjectsPage(projects: List<Project>, modifier: Modifier = Modifier) {
+fun ProjectsPage(
+    projects: List<Project>,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(
         modifier = modifier,
         verticalArrangement = spacedBy(20.dp),
@@ -39,13 +42,14 @@ fun ProjectsPage(projects: List<Project>, modifier: Modifier = Modifier) {
 @Composable
 private fun ProjectCard(model: Project) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.secondary.copy(alpha = .2f), shape = RoundedCornerShape(24.dp)),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.secondary.copy(alpha = .2f), shape = RoundedCornerShape(24.dp)),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = model.title,
@@ -58,7 +62,7 @@ private fun ProjectCard(model: Project) {
                     Icon(
                         imageVector = it,
                         contentDescription = null,
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
             }
@@ -75,10 +79,11 @@ private fun ProjectCard(model: Project) {
 
         val uriHandler = LocalUriHandler.current
         Row(
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(end = 16.dp, bottom = 16.dp),
-            horizontalArrangement = spacedBy(16.dp)
+            modifier =
+                Modifier
+                    .align(Alignment.End)
+                    .padding(end = 16.dp, bottom = 16.dp),
+            horizontalArrangement = spacedBy(16.dp),
         ) {
             model.links.forEach { link ->
                 VectorIconButton(imageVector = link.icon) {
@@ -86,6 +91,5 @@ private fun ProjectCard(model: Project) {
                 }
             }
         }
-
     }
 }

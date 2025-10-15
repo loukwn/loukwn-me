@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.loukwn.biocompose.getWindowSize
-import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
+import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import com.loukwn.biocompose.presentation.util.toPx
 import compose.icons.EvaIcons
@@ -48,7 +48,7 @@ import org.jetbrains.compose.resources.painterResource
 fun AboutMeContent(
     component: AboutMeComponent,
     onSystemUiModeChanged: (isLight: Boolean) -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     val state by remember { component.state }
     val windowSize = getWindowSize()
@@ -102,39 +102,46 @@ private fun Avatar(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(Res.drawable.me),
         contentDescription = null,
-        modifier = modifier
-            .blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
+        modifier =
+            modifier
+                .blur(radiusX = blurRadiusAnimated, radiusY = blurRadiusAnimated),
         contentScale = ContentScale.FillHeight,
     )
 }
 
 @Composable
 private fun DarkScrim(darknessProgress: Float) {
-    val tweakedProgress = if (darknessProgress > 0.5f) {
-        darknessProgress + .2f
-    } else {
-        darknessProgress
-    }
+    val tweakedProgress =
+        if (darknessProgress > 0.5f) {
+            darknessProgress + .2f
+        } else {
+            darknessProgress
+        }
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                MaterialTheme.colors.background.copy(alpha = tweakedProgress.coerceAtMost(1f)),
-            )
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(
+                    MaterialTheme.colors.background.copy(alpha = tweakedProgress.coerceAtMost(1f)),
+                ),
     )
 }
 
 @Composable
-fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
+fun TopBar(
+    modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit,
+) {
     Column(
-        modifier = modifier
-            .padding(top = GlobalInsetsToConsume.calculateTopPadding())
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .padding(top = GlobalInsetsToConsume.calculateTopPadding())
+                .fillMaxWidth(),
     ) {
         Spacer(Modifier.height(24.dp))
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f)
+            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f),
         )
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
@@ -155,7 +162,7 @@ fun TopBar(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f)
+            color = MaterialTheme.colors.onPrimary.copy(alpha = .5f),
         )
     }
 }

@@ -39,7 +39,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.loukwn.biocompose.presentation.design_system.components.VectorIconButton
+import com.loukwn.biocompose.presentation.designsystem.components.VectorIconButton
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
@@ -49,7 +49,6 @@ import compose.icons.evaicons.outline.MessageSquare
 import compose.icons.evaicons.outline.Person
 import compose.icons.evaicons.outline.Pin
 
-
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun CalendarItemDetails(
@@ -57,70 +56,74 @@ internal fun CalendarItemDetails(
     modifier: Modifier = Modifier,
     onCalendarItemDismissed: () -> Unit,
 ) {
-    val sharedTransitionScope = LocalSharedTransitionScope.current
-        ?: throw IllegalStateException("No SharedElementScope found")
-    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No AnimatedVisibility found")
+    val sharedTransitionScope =
+        LocalSharedTransitionScope.current
+            ?: throw IllegalStateException("No SharedElementScope found")
+    val animatedVisibilityScope =
+        LocalNavAnimatedVisibilityScope.current
+            ?: throw IllegalStateException("No AnimatedVisibility found")
 
     with(sharedTransitionScope) {
         if (calendarItem is CalendarItem.Job) {
             Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background)
-                    .clickable(
-                        onClick = onCalendarItemDismissed,
-                        interactionSource = null,
-                        indication = null,
-                    ),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(
-                            top = GlobalInsetsToConsume.calculateTopPadding() + 20.dp,
-                            start = 32.dp,
-                            end = 32.dp,
-                            bottom = GlobalInsetsToConsume.calculateBottomPadding() + 36.dp,
-                        )
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(
-                                key = "${calendarItem.company}-bounds",
-                            ),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
-                        )
+                modifier =
+                    modifier
+                        .fillMaxSize()
                         .background(MaterialTheme.colors.background)
-                        .background(
-                            calendarItem.accentColor.copy(alpha = .15f),
-                            RoundedCornerShape(16.dp)
-                        )
-                        .height(IntrinsicSize.Min)
-                        .align(Alignment.Center)
-                        .clip(RoundedCornerShape(16.dp))
                         .clickable(
-                            onClick = {},
+                            onClick = onCalendarItemDismissed,
                             interactionSource = null,
                             indication = null,
                         ),
+            ) {
+                Row(
+                    modifier =
+                        Modifier
+                            .padding(
+                                top = GlobalInsetsToConsume.calculateTopPadding() + 20.dp,
+                                start = 32.dp,
+                                end = 32.dp,
+                                bottom = GlobalInsetsToConsume.calculateBottomPadding() + 36.dp,
+                            ).sharedBounds(
+                                sharedContentState =
+                                    rememberSharedContentState(
+                                        key = "${calendarItem.company}-bounds",
+                                    ),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
+                            ).background(MaterialTheme.colors.background)
+                            .background(
+                                calendarItem.accentColor.copy(alpha = .15f),
+                                RoundedCornerShape(16.dp),
+                            ).height(IntrinsicSize.Min)
+                            .align(Alignment.Center)
+                            .clip(RoundedCornerShape(16.dp))
+                            .clickable(
+                                onClick = {},
+                                interactionSource = null,
+                                indication = null,
+                            ),
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(12.dp)
-                            .background(calendarItem.accentColor),
+                        modifier =
+                            Modifier
+                                .fillMaxHeight()
+                                .width(12.dp)
+                                .background(calendarItem.accentColor),
                     )
                     Column(
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 32.dp,
-                                vertical = 20.dp,
-                            )
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(
-                                    key = "${calendarItem.company}-box-internal",
+                        modifier =
+                            Modifier
+                                .padding(
+                                    horizontal = 32.dp,
+                                    vertical = 20.dp,
+                                ).sharedElement(
+                                    sharedContentState =
+                                        rememberSharedContentState(
+                                            key = "${calendarItem.company}-box-internal",
+                                        ),
+                                    animatedVisibilityScope = animatedVisibilityScope,
                                 ),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                            ),
                         verticalArrangement = spacedBy(48.dp),
                     ) {
                         var alphaTarget by remember { mutableStateOf(0f) }
@@ -133,27 +136,29 @@ internal fun CalendarItemDetails(
                                 Text(
                                     text = calendarItem.company,
                                     color = MaterialTheme.colors.onBackground,
-                                    modifier = Modifier
-                                        .sharedElement(
-                                            sharedContentState = rememberSharedContentState(
-                                                key = "${calendarItem.company}-title",
-                                            ),
-                                            animatedVisibilityScope = animatedVisibilityScope,
-                                        )
-                                        .skipToLookaheadSize(),
+                                    modifier =
+                                        Modifier
+                                            .sharedElement(
+                                                sharedContentState =
+                                                    rememberSharedContentState(
+                                                        key = "${calendarItem.company}-title",
+                                                    ),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                            ).skipToLookaheadSize(),
                                 )
                                 Text(
                                     text = calendarItem.durationText,
                                     color = MaterialTheme.colors.onBackground.copy(.7f),
                                     style = MaterialTheme.typography.caption,
-                                    modifier = Modifier
-                                        .sharedElement(
-                                            sharedContentState = rememberSharedContentState(
-                                                key = "${calendarItem.company}-duration",
-                                            ),
-                                            animatedVisibilityScope = animatedVisibilityScope,
-                                        )
-                                        .skipToLookaheadSize()
+                                    modifier =
+                                        Modifier
+                                            .sharedElement(
+                                                sharedContentState =
+                                                    rememberSharedContentState(
+                                                        key = "${calendarItem.company}-duration",
+                                                    ),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                            ).skipToLookaheadSize(),
                                 )
                             }
                             VectorIconButton(
@@ -172,12 +177,13 @@ internal fun CalendarItemDetails(
                         }
 
                         Column(
-                            modifier = Modifier
-                                .alpha(alphaAnimated)
-                                .fillMaxWidth()
-                                .skipToLookaheadSize()
-                                .verticalScroll(rememberScrollState()),
-                            verticalArrangement = spacedBy(16.dp)
+                            modifier =
+                                Modifier
+                                    .alpha(alphaAnimated)
+                                    .fillMaxWidth()
+                                    .skipToLookaheadSize()
+                                    .verticalScroll(rememberScrollState()),
+                            verticalArrangement = spacedBy(16.dp),
                         ) {
                             CalendarJobContent(model = calendarItem)
                         }
@@ -188,12 +194,9 @@ internal fun CalendarItemDetails(
     }
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CalendarJobContent(
-    model: CalendarItem.Job,
-) {
+private fun CalendarJobContent(model: CalendarItem.Job) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = spacedBy(60.dp),

@@ -31,67 +31,73 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.loukwn.biocompose.presentation.design_system.icons.Back
-import com.loukwn.biocompose.presentation.design_system.icons.BatteryTwoThirds
-import com.loukwn.biocompose.presentation.design_system.icons.Home
-import com.loukwn.biocompose.presentation.design_system.icons.MyIcons
-import com.loukwn.biocompose.presentation.design_system.icons.NetworkCell
-import com.loukwn.biocompose.presentation.design_system.icons.NetworkWifi
-import com.loukwn.biocompose.presentation.design_system.icons.Recents
+import com.loukwn.biocompose.presentation.designsystem.icons.Back
+import com.loukwn.biocompose.presentation.designsystem.icons.BatteryTwoThirds
+import com.loukwn.biocompose.presentation.designsystem.icons.Home
+import com.loukwn.biocompose.presentation.designsystem.icons.MyIcons
+import com.loukwn.biocompose.presentation.designsystem.icons.NetworkCell
+import com.loukwn.biocompose.presentation.designsystem.icons.NetworkWifi
+import com.loukwn.biocompose.presentation.designsystem.icons.Recents
 
-private const val StatusBarHeightDp = 32
-private const val StatusBarVerticalPaddingDp = 4
-private const val NavigationBarHeightDp = 48
+private const val STATUS_BAR_HEIGHT_DP = 32
+private const val STATUS_BAR_VERTICAL_PADDING_DP = 4
+private const val NAVIGATION_BAR_HEIGHT_DP = 48
 
-val GlobalInsetsToConsume = PaddingValues(
-    top = StatusBarHeightDp.dp,
-    bottom = NavigationBarHeightDp.dp,
-    start = 0.dp,
-    end = 0.dp,
-)
+val GlobalInsetsToConsume =
+    PaddingValues(
+        top = STATUS_BAR_HEIGHT_DP.dp,
+        bottom = NAVIGATION_BAR_HEIGHT_DP.dp,
+        start = 0.dp,
+        end = 0.dp,
+    )
 
 @Composable
-fun StatusBar(modifier: Modifier, time: String, inLightMode: Boolean = true) {
-    val foregroundTintColor = if (inLightMode) {
-        Color.Black
-    } else {
-        Color.White
-    }
+fun StatusBar(
+    modifier: Modifier,
+    time: String,
+    inLightMode: Boolean = true,
+) {
+    val foregroundTintColor =
+        if (inLightMode) {
+            Color.Black
+        } else {
+            Color.White
+        }
 
     Row(
-        modifier = modifier
-            .height(StatusBarHeightDp.dp)
-            .padding(vertical = StatusBarVerticalPaddingDp.dp, horizontal = 32.dp),
+        modifier =
+            modifier
+                .height(STATUS_BAR_HEIGHT_DP.dp)
+                .padding(vertical = STATUS_BAR_VERTICAL_PADDING_DP.dp, horizontal = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-
         Text(
             text = time,
             color = foregroundTintColor,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
         Row(modifier = Modifier.fillMaxHeight()) {
-            val iconSizeDp = (StatusBarHeightDp - 2 * StatusBarVerticalPaddingDp).dp
+            val iconSizeDp = (STATUS_BAR_HEIGHT_DP - 2 * STATUS_BAR_VERTICAL_PADDING_DP).dp
 
             Image(
                 imageVector = MyIcons.NetworkWifi,
                 modifier = Modifier.size(iconSizeDp),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(foregroundTintColor)
+                colorFilter = ColorFilter.tint(foregroundTintColor),
             )
             Image(
                 imageVector = MyIcons.NetworkCell,
                 modifier = Modifier.size(iconSizeDp),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(foregroundTintColor)
+                colorFilter = ColorFilter.tint(foregroundTintColor),
             )
             Image(
                 imageVector = MyIcons.BatteryTwoThirds,
                 modifier = Modifier.size(iconSizeDp),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(foregroundTintColor)
+                colorFilter = ColorFilter.tint(foregroundTintColor),
             )
         }
     }
@@ -104,15 +110,17 @@ fun NavigationBar(
     onBackPressed: () -> Unit,
     onHomePressed: () -> Unit,
 ) {
-    val foregroundTintColor = if (inLightMode) {
-        Color.Black
-    } else {
-        Color.White
-    }
+    val foregroundTintColor =
+        if (inLightMode) {
+            Color.Black
+        } else {
+            Color.White
+        }
 
     Row(
-        modifier = modifier
-            .height(NavigationBarHeightDp.dp),
+        modifier =
+            modifier
+                .height(NAVIGATION_BAR_HEIGHT_DP.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
@@ -128,31 +136,31 @@ private fun NavigationBarButton(
     tintColor: Color,
     onClick: () -> Unit,
 ) {
-
     val hoverInteractionSource = remember { MutableInteractionSource() }
     val isHovered by hoverInteractionSource.collectIsHoveredAsState()
     val tint = if (isHovered) tintColor.copy(alpha = .5f) else tintColor
 
     Row(
-        modifier = Modifier
-            .fillMaxHeight()
-            .width(100.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .hoverable(hoverInteractionSource)
-            .pointerHoverIcon(PointerIcon.Hand)
-            .clickable(
-                onClick = onClick,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(true, color = Color.White),
-                role = Role.Button,
-            ),
+        modifier =
+            Modifier
+                .fillMaxHeight()
+                .width(100.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .hoverable(hoverInteractionSource)
+                .pointerHoverIcon(PointerIcon.Hand)
+                .clickable(
+                    onClick = onClick,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple(true, color = Color.White),
+                    role = Role.Button,
+                ),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             imageVector = imageVector,
             contentDescription = null,
-            colorFilter = ColorFilter.tint(tint)
+            colorFilter = ColorFilter.tint(tint),
         )
     }
 }

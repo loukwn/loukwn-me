@@ -5,5 +5,6 @@ import com.arkivanov.decompose.ComponentContext
 interface DesktopComponent
 
 class DefaultDesktopComponent(
-    componentContext: ComponentContext
-): DesktopComponent, ComponentContext by componentContext
+    componentContext: ComponentContext,
+) : DesktopComponent,
+    ComponentContext by componentContext

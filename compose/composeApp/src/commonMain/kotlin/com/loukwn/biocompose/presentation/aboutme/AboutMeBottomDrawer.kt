@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.loukwn.biocompose.getAgeInYears
-import com.loukwn.biocompose.presentation.design_system.components.SystemUiGradientOverlay
+import com.loukwn.biocompose.presentation.designsystem.components.SystemUiGradientOverlay
 import com.loukwn.biocompose.presentation.root.GlobalInsetsToConsume
 import kotlinx.coroutines.delay
 import loukwn_me_kotlin_wasm.composeapp.generated.resources.Res
@@ -47,7 +47,7 @@ import loukwn_me_kotlin_wasm.composeapp.generated.resources.equipment
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
-private const val BottomDrawerAnimationDelayMs = 1000L
+private const val BOTTOM_DRAWER_ANIMATION_DELAY_MS = 1000L
 private val MoreContentBottomScrimSize = GlobalInsetsToConsume.calculateBottomPadding() + 50.dp
 
 @Composable
@@ -57,7 +57,7 @@ fun FakeBottomDrawer(windowHeightDp: Dp) {
     var targetHeight by remember { mutableStateOf(0.dp) }
     val animatedHeight by animateDpAsState(
         targetHeight,
-        spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+        spring(dampingRatio = Spring.DampingRatioMediumBouncy),
     )
 
     LaunchedEffect(windowHeightDp) {
@@ -67,7 +67,7 @@ fun FakeBottomDrawer(windowHeightDp: Dp) {
     }
 
     LaunchedEffect(Unit) {
-        delay(BottomDrawerAnimationDelayMs)
+        delay(BOTTOM_DRAWER_ANIMATION_DELAY_MS)
         targetHeight = windowHeightDp / 4
         finishedFirstAnimation = true
     }
@@ -86,7 +86,7 @@ fun BottomDrawerList(
     var targetPaddingTop by remember { mutableStateOf(windowHeightDp) }
     val animatingPaddingTop by animateDpAsState(
         targetPaddingTop,
-        spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+        spring(dampingRatio = Spring.DampingRatioMediumBouncy),
     )
 
     LaunchedEffect(windowHeightDp) {
@@ -96,27 +96,28 @@ fun BottomDrawerList(
     }
 
     LaunchedEffect(Unit) {
-        delay(BottomDrawerAnimationDelayMs)
+        delay(BOTTOM_DRAWER_ANIMATION_DELAY_MS)
         targetPaddingTop = (3 * windowHeightDp) / 4 - 20.dp
         finishedFirstAnimation = true
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+            modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
         ) {
             Spacer(modifier = Modifier.height(animatingPaddingTop))
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
-                    .background(MaterialTheme.colors.background)
-                    .padding(
-                        top = 32.dp,
-                        start = 32.dp,
-                        end = 32.dp,
-                        bottom = MoreContentBottomScrimSize
-                    )
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
+                        .background(MaterialTheme.colors.background)
+                        .padding(
+                            top = 32.dp,
+                            start = 32.dp,
+                            end = 32.dp,
+                            bottom = MoreContentBottomScrimSize,
+                        ),
             ) {
                 BottomDrawerContent(state)
             }
@@ -185,7 +186,10 @@ private fun ColumnScope.BottomDrawerContent(state: AboutMeUiState) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TagSection(tags: List<Tag>, modifier: Modifier = Modifier) {
+private fun TagSection(
+    tags: List<Tag>,
+    modifier: Modifier = Modifier,
+) {
     FlowRow(
         modifier = modifier,
         verticalArrangement = spacedBy(8.dp),
@@ -193,11 +197,12 @@ private fun TagSection(tags: List<Tag>, modifier: Modifier = Modifier) {
     ) {
         for (tag in tags) {
             Row(
-                modifier = Modifier
-                    .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                modifier =
+                    Modifier
+                        .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = spacedBy(8.dp)
+                horizontalArrangement = spacedBy(8.dp),
             ) {
                 Icon(
                     modifier = Modifier.size(24.dp),
@@ -220,8 +225,10 @@ private fun ColumnScope.Separator(withDivider: Boolean) {
     Spacer(modifier = Modifier.height(52.dp))
     if (withDivider) {
         Divider(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-                .fillMaxWidth(.5f),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(.5f),
             color = MaterialTheme.colors.onBackground.copy(alpha = .3f),
         )
         Spacer(modifier = Modifier.height(52.dp))
@@ -260,7 +267,6 @@ private fun TechnologiesSection(
     }
 }
 
-
 @Composable
 private fun ImageSection(
     drawable: DrawableResource,
@@ -275,7 +281,7 @@ private fun ImageSection(
         Image(
             painter = painterResource(drawable),
             contentDescription = null,
-            modifier = Modifier.clip(RoundedCornerShape(20.dp))
+            modifier = Modifier.clip(RoundedCornerShape(20.dp)),
         )
         Text(
             text = text,
@@ -285,7 +291,6 @@ private fun ImageSection(
     }
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Hobbies(
@@ -294,7 +299,7 @@ private fun Hobbies(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = spacedBy(20.dp)
+        verticalArrangement = spacedBy(20.dp),
     ) {
         Text(
             text = "Hobbies",
@@ -308,9 +313,10 @@ private fun Hobbies(
         ) {
             for (hobby in hobbies) {
                 Text(
-                    modifier = Modifier
-                        .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
-                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    modifier =
+                        Modifier
+                            .background(MaterialTheme.colors.surface, RoundedCornerShape(20.dp))
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
                     text = hobby,
                     color = MaterialTheme.colors.onSurface,
                     style = MaterialTheme.typography.body2,
@@ -321,10 +327,13 @@ private fun Hobbies(
 }
 
 @Composable
-private fun PhraseSection(phrase: String, modifier: Modifier = Modifier) {
+private fun PhraseSection(
+    phrase: String,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier,
-        verticalArrangement = spacedBy(20.dp)
+        verticalArrangement = spacedBy(20.dp),
     ) {
         Text(
             text = "A phrase that I often use",

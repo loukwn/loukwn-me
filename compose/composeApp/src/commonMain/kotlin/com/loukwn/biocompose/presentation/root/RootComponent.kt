@@ -34,21 +34,37 @@ import kotlinx.serialization.Serializable
 
 @Stable
 interface RootComponent {
-
     val stack: Value<ChildStack<*, Child>>
     val state: State<RootUiState>
 
     fun onBack()
+
     fun onHome()
+
     fun onDesktopAppClicked(desktopApp: DesktopApp)
+
     fun onSystemUiModeChanged(isLight: Boolean)
 
     sealed class Child {
-        data class Desktop(val component: DesktopComponent) : Child()
-        data class AboutMe(val component: AboutMeComponent) : Child()
-        data class Portfolio(val component: PortfolioComponent) : Child()
-        data class Links(val component: LinksComponent) : Child()
-        data class AboutThis(val component: AboutThisComponent) : Child()
+        data class Desktop(
+            val component: DesktopComponent,
+        ) : Child()
+
+        data class AboutMe(
+            val component: AboutMeComponent,
+        ) : Child()
+
+        data class Portfolio(
+            val component: PortfolioComponent,
+        ) : Child()
+
+        data class Links(
+            val component: LinksComponent,
+        ) : Child()
+
+        data class AboutThis(
+            val component: AboutThisComponent,
+        ) : Child()
     }
 }
 
@@ -61,8 +77,8 @@ data class RootUiState(
 class DefaultRootComponent(
     componentContext: ComponentContext,
     private val coroutineScope: CoroutineScope,
-) : RootComponent, ComponentContext by componentContext {
-
+) : RootComponent,
+    ComponentContext by componentContext {
     private val navigation = StackNavigation<Configuration>()
 
     private val _state = mutableStateOf(RootUiState(getFormattedTime(), false))
@@ -77,7 +93,7 @@ class DefaultRootComponent(
 
     private fun updateTimeInIntervals() {
         coroutineScope.launch {
-            while(isActive) {
+            while (isActive) {
                 delay(TIME_FETCH_INTERVAL_MS)
                 _state.value = _state.value.copy(time = getFormattedTime())
             }
@@ -93,7 +109,10 @@ class DefaultRootComponent(
             childFactory = ::child,
         )
 
-    private fun child(configuration: Configuration, componentContext: ComponentContext): RootComponent.Child =
+    private fun child(
+        configuration: Configuration,
+        componentContext: ComponentContext,
+    ): RootComponent.Child =
         when (configuration) {
             is Configuration.Desktop -> RootComponent.Child.Desktop(desktopComponent(componentContext))
             is Configuration.AboutMe -> RootComponent.Child.AboutMe(aboutMeComponent(componentContext))
@@ -102,20 +121,16 @@ class DefaultRootComponent(
             is Configuration.AboutThis -> RootComponent.Child.AboutThis(aboutThisComponent(componentContext))
         }
 
-    private fun desktopComponent(componentContext: ComponentContext): DesktopComponent =
-        DefaultDesktopComponent(componentContext)
+    private fun desktopComponent(componentContext: ComponentContext): DesktopComponent = DefaultDesktopComponent(componentContext)
 
-    private fun aboutMeComponent(componentContext: ComponentContext): AboutMeComponent =
-        DefaultAboutMeComponent(componentContext)
-    
+    private fun aboutMeComponent(componentContext: ComponentContext): AboutMeComponent = DefaultAboutMeComponent(componentContext)
+
     private fun portfolioComponent(componentContext: ComponentContext): PortfolioComponent =
         DefaultPortfolioComponent(componentContext, canGoBackStateFlow, deepBackEventDispatchFlow)
 
-    private fun linksComponent(componentContext: ComponentContext): LinksComponent =
-        DefaultLinksComponent(componentContext)
+    private fun linksComponent(componentContext: ComponentContext): LinksComponent = DefaultLinksComponent(componentContext)
 
-    private fun aboutThisComponent(componentContext: ComponentContext): AboutThisComponent =
-        DefaultAboutThisComponent(componentContext)
+    private fun aboutThisComponent(componentContext: ComponentContext): AboutThisComponent = DefaultAboutThisComponent(componentContext)
 
     override fun onBack() {
         if (canGoBackStateFlow.value) {
@@ -133,12 +148,13 @@ class DefaultRootComponent(
     }
 
     override fun onDesktopAppClicked(desktopApp: DesktopApp) {
-        val configuration = when (desktopApp) {
-            DesktopApp.AboutMe -> Configuration.AboutMe
-            DesktopApp.Portfolio -> Configuration.Portfolio
-            DesktopApp.Links -> Configuration.Links
-            DesktopApp.AboutThis -> Configuration.AboutThis
-        }
+        val configuration =
+            when (desktopApp) {
+                DesktopApp.AboutMe -> Configuration.AboutMe
+                DesktopApp.Portfolio -> Configuration.Portfolio
+                DesktopApp.Links -> Configuration.Links
+                DesktopApp.AboutThis -> Configuration.AboutThis
+            }
         navigation.push(configuration)
     }
 
@@ -153,7 +169,7 @@ class DefaultRootComponent(
 
         @Serializable
         data object AboutMe : Configuration
-        
+
         @Serializable
         data object Portfolio : Configuration
 
