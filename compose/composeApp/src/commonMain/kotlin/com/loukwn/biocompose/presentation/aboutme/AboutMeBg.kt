@@ -26,14 +26,16 @@ fun AboutMeBgDrawings(modifier: Modifier = Modifier) {
         animateIntAsState(maxRadius, animationSpec = tween(1500, easing = FastOutLinearInEasing))
 
     Canvas(
-        modifier = modifier.onGloballyPositioned {
-            maxRadius = it.size.height
-            randomCenterOffsets = calculateRandomCenterOffsets(
-                stepSize = stepSize,
-                maxRadius = maxRadius,
-                currentRandomCenterOffsets = randomCenterOffsets,
-            )
-        },
+        modifier =
+            modifier.onGloballyPositioned {
+                maxRadius = it.size.height
+                randomCenterOffsets =
+                    calculateRandomCenterOffsets(
+                        stepSize = stepSize,
+                        maxRadius = maxRadius,
+                        currentRandomCenterOffsets = randomCenterOffsets,
+                    )
+            },
     ) {
         for (i in stepSize..maxRadiusAnimated.value step stepSize) {
             val centerIndex = i / stepSize
@@ -42,7 +44,7 @@ fun AboutMeBgDrawings(modifier: Modifier = Modifier) {
                     color = Color.White.copy(alpha = .1f),
                     radius = i.toFloat(),
                     center = randomCenterOffsets[centerIndex],
-                    style = Stroke(width = 2f)
+                    style = Stroke(width = 2f),
                 )
             }
         }
@@ -52,7 +54,7 @@ fun AboutMeBgDrawings(modifier: Modifier = Modifier) {
 private fun calculateRandomCenterOffsets(
     stepSize: Int,
     maxRadius: Int,
-    currentRandomCenterOffsets: List<Offset>
+    currentRandomCenterOffsets: List<Offset>,
 ): List<Offset> {
     val centerOffsetsToHave = (maxRadius / stepSize.toFloat()).toInt()
 
@@ -63,7 +65,7 @@ private fun calculateRandomCenterOffsets(
                     Offset(
                         x = Random.nextInt(0 until maxRadius).toFloat(),
                         y = Random.nextInt(0 until maxRadius).toFloat(),
-                    )
+                    ),
                 )
             }
         }
@@ -72,16 +74,17 @@ private fun calculateRandomCenterOffsets(
             return currentRandomCenterOffsets
                 .dropLast(currentRandomCenterOffsets.size - centerOffsetsToHave)
         } else if (centerOffsetsToHave > currentRandomCenterOffsets.size) {
-            val extraOffsetsToAdd = buildList {
-                repeat(centerOffsetsToHave - currentRandomCenterOffsets.size) {
-                    add(
-                        Offset(
-                            x = Random.nextInt(0 until maxRadius).toFloat(),
-                            y = Random.nextInt(0 until maxRadius).toFloat(),
+            val extraOffsetsToAdd =
+                buildList {
+                    repeat(centerOffsetsToHave - currentRandomCenterOffsets.size) {
+                        add(
+                            Offset(
+                                x = Random.nextInt(0 until maxRadius).toFloat(),
+                                y = Random.nextInt(0 until maxRadius).toFloat(),
+                            ),
                         )
-                    )
+                    }
                 }
-            }
             return currentRandomCenterOffsets.plus(extraOffsetsToAdd)
         } else {
             return currentRandomCenterOffsets

@@ -57,7 +57,7 @@ val myLinks by lazy {
             displayText = "Email",
             url = "mailto:hello@loukwn.me",
             displayUrl = "hello@loukwn.me",
-            bgColor = Color(0xffb94034)
+            bgColor = Color(0xffb94034),
         ),
         FullLink(
             icon = EvaIcons.Outline.File,
