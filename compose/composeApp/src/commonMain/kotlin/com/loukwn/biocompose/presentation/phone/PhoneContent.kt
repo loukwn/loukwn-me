@@ -23,20 +23,26 @@ import com.loukwn.biocompose.presentation.desktop.DesktopScreen
 import com.loukwn.biocompose.presentation.links.LinksScreen
 import com.loukwn.biocompose.presentation.portfolio.PortfolioScreen
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Composable
-fun PhoneContent() {
+fun PhoneContent(onNavHostReady: suspend (NavHostController) -> Unit) {
     val navController = rememberNavController()
     val phoneViewModel: PhoneViewModel = viewModel()
     val state by phoneViewModel.state.collectAsState()
+
+    LaunchedEffect(navController) {
+        onNavHostReady(navController)
+    }
 
     LaunchedEffect(Unit) {
         phoneViewModel.commands.collectLatest { command ->
             when (command) {
                 is PhoneCommand.GoBack -> {
-                    navController.popBackStack(route = Destination.Desktop, inclusive = false)
+                    navController.navigateUp()
                 }
+
                 is PhoneCommand.NavigateTo -> {
                     navController.navigate(command.destination)
                 }
@@ -88,18 +94,23 @@ private fun PhoneContentInternal(
 
 sealed interface Destination {
     @Serializable
+    @SerialName("home")
     data object Desktop : Destination
 
     @Serializable
+    @SerialName("about-me")
     data object AboutMe : Destination
 
     @Serializable
+    @SerialName("portfolio")
     data object Portfolio : Destination
 
     @Serializable
+    @SerialName("contact-me")
     data object Links : Destination
 
     @Serializable
+    @SerialName("about-this")
     data object AboutThis : Destination
 }
 

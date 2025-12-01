@@ -5,29 +5,6 @@ body {
   background: #000000;
 }
 
-#background-container img {
-  min-height: 100%;
-  min-width: 1024px;
-  width: 100%;
-  height: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  -webkit-transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -o-transition: opacity 0.5s ease-in-out;
-  transition: opacity 0.5s ease-in-out;
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-}
-
-#background-container img.opaque {
-  opacity: 1;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-  filter: alpha(opacity=1);
-}
-
 #content-container {
   display: flex;
   flex-direction: row;
@@ -187,45 +164,3 @@ body {
   }
 }
 
-/* .turn-to-light {
-    -webkit-animation-name: turnToLight;
-    -webkit-animation-duration: 1s;
-    animation-name: turnToLight;
-    animation-duration: 1s;
-    filter: invert(0);
-    -webkit-filter: invert(0);
-}
-
-@keyframes turnToLight {
-    from {
-        filter: invert(1);
-        -webkit-filter: invert(1);
-    }
-    to {
-        filter: invert(0);
-        -webkit-filter: invert(0);
-    }
-}
-
-.turn-to-dark {
-    -webkit-animation-name: turnToDark;
-    -webkit-animation-duration: 1s;
-    animation-name: turnToDark;
-    animation-duration: 1s;
-    filter: invert(1);
-    -webkit-filter: invert(1);
-}
-
-@keyframes turnToDark {
-    from {
-        filter: invert(0);
-        -webkit-filter: invert(0);
-        opacity: 1;
-    }
-
-    to {
-        filter: invert(1);
-        -webkit-filter: invert(1);
-        opacity: 0.8;
-    }
-} */

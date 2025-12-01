@@ -2,6 +2,7 @@ package com.loukwn.biocompose.presentation.aboutme
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
+import com.loukwn.biocompose.data.ScreenLog
 import com.loukwn.biocompose.data.ScreenLogger
 import compose.icons.LineAwesomeIcons
 import compose.icons.SimpleIcons
@@ -38,7 +39,7 @@ class AboutMeViewModel : ViewModel() {
     val state: StateFlow<AboutMeUiState> = _state.asStateFlow()
 
     init {
-        ScreenLogger.logScreen("about_me")
+        ScreenLogger.logScreen(ScreenLog.AboutMe)
     }
 
     private fun getInitialState(): AboutMeUiState {
